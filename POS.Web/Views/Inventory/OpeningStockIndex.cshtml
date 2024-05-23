@@ -1,0 +1,199 @@
+﻿
+
+
+
+<style>
+    .content-header {
+        display: none !important;
+    }
+</style>
+
+
+<div id="VendorToWarehouseHead"></div>
+<div id="VendorToWarehouseDetail"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        VendorToWarehouseHead();
+        VendorToWarehouseDetail();
+    });
+    function VendorToWarehouseHead() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/OpeningStockHead/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#VendorToWarehouseHead").html(result);
+            stopLoader();
+        });
+    }
+
+    function VendorToWarehouseDetail() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/OpeningStockDetail/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#VendorToWarehouseDetail").html(result);
+            stopLoader();
+        });
+    }
+
+    function SaveVendorToWarehouse(modelData) {
+        startLoader();
+            $.ajax({
+                url: '@Url.Action("AddOpeningStock", "Inventory")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Save successfully");
+                    VendorToWarehouseHead();
+
+                    $("#customModal").modal('hide');
+                }
+                stopLoader();
+            });
+    }
+
+
+
+    function CalculateSubTotalAmount(itemId) {
+        var quantity = parseFloat($(`#Quantity_${itemId}`).val()).toFixed(2);
+        var gst = parseFloat($(`#gst_${itemId}`).val()).toFixed(2);
+        var price = parseFloat($(`#Price_${itemId}`).val()).toFixed(2);
+        var subTotal = parseFloat(quantity * price).toFixed(2);
+        parseFloat($(`#SubTotal_${itemId}`).html(subTotal)).toFixed(2);
+
+
+        if (itemId == "" || quantity == "" || price == "") {
+            return alertify.error("values is empty");
+        }
+        else {
+
+            var modelData = {
+                ItemId : itemId,
+                Price: price,
+                Quantity: quantity,
+            }
+
+            startLoader();
+            $.ajax({
+                url: '@Url.Action("UpdateOpeningStock", "Inventory")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                VendorToWarehouseDetail();
+                stopLoader();
+            });
+
+        }
+
+    }
+
+    function Purchase() {
+        var transactionDate = $("#TransactionDate").val();
+        var docNo = $("#DocNo").val();
+        var vendorId = $("#VendorId").val();
+        var remarks = $("#Remarks").val();
+        var grossAmount = parseFloat($("#GrossAmount").text()).toFixed(2);
+        var totalAmount = parseFloat($("#TotalAmount").text()).toFixed(2);
+
+        var itemData = [];
+
+        $("#tblSale tr").each(function () {
+            debugger;
+            $this = $(this);
+            var itemId = $this.find("input.itemId").val();
+            var itemName = $this.find("span.itemName").text();
+            var itemPrice = $this.find("input.itemPrice").val();
+            var quantity = $this.find("input.itemQuantity").val();
+            var itemRemarks = $this.find("input.itemRemarks").val();
+
+            if (itemId && quantity) {
+                var itemRow = {
+                    Id: itemId,
+                    Name: itemName,
+                    Price: itemPrice,
+                    Quantity: quantity,
+                    Remarks: itemRemarks,
+                }
+                itemData.push(itemRow);
+            }
+        });
+
+        if (transactionDate == "" || vendorId == "" || itemData.length == 0) {
+            return alertify.error("Please Fill The Required Fields");
+        }
+        else {
+            var modelData = {
+                TransactionDate: transactionDate,
+                DocNo: docNo,
+                VendorId: vendorId,
+                Remarks: remarks,
+                GrossAmount: grossAmount,
+                TotalNetAmount: totalAmount,
+                RawItems: itemData,
+            };
+
+            SavePurchaseOrder(modelData);
+
+        }
+
+    }
+
+    function SavePurchaseOrder(modelData) {
+
+        console.log(modelData);
+
+
+         startLoader();
+            $.ajax({
+                url: '@Url.Action("AddOpeningStock", "Inventory")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    //window.location.reload();
+                    window.location = "/Inventory/GetAllOpeningStockItems";
+                    alertify.alert("Purchase From Vendor Saved successfully");
+
+                }
+                stopLoader();
+            });
+    }
+
+    function RemoveVendorToWarehouse(itemId) {
+         startLoader();
+            $.ajax({
+                url: '@Url.Action("DeleteOpeningStock", "Inventory")',
+                type: "POST",
+                data: { ItemId: itemId},
+            }).done(function (res) {
+                VendorToWarehouseDetail();
+                stopLoader();
+            });
+    }
+</script>
+
+
+

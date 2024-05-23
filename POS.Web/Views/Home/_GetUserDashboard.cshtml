@@ -1,0 +1,222 @@
+﻿@using POS.Utilities.ViewModel
+@using POS.Utilities.Utilities
+@using POS.Utilities.Services
+@{
+    Layout = null;
+    var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+    var checkShopStatus = UserServices.CheckShopOpenStatus();
+    var date = DateTime.Now;
+    var dateto = date.Date;
+    var dashboard = DashboardServices.GetDashboard(dateto);
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <meta http-equiv="refresh" content="60;" />
+
+</head>
+<body>
+
+    @{
+        if (user.UserTypeId == 1 || user.UserTypeId == 2 || (user.UserTypeId == 3 && checkShopStatus))
+        {
+            if (dashboard != null)
+            {
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <!-- Small boxes (Stat box) -->
+                        <div class="row">
+                            <div class="col-lg-3 col-6">
+                                <a href="/Home/AllOrders">
+                                    <!-- small box -->
+                                    <div class="small-box bg-gradient-info">
+                                        <div class="inner">
+                                            <h3>@dashboard.TotalCloseOrders</h3>
+
+                                            <p>Customer Orders History</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-6">
+                                <a href="/Home/OpenOrders">
+                                    <!-- small box -->
+                                    <div class="small-box bg-gradient-success">
+                                        <div class="inner">
+                                            <h3>@dashboard.TotalOpenOrders</h3>
+
+                                            <p>Total Open Orders</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="fas fa-cart-plus"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- ./col -->
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-6">
+                                <a href="/Home/DraftOrders">
+                                    <!-- small box -->
+                                    <div class="small-box bg-gradient-danger">
+                                        <div class="inner">
+                                            <h3>@dashboard.TotalDraftOrders</h3>
+
+                                            <p>Total Draft Orders</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="fas fa-shopping-bag"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-6">
+                                <a href="/Home/POS">
+                                    <!-- small box -->
+                                    <div class="small-box bg-gradient-warning">
+                                        <div class="inner">
+                                            <h3>-</h3>
+
+                                            <p>POS Panel</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="fas fa-desktop"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- ./col -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-3 col-6">
+
+                                <!-- small box -->
+                                <div class="small-box bg-gradient-info">
+                                    <div class="inner">
+                                        <h3>@dashboard.TOTALBILL</h3>
+
+                                        <p>Today Bill</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-6">
+
+                                <!-- small box -->
+                                <div class="small-box bg-gradient-success">
+                                    <div class="inner">
+                                        <h3>@dashboard.TotalNetAmount</h3>
+
+                                        <p>Today Sales</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- ./col -->
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-6">
+
+                                <!-- small box -->
+                                <div class="small-box bg-gradient-danger">
+                                    <div class="inner">
+                                        <h3>@dashboard.DiscountCharged</h3>
+
+                                        <p>Today Discount </p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-shopping-bag"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-6">
+
+                                <!-- small box -->
+                                <div class="small-box bg-gradient-warning">
+                                    <div class="inner">
+
+                                        <h3>@dashboard.ServiceCharged</h3>
+                                        <p> Today Service Charged</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-desktop"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- ./col -->
+                        </div>
+
+                        <!-- /.row -->
+                        <!-- Small boxes (Stat box) -->
+                        <!-- /.row -->
+
+                    </div><!-- /.container-fluid -->
+                    <div class="row">
+                        @{
+
+                            if (ItemServices.GetAllFloors()?.Count > 0)
+                            {
+                                foreach (var p in ItemServices.GetAllFloors())
+                                {
+                                    <div class="col-lg-3 col-6">
+                                        <a href="/Menu/Tables/@p.Id">
+                                            <!-- small box -->
+                                            <div class="small-box bg-gradient-gray">
+                                                <div class="inner">
+                                                    <h3>@DashboardServices.GetTotalTablesByFloor(p.Id)</h3>
+
+                                                    <p>@p.Name Floor Tables</p>
+                                                </div>
+                                                <div class="icon">
+                                                    <i class="fas fa-table"></i>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <!-- ./col -->
+                                }
+                            }
+                        }
+
+                        <div class="col-lg-3 col-6">
+                            <a href="#">
+                                <!-- small box -->
+                                <div class="small-box bg-gradient-dark">
+                                    <div class="inner">
+                                        <h3>@dashboard.TotalItems</h3>
+
+                                        <p>Total Items</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-file-alt"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ./col -->
+                    </div>
+                </section>
+                <!-- /.content -->
+            }
+
+        }
+    }
+
+</body>
+</html>

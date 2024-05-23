@@ -1,0 +1,1 @@
+search_result['5834']=["topic_0000000000001075.html","CompanyInfoDataTable.NTNColumn Property",""];

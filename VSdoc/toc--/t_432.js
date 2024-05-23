@@ -1,0 +1,1 @@
+c['432']=[['433',"DocNo Property","topic_00000000000001D1.html",0],['434',"HeadID Property","topic_00000000000001D0.html",0],['435',"ItemName Property","topic_00000000000001D5.html",0],['436',"Quantity Property","topic_00000000000001D4.html",0],['437',"Remarks Property","topic_00000000000001D2.html",0],['438',"TransactionDate Property","topic_00000000000001D3.html",0]];

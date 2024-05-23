@@ -1,0 +1,145 @@
+﻿@using POS.Utilities.ViewModel
+@model IEnumerable<OrderViewModel>
+@{
+    ViewBag.Title = "All Order";
+    var searchKeyword = ViewBag.search;
+}
+
+
+<script src="~/Scripts/Site.js"></script>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">List of All Orders</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive">
+                <table id="bootstrap-data-table-export" class="table table-hover table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>InvoiceNo</th>
+                            <th>Car Number</th>
+                            <th>Payment</th>
+                            <th>Gross Amount</th>
+                            <th>Discount</th>
+                            <th>Tip</th>
+                            <th>Service Charges</th>
+                            <th>GST</th>
+                            <th>Receipt Total Cash</th>
+                            <th>Receipt Total Credit</th>
+                            <th>Change</th>
+                            <th>Total Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var e in Model)
+                            {
+                        <tr class="dgrow" data-id="@e.Id">
+
+                            <td>@e.Id</td>
+                            <td>@e.InvoiceNumber</td>
+                            <td>@e.CarNo</td>
+                            <td>@e.PaymentTypeName</td>
+                            <td>@e.GrossAmount</td>
+                            <td>@e.DiscountCharged</td>
+                            <td>@e.Tip</td>
+                            <td>@e.ServiceCharged</td>
+                            <td>@e.GstCharged</td>
+                            <td>@e.ReceiptTotalCash</td>
+                            <td>@e.ReceiptTotalCredit</td>
+                            <td>@e.Change</td>
+                            <td>@e.TotalNetAmount</td>
+                            <td>
+                                <a href="javascript:void(0)" onclick="GetInvoice(@e.Id)" class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="bottom"><span class="fas fa-print"></span> Print</a>
+                            </td>
+                        </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card-body -->
+            @*<div class="card-footer clearfix">
+                    <div class="row justify-content-center">
+
+                        <div class="pagination pagination-sm m-0 float-right">
+                            @Html.PagedListPager(Model, page => Url.Action("ManageOrders", "Order", new { page, search = searchKeyword, }))
+                            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                        </div>
+
+                    </div>
+                </div>*@
+
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+<div id="InvoiceFormat" style="display:none"></div>
+
+<script>
+    $(document).ready(function () {
+        //GetAllOrders();
+    });
+
+
+
+    //function GetAllOrders() {
+    //    startLoader();
+    //    $.ajax(
+    //        {
+    //            url: "/Home/PrintInvoice/",
+    //            type: "Get"
+    //        }
+    //    ).done(function (result) {
+
+    //        stopLoader();
+    //    });
+    //}
+</script>
+
+<script>
+
+    function ViewInvoice(id) {
+        debugger
+        var URL = "/Home/PrintInvoice/" + id;
+        window.open(URL, "_blank");
+
+    }
+
+
+
+    function UpdateMode(orderId) {
+        startLoader();
+        $.ajax
+            ({
+                url: "/Home/OpenOrder",
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify({ id: orderId }),
+                datatype: "JSON",
+            }).done(function (res) {
+
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Now Order Is Open");
+                    window.location.href = "/Home/POS?OrderId=" + orderId + "&IsUpdateMode= true";
+                }
+                stopLoader();
+
+            });
+
+    }
+</script>

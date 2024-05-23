@@ -1,0 +1,201 @@
+﻿
+@using POS.Utilities.Services
+@using POS.Utilities.Utilities
+@using POS.Utilities.ViewModel
+@model UserViewModel
+@{
+ 
+    Model.Customers = VendorServices.GetAllCustomers();
+}
+
+@{
+    ViewBag.Title = "POS";
+}
+
+<style>
+    .content-header {
+        display: none;
+    }
+</style>
+
+
+<div class="row" style=" padding-top: 10px;">
+    @*<div class="col-lg-2 col-md-4 col-sm-4">
+            <p class="font-weight-bold">Setup</p>
+            @Html.Partial("_SideMenu")
+        </div>*@
+    <div class="col-lg-2 col-md-4 col-sm-4 ">
+        <p class="font-weight-bold">Menu</p>
+        @Html.Partial("_Categories")
+    </div>
+    <div class="col-lg-5 col-md-8 col-sm-8">
+        <p class="font-weight-bold">Items</p>
+        <div id="LoadItems"></div>
+    </div>
+    <div class="col-lg-5 col-md-12 col-sm-12">
+        <p class="font-weight-bold">Cart Detail</p>
+        <div id="LoadCartItems"></div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModal-label">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="customerModal-label">Select Customer</h4>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+            </div>
+            <div class="modal-body">
+                @Html.DropDownListFor(m => m.Id, new SelectList(Model.Customers, "Id", "CarNumber"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = " Select Customer ", @required = "true", @id = "Guests" })
+
+ 
+                </a>
+                @*<input type="number" class="form-control" min="0" max="100" id="Guests" placeholder="0000">*@
+
+            </div>
+            <div class="modal-footer">
+
+                <a href="/Vendor/Customers">Add New Customer</a>
+                <a href="/home/GetCarHistory">Get History</a>
+                <a href="/Home/Index">Back</a>
+                <button type="button" class="btn btn-primary" onclick="SaveGuests()">Save</button>
+
+
+                @*<button href="/Home/Index"target="_blank"type="submit"class="btn btn-primary">Back</button>*@
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ItemRemarksModal" tabindex="-1" role="dialog" aria-labelledby="ItemRemarksModal-label">
+    <div class="modal-dialog" role="document">
+        <input type="text" id="itemID" hidden />
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="ItemRemarksModal-title"></h4>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <textarea class="form-control" rows="3" id="itemRemarks"> </textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="SaveItemRemarks()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="orderReasonModal" tabindex="-1" role="dialog" aria-labelledby="orderReasonModal-label">
+    <div class="modal-dialog" role="document">
+        <input type="text" id="orderID" hidden />
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModal-label">Reason</h4>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <textarea class="form-control" rows="3" id="orderReason"> </textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SaveOrderWithReason()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+
+    function callHistoryReport() {
+
+        if ($("#Guests").val() != "") {
+            debugger
+            var itemId = $("#Guests").val();
+            GetCarHsitory(itemId);
+        }
+        else {
+            var itemId = '0';
+        }
+        function GetCarHsitory(itemId) {
+            debugger
+            $.ajax
+                ({
+                    url: "/Home/GetCarHistorybyId/",
+                    type: "POST",
+                    data: { ItemId: itemId },
+                }).done(function (result) {
+                    console.log(result);
+                    if (res == "Error" || res == "") {
+                        alertify.error("Something went wrong");
+                    }
+                    else if (res == "Success") {
+                        alertify.success("Saved successfully");
+                        RefreshCart();
+                        location.reload();
+                    }
+                    stopLoader();
+                });
+        }
+
+    }
+
+
+    function GetCarHsitory(itemId) {
+        debugger
+        $.ajax
+            ({
+                url: "/Home/GetCarHistorybyId/",
+                type: "POST",
+                data: { ItemId: itemId },
+            }).done(function (result) {
+                console.log(result);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Saved successfully");
+                    RefreshCart();
+                    location.reload();
+                }
+                stopLoader();
+            });
+    }
+
+    function GetCategoryDetail(categoryId) {
+        $.ajax
+            ({
+                url: "/Home/CategoryDetails/",
+                type: "POST",
+                data: { CategoryId: categoryId },
+            }).done(function (result) {
+                $("#LoadItems").html(result);
+            });
+    }
+
+    function TableRelease(tableId) {
+        $.ajax({
+            url: "/Home/IsReleaseTable/",
+            type: "POST",
+            data: { id: tableId },
+        }).done(function (res) {
+            console.log(res);
+            if (res == "Error" || res == "") {
+                alertify.error("Something went wrong with releasing table");
+            }
+            else if (res == "Success") {
+
+                alertify.success("Release Table successfully");
+            }
+        });
+    }
+</script>

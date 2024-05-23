@@ -1,0 +1,1 @@
+search_result['1404']=["topic_0000000000000419.html","DataLinkEscape Field","Indicates that control characters present in the stream should\r\nbe passed through as transmitted and not interpreted as control\r\ncharacters."];

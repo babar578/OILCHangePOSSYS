@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"SOLUTION-WIDE PROPERTIES Reference","topic_0000000000001149.html"],['4471',"POS.Web.Dock27PosWebPortalDataSet1TableAdapters Namespace","topic_00000000000008EA.html"],['4483',"VenderToWarhouseTableAdapter Class","topic_00000000000008EB.html"],['4485',"Properties","topic_00000000000008EB_props--.html"]];

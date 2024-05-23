@@ -1,0 +1,180 @@
+﻿
+@{
+    ViewBag.Title = "ClosingInventory";
+}
+
+<style>
+    .content-header {
+        display: none !important;
+    }
+</style>
+
+
+<div id="ClosingInventoryHead"></div>
+<div id="ClosingInventoryDetail"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        ClosingInventoryHead();
+        ClosingInventoryDetail();
+    });
+
+    function ClosingInventoryHead() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/ClosingInventoryHead/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#ClosingInventoryHead").html(result);
+            stopLoader();
+        });
+    }
+
+    function ClosingInventoryDetail() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/ClosingInventoryDetail/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#ClosingInventoryDetail").html(result);
+            stopLoader();
+        });
+    }
+
+    function myFunction() {
+        debugger
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tblSale");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function CalculateRQty(itemId) {
+
+        var phyQuantity = parseFloat($(`#PhyQuantity_${itemId}`).text());
+        var remQuantity = parseFloat($(`#RemQuantity_${itemId}`).val());
+
+        if (remQuantity > phyQuantity) {
+            return alertify.error("Closing Inventory Quantity Always Less Than And Equal To Physical Quantity");
+        }
+
+        var remaining = phyQuantity - remQuantity;
+        $(`#ConsumptionQuantity_${itemId}`).html(remaining);
+    }
+
+    function ClosingInventory() {
+        var transactionDate = $("#TransactionDate").val();
+        var docNo = $("#DocNo").val();
+        var remarks = $("#Remarks").val();
+        var DeptmentId = $("#DeptmentId").val();
+
+        var itemData = [];
+
+        $("#tblSale tr").each(function () {
+            $this = $(this);
+            var itemId = $this.find("input.itemId").val();
+            var itemName = $this.find("span.itemName").text();
+
+            var quantity = parseFloat($(`#ConsumptionQuantity_${itemId}`).text());
+            var itemRemarks = $this.find("input.itemRemarks").val();
+
+            if (itemId && quantity) {
+                var itemRow = {
+                    ItemId: itemId,
+                    ItemName: itemName,
+                    Quantity: quantity,
+                    Remarks: itemRemarks,
+                }
+                itemData.push(itemRow);
+            }
+        });
+
+        if (transactionDate == "" || itemData.length == 0) {
+            return alertify.error("Please Fill The Required Fields");
+        }
+        else {
+            var modelData = {
+                TransactionDate: transactionDate,
+                DocNo: docNo,
+                Remarks: remarks,
+                DeptmentId: DeptmentId,
+                ClosingInventoryDetails: itemData,
+            };
+
+            SaveClosingInventory(modelData);
+        }
+
+
+    }
+
+    function SaveClosingInventory(modelData) {
+        console.log(modelData);
+        alertify.confirm("Are you sure you want to save Voucher", function (e, str) {
+            if (e) {
+         startLoader();
+            $.ajax({
+                url: '@Url.Action("AddClosingInventory", "Inventory")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    window.location.href ="/Inventory/AllClosingInventory";
+                    alertify.success("Closing Inventory Saved Successfully");
+
+
+                    window.location.href = "/Inventory/AllClosingInventory";
+                }
+                stopLoader();
+            });
+              }
+            else
+            {
+        /* location.reload()*/
+            }
+        }, "Default Value");
+
+    }
+
+    function RemoveClosingInventory(itemId) {
+         startLoader();
+            $.ajax({
+                url: '@Url.Action("RemoveClosingInventory", "Inventory")',
+                type: "POST",
+                data: { ItemId: itemId},
+            }).done(function (res) {
+                ClosingInventoryDetail();
+                stopLoader();
+            });
+    }
+</script>
+
+
+
+
+

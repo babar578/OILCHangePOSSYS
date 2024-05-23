@@ -1,0 +1,1 @@
+c['1593']=[['1594',"ClosingInventoryHeadViewModel Constructor","topic_000000000000049A.html",0],['1595',"Properties","topic_0000000000000499_props--.html",1],['1605',"Methods","topic_0000000000000499_methods--.html",1]];

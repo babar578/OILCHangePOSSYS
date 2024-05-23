@@ -1,0 +1,1 @@
+c['4483']=[['4484',"VenderToWarhouseTableAdapter Constructor","topic_00000000000008EC.html",0],['4485',"Properties","topic_00000000000008EB_props--.html",1],['4489',"Methods","topic_00000000000008EB_methods--.html",1]];

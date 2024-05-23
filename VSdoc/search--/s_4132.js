@@ -1,0 +1,1 @@
+search_result['4132']=["topic_0000000000000BDC.html","fn_VenderPaymentLedgerDataTable.Clone Method","Clones the structure of the DataTable, including all DataTable schemas and constraints."];

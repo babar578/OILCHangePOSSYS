@@ -1,0 +1,1 @@
+search_result['2900']=["topic_0000000000000862.html","fn_ItemsStockInHandDataTable.AverageRateColumn Property",""];

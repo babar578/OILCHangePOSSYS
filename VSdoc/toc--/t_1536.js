@@ -1,0 +1,1 @@
+c['1536']=[['1537',"CartItemViewModel Constructor","topic_000000000000046A.html",0],['1538',"Properties","topic_0000000000000469_props--.html",1],['1551',"Methods","topic_0000000000000469_methods--.html",1]];

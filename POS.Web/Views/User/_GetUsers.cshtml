@@ -1,0 +1,51 @@
+﻿@using POS.Utilities.Services
+@{
+    Layout = null;
+}
+
+
+<div class="">
+    <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-height: 700px;">
+
+        <!-- Small boxes (Stat box) -->
+        <div class="row" id="myDIV">
+            @{
+                if (UserServices.GetAllUsers()?.Count > 0)
+                {
+                    foreach (var p in UserServices.GetAllUsers())
+                    {
+                        <div class="col-sm-12 btnActive">
+                            <a href="javascript:void(0)" onclick="GetUserRights(@p.Id);">
+                                <!-- small box -->
+                                <div class="small-box btn-info">
+                                    <div class="inner" style="text-align:center">
+                                        <h4>@p.UserName</h4>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ./col -->
+                    }
+                }
+            }
+        </div>
+        <!-- /.row -->
+    </div>
+</div>
+
+
+<script>
+
+    //// Add active class to the current button (highlight it)
+    //var header = document.getElementById("myDIV");
+    //var btns = header.getElementsByClassName("btnActive");
+    //for (var i = 0; i < btns.length; i++) {
+    //    btns[i].addEventListener("click", function () {
+    //        var current = document.getElementsByClassName("active");
+    //        if (current.length > 0) {
+    //            current[0].className = current[0].className.replace(" active", "");
+    //        }
+    //        this.className += " active";
+    //    });
+    //}
+</script>

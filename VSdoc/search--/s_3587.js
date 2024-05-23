@@ -1,0 +1,1 @@
+search_result['3587']=["topic_0000000000000A4C.html","Dock27PosWebPortalDataSet2342.Clone Method","Copies the structure of the DataSet, including all DataTable schemas, relations, and constraints. Does not copy any data."];

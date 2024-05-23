@@ -1,0 +1,153 @@
+﻿@using POS.Utilities.ReportsModel
+@*@model IEnumerable<InventoryBalanceViewModel>*@
+@{
+    Layout = null;
+
+    var model = Session["Balance"] as FilterInventoryViewModel;
+    //List<ItemStockViewModel> model = VendorServices.GetInventoryBalance();
+    var inventoryBalances = POS.Utilities.Services.ReportServices.GetInventoryBalanceReport(model.FromDate, model.ToDate, model.ItemId, model.UnitId);
+
+    int Counter = 1;
+}
+
+<script src="~/Scripts/Site.js"></script>
+<script>
+    $("#bootstrap-data-table-export").DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                },
+                title: '',
+                footer: true,
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos(lastCol) + '1';
+                    //Has to be done this way to avoid creation of unwanted namespace atributes.
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main', 'autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                }
+                //filename: function () {
+                //    return ' myfile ' + date;
+                //},
+            },
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                exportOptions: {
+                    columns: ':visible'
+                },
+                title: '',
+                footer: true
+            },
+            //'colvis'
+        ]
+    });
+
+    function createCellPos(n) {
+        var ordA = 'A'.charCodeAt(0);
+        var ordZ = 'Z'.charCodeAt(0);
+        var len = ordZ - ordA + 1;
+        var s = "";
+
+        while (n >= 0) {
+            s = String.fromCharCode(n % len + ordA) + s;
+            n = Math.floor(n / len) - 1;
+        }
+
+        return s;
+    }
+</script>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <!-- /.card-header -->
+            <div class="card-body table-responsive">
+                <table id="bootstrap-data-table-export" class="table table-sm table-hover table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Sr.#</th>
+                            <th>Category</th>
+                            <th>Item Name</th>
+                            <th>Unit</th>
+                            <th>Average Rate</th>
+                            <th>Opening Balance</th>
+                            <th>Vendor To Warehouse</th>
+                            <th>Issue To Department</th>
+                            <th>Return To Warehouse</th>
+                            <th>Return To Vendor</th>
+                            <th>Wastage</th>
+                            <th>Closing Inventory</th>
+                            <th>Closing Net Balance</th>
+                        </tr>
+                    </thead>
+                    @if (inventoryBalances?.Count() > 0)
+                    {
+                        <tbody>
+
+
+                            @foreach (var e in inventoryBalances)
+                            {
+                                <tr class="dgrow">
+                                    <td>@Counter</td>
+                                    <td>@e.CategoryName</td>
+                                    <td>@e.ItemName</td>
+                                    <td>@e.UnitName</td>
+                                    <td>@e.AverageRate</td>
+                                    <td>@e.OpeningBalanceQuantity</td>
+                                    <td>@e.VendorToWarehouseQuantity</td>
+                                    <td>@e.IssueToLocationQuantity</td>
+                                    <td>@e.ReturnToWarehouseQuantity</td>
+                                    <td>@e.ReturnToVendorQuantity</td>
+                                    <td>@e.WastageQuantity</td>
+                                    <td>@e.ClosingInventoryQuantity</td>
+                                    <td>@e.ClosingBalanceQuantity</td>
+                                </tr>
+                                Counter++;
+                            }
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3"></th>
+                                <th> Total</th>
+                                <th></th>
+                                <th>@inventoryBalances.Sum(p => p.OpeningBalanceQuantity)</th>
+                                <th>@inventoryBalances.Sum(p => p.VendorToWarehouseQuantity)</th>
+                                <th>@inventoryBalances.Sum(p => p.IssueToLocationQuantity)</th>
+                                <th>@inventoryBalances.Sum(p => p.ReturnToWarehouseQuantity)</th>
+                                <th>@inventoryBalances.Sum(p => p.ReturnToVendorQuantity)</th>
+                                <th>@inventoryBalances.Sum(p => p.WastageQuantity)</th>
+                                <th>@inventoryBalances.Sum(p => p.ClosingInventoryQuantity)</th>
+                                <th>@inventoryBalances.Sum(p => p.ClosingBalanceQuantity)</th>
+                            </tr>
+                        </tfoot>
+                    }
+
+                </table>
+            </div>
+
+
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
+
+
+
+
+
+
+

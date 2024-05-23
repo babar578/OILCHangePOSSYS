@@ -1,0 +1,1 @@
+c['2684']=[['2685',"WastageRepotDataTable Constructor","topic_00000000000009B5_overloads--.html",1],['2688',"Properties","topic_00000000000009B4_props--.html",1],['2698',"Methods","topic_00000000000009B4_methods--.html",1],['2714',"Events","topic_00000000000009B4_events--.html",1]];

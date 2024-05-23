@@ -1,0 +1,1 @@
+c['4021']=[['4022',"AddWastageRepotRow(int, string, string, double, double, double, DateTime) Method","topic_0000000000000F77.html",0],['4023',"AddWastageRepotRow(WastageRepotRow) Method","topic_0000000000000F76.html",0]];

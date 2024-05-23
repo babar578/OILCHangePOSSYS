@@ -1,0 +1,80 @@
+﻿@using POS.Utilities.ViewModel
+@model IEnumerable<VendorViewModel>
+@{
+    Layout = null;
+}
+
+<script src="~/Scripts/Site.js"></script>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">List of All Open Vendors</h3>
+                <div class="card-tools">
+                    @{
+
+                        <div class="btn-group float-left" role="group">
+                            <div class="">
+                                <a href="/Vendor/AddVendor" id="btn-add"
+                                   class="btn btn-primary waves-effect"
+                                   data-toggle="tooltip" data-placement="bottom" title="New Vendor"
+                                   data-caption="Add New Vendor">
+                                    <span class="fas fa-plus"></span> Add New Vendor
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive">
+                <table id="bootstrap-data-table-export" class="table table-hover table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            @*<th>Code</th>*@
+                            <th>Vendor Name</th>
+                            <th>Contact Person</th>
+                            <th>NTN</th>
+                            <th>Gst No</th>
+                            <th>CNIC</th>
+                            <th>Vendor Name</th>
+                            <th>Mobile</th>
+                            <th>Business Start Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var e in Model)
+                            {
+                                <tr class="dgrow" data-id="@e.Id">
+
+                                    @*<td>@e.Id</td>*@
+                                    <td>@e.VendorName</td>
+                                    <td>@e.ContactPerson</td>
+                                    <td>@e.NTN</td>
+                                    <td>@e.GstNo</td>
+                                    <td>@e.CNIC</td>
+                                    <td>@e.CityName</td>
+                                    <td>@e.Mobile</td>
+                                    <td>@e.BusinessStartDate.ToString("dd-MMM-yyyy")</td>
+                                    <td>
+                                        <a href="/Vendor/AddVendor/" class="btn btn-xs btn-warning btn-edit" data-toggle="tooltip" data-placement="bottom" title="Edit Vendor" data-caption="Update Vendor Detail"><span class="fas fa-edit"></span></a>
+                                        <a href="/Vendor/DeleteVendor/" class="btn btn-xs btn-danger btn-delete" data-toggle="tooltip" data-placement="bottom" title="Delete Vendor"><span class="fas fa-trash"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
+

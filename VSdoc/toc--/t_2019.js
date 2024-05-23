@@ -1,0 +1,1 @@
+c['2019']=[['2020',"ReturnToVendorHeadViewModel Constructor","topic_0000000000000612.html",0],['2021',"Properties","topic_0000000000000611_props--.html",1],['2043',"Methods","topic_0000000000000611_methods--.html",1]];

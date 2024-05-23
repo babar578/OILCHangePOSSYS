@@ -1,0 +1,1 @@
+search_result['1904']=["topic_0000000000000570.html","OpeningStockHeadViewModel.Remarks Property",""];

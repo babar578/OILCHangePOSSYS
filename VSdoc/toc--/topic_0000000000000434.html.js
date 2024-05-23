@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"SOLUTION-WIDE PROPERTIES Reference","topic_0000000000001149.html"],['1433',"POS.Utilities.Utilities Namespace","topic_000000000000040E.html"],['1469',"InvoicePrinter Class","topic_0000000000000430.html"],['1470',"Methods","topic_0000000000000430_methods--.html"],['1472',"DessertInoviceFormat Method","topic_0000000000000434.html"]];

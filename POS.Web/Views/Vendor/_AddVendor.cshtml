@@ -1,0 +1,126 @@
+﻿@using POS.Utilities.Services
+@using POS.Utilities.ViewModel
+@model VendorViewModel
+@{
+
+    Layout = null;
+    Model.Cities = VendorServices.GetAllCities();
+
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.VendorName, new { @class = "form-control", placeholder = "Vendor Name * ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.ContactPerson, new { @class = "form-control", placeholder = "Contact Person * ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Address * ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.DropDownListFor(m => m.CityId, new SelectList(Model.Cities, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "City", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "E.g user@domain.com  ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", placeholder = "Cell No * ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Telephone1, new { @class = "form-control", placeholder = "Telephone1 ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Telephone2, new { @class = "form-control", placeholder = "Telephone2 ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.GstNo, new { @class = "form-control", placeholder = "GST No * ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.CNIC, new { @class = "form-control", placeholder = "CNIC ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.NTN, new { @class = "form-control", placeholder = "NTN *", @required = "true" })
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="Vendor" class="btn btn-primary"><span class="fa fa-edit"></span> Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+
+}
+<script>
+
+    $("#Vendor").click(function () {
+
+        var id = $("#Id").val();
+        var vendorName = $("#VendorName").val();
+        var contactPerson = $("#ContactPerson").val();
+        var address = $("#Address").val();
+        var cityId = $("#CityId").val();
+        var email = $("#Email").val();
+        var mobile = $("#Mobile").val();
+        var telephone1 = $("#Telephone1").val();
+        var telephone2 = $("#Telephone2").val();
+        var gstNo = $("#GstNo").val();
+        var cnic = $("#CNIC").val();
+        var ntn = $("#NTN").val();
+
+        if (vendorName == "" || contactPerson == "" || address == "" || cityId == "" || Mobile == "" || gstNo == "" || ntn == "") {
+            alertify.error("Fill required fields.");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                Id: id,
+                VendorName: vendorName,
+                ContactPerson: contactPerson,
+                Address: address,
+                CityId: cityId,
+                Email: email,
+                Mobile: mobile,
+                Telephone1: telephone1,
+                Telephone2: telephone2,
+                GstNo: gstNo,
+                CNIC: cnic,
+                NTN: ntn,
+            };
+
+            SaveVendor(modelData);
+        }
+    });
+</script>
+
+
+

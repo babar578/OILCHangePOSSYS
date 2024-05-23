@@ -1,0 +1,1 @@
+c['4514']=[['4515',"IssueToDeptmentTableAdapter Constructor","topic_0000000000000B06.html",0],['4516',"Properties","topic_0000000000000B05_props--.html",1],['4520',"Methods","topic_0000000000000B05_methods--.html",1]];

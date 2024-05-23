@@ -1,0 +1,1 @@
+c['3595']=[['3596',"DepartmentId Property","topic_0000000000000D96.html",0],['3597',"ItemName Property","topic_0000000000000D97.html",0],['3598',"Name Property","topic_0000000000000D99.html",0],['3599',"TotalQunity Property","topic_0000000000000D9A.html",0],['3600',"TransactionDate Property","topic_0000000000000D98.html",0]];

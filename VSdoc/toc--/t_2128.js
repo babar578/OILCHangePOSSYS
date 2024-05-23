@@ -1,0 +1,1 @@
+c['2128']=[['2129',"Implicit Conversion (ShopStatus to ShopStatusViewModel) Operator","topic_0000000000000673.html",0],['2130',"Implicit Conversion (ShopStatusViewModel to ShopStatus) Operator","topic_0000000000000674.html",0]];

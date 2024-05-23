@@ -1,0 +1,123 @@
+﻿@using POS.Utilities.ReportsModel
+@{
+    Layout = null;
+
+    var model = Session["_VendorPayment"] as FilterVendorPayment;
+    var payments = POS.Utilities.Services.ReportServices.GetVendorPaymentReport(model.FromDate, model.ToDate, model.VendorId);
+
+    int Counter = 1;
+}
+
+<script src="~/Scripts/Site.js"></script>
+<script>
+    $("#bootstrap-data-table-export").DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                },
+                title: '',
+                footer: true,
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var lastCol = sheet.getElementsByTagName('col').length - 1;
+                    var colRange = createCellPos(lastCol) + '1';
+                    //Has to be done this way to avoid creation of unwanted namespace atributes.
+                    var afSerializer = new XMLSerializer();
+                    var xmlString = afSerializer.serializeToString(sheet);
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+                    var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main', 'autoFilter');
+                    var filterAttr = xmlDoc.createAttribute('ref');
+                    filterAttr.value = 'A1:' + colRange;
+                    xlsxFilter.setAttributeNode(filterAttr);
+                    sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+                }
+                //filename: function () {
+                //    return ' myfile ' + date;
+                //},
+            },
+            {
+                extend: 'pdfHtml5',
+                orientation: 'portrait',
+                pageSize: 'A4',
+                exportOptions: {
+                    columns: ':visible'
+                },
+                title: '',
+                footer: true
+            },
+            //'colvis'
+        ]
+    });
+
+    function createCellPos(n) {
+        var ordA = 'A'.charCodeAt(0);
+        var ordZ = 'Z'.charCodeAt(0);
+        var len = ordZ - ordA + 1;
+        var s = "";
+
+        while (n >= 0) {
+            s = String.fromCharCode(n % len + ordA) + s;
+            n = Math.floor(n / len) - 1;
+        }
+
+        return s;
+    }
+</script>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <!-- /.card-header -->
+            <div class="card-body table-responsive">
+                <table id="bootstrap-data-table-export" class="table table-sm table-hover table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Sr.#</th>
+                            <th>Vendor</th>
+                            <th>Transaction Date</th>
+                            <th>DocNo</th>
+                            <th>Type</th>
+                            <th>Payments</th>
+                        </tr>
+                    </thead>
+                    @if (payments?.Count() > 0)
+                    {
+                        <tbody>
+
+                            @foreach (var e in payments)
+                            {
+                                <tr class="dgrow">
+                                    <td>@Counter</td>
+                                    <td>@e.VendorName</td>
+                                    <td>@e.TransactionDate.ToString("ddd, dd-MMM-yyyy")</td>
+                                    <td>@e.DocNo</td>
+                                    <td>@e.PaymentTypeName</td>
+                                    <td>@Convert.ToDecimal(e.Payment).ToString("#,##0.00")</td>
+                                </tr>
+                                Counter++;
+                            }
+
+                        </tbody>
+
+                    }
+
+                </table>
+            </div>
+
+
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

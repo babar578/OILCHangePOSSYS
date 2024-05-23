@@ -1,0 +1,1 @@
+search_result['1616']=["topic_00000000000004A5.html","ClosingInventoryHeadViewModel.Implicit Conversion (ClosingInventoryHeadViewModel to ClosingInventoryHead) Operator",""];

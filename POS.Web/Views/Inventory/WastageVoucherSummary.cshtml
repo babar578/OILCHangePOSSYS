@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Wastage Items Voucher Summary";
+}
+
+<div id="WastageVoucher"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetWastageVoucherSummary();
+    });
+
+    function GetWastageVoucherSummary() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/GetWastageVoucherSummary/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#WastageVoucher").html(result);
+            stopLoader();
+        });
+    }
+</script>
+

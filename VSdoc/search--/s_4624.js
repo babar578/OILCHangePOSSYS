@@ -1,0 +1,1 @@
+search_result['4624']=["topic_0000000000000D40.html","WastageRepotDataTable.CreateInstance Method","Creates a new instance of DataTable."];

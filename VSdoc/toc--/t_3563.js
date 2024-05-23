@@ -1,0 +1,1 @@
+c['3563']=[['3564',"ReturnVenderTowareHouseSummaryDataTable(SerializationInfo, StreamingContext) Constructor","topic_0000000000000D7C.html",0],['3565',"ReturnVenderTowareHouseSummaryDataTable() Constructor","topic_0000000000000D7B.html",0]];

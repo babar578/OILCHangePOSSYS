@@ -1,0 +1,77 @@
+﻿@{
+
+    Layout = null;
+
+    int? tableId = null;
+
+    if (Session["CurrentTableId"] != null)
+    {
+        tableId = (int)Session["CurrentTableId"];
+
+    }
+
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => tableId)
+    <div class="form-group ">
+        <input type="number" id="DiscountPer" class="form-control" placeholder="0000" />
+    </div>
+
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="AddDiscountPer" data-dismiss="modal" class="btn btn-primary"><span class="fa fa-save"></span> Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+}
+
+<script>
+
+    $("#AddDiscountPer").click(function () {
+        debugger
+
+        var tableId = $("#tableId").val();
+        var discountPer = $("#DiscountPer").val();
+
+        var amount = $("#subTotalAmount").text();
+        var subTotalAmount = parseFloat(amount);
+        var discountPrice = discountPer;
+        //var discountPrice = (discountPer / 100) * subTotalAmount;
+
+
+        if (discountPer == "") {
+            alertify.error("Please Enter Valid Number.");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                DiscountPercentage: discountPer,
+                DiscountCharged: discountPrice,
+                TableId: tableId,
+            };
+            startLoader();
+            $.ajax({
+                url: '@Url.Action("CreateTicket", "Home")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Saved successfully");
+                    RefreshCart();
+                }
+                stopLoader();
+            });
+        }
+    });
+</script>
+

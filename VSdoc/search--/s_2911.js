@@ -1,0 +1,1 @@
+search_result['2911']=["topic_000000000000086B.html","fn_ItemsStockInHandDataTable.Clone Method","Clones the structure of the DataTable, including all DataTable schemas and constraints."];

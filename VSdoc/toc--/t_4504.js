@@ -1,0 +1,1 @@
+c['4504']=[['4505',"fn_InventoryBalTableAdapter Constructor","topic_0000000000000AAA.html",0],['4506',"Properties","topic_0000000000000AA9_props--.html",1],['4510',"Methods","topic_0000000000000AA9_methods--.html",1]];

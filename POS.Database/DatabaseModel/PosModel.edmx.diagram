@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="82ba22afd1184dcd9e60c83bad5adbfc" Name="Diagram1">
+        <EntityTypeShape EntityType="PosModel.Category" Width="1.5" PointX="13.75" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.City" Width="1.5" PointX="0.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.ClosingInventoryDetail" Width="1.5" PointX="26" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.ClosingInventoryHead" Width="1.5" PointX="23.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Company" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Customer" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Department" Width="1.5" PointX="10.75" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Designation" Width="1.5" PointX="17.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Expense" Width="1.5" PointX="2.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.ExtraSale" Width="1.5" PointX="4.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Floor" Width="1.5" PointX="13.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.FloorTable" Width="1.5" PointX="16" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.IssueToLocationDetail" Width="1.5" PointX="15.25" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.IssueToLocationHead" Width="1.5" PointX="13" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.ItemGroup" Width="1.5" PointX="13.75" PointY="40" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Item" Width="1.5" PointX="16" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.JobCardDetail" Width="1.5" PointX="7.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.JobCardHead" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Location" Width="1.5" PointX="10.75" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.MainMenu" Width="1.5" PointX="20" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.OpeningDetail" Width="1.5" PointX="25" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.OpeningHead" Width="1.5" PointX="22.75" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.OrderFeedback" Width="1.5" PointX="15.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.OrderFeedbackStatus" Width="1.5" PointX="7.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.OrderItem" Width="1.5" PointX="15.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Order" Width="1.5" PointX="13" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.OrderTableHistory" Width="1.5" PointX="18.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.OrderType" Width="1.5" PointX="10.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.PaymentType" Width="1.5" PointX="10.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.PrintInfo" Width="1.5" PointX="13" PointY="33.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Process" Width="1.5" PointX="7.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Purchase" Width="1.5" PointX="10.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.QuotationDetail" Width="1.5" PointX="0.75" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.QuotationHead" Width="1.5" PointX="5.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.ReturnToVendorDetail" Width="1.5" PointX="25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.ReturnToVendorHead" Width="1.5" PointX="22.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.ReturnToWarehouseDetail" Width="1.5" PointX="21" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.ReturnToWarehouseHead" Width="1.5" PointX="18.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Sale" Width="1.5" PointX="7.75" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.ShopStatus" Width="1.5" PointX="2.75" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.StaffFoodDetail" Width="1.5" PointX="21" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.StaffFoodHead" Width="1.5" PointX="18.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.SubCategory" Width="1.5" PointX="13.75" PointY="42.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Unit" Width="1.5" PointX="13.75" PointY="45.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.UserRight" Width="1.5" PointX="22.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.User" Width="1.5" PointX="20" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.UserType" Width="1.5" PointX="17.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.VehicleJobCard" Width="1.5" PointX="7.75" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.VendorPayment" Width="1.5" PointX="8.25" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.VendorPaymentType" Width="1.5" PointX="6" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.Vendor" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.VendorToWarehouseDetail" Width="1.5" PointX="0.75" PointY="25.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.VendorToWarehouseHead" Width="1.5" PointX="5.25" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.WastageDetail" Width="1.5" PointX="15.25" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.WastageHead" Width="1.5" PointX="13" PointY="17.75" IsExpanded="true" />
+        <AssociationConnector Association="PosModel.FK_Items_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_SubCategories_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_Vendors_Cities" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_ClosingInventoryDetail_ClosingInventoryHead" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_IssueToLocationHead_Departments" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_Items_Departments" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_PrintInfo_Departments" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_WastageHead_Departments" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_Users_Designations" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_FloorTables_Floors" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_OrderTableHistories_FloorTables" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_IssueToLocationDetail_IssueToLocationHead" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_IssueToLocationHead_Locations" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_Items_ItemGroups" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_Items_SubCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_Items_Units" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_PurchaseJobCardHead_Vendors" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_WastageHead_Locations" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_UserRights_MainMenu" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_OpeningDetail_OpeningHead" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_OrderFeedbacks_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_OrderItems_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_Orders_OrderTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_Orders_PaymentTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_OrderTableHistories_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_QuotationHead_Vendors" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_QuotationsHead_Vendors" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_ReturnToVendorDetail_ReturnToVendorHead" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_ReturnToWarehouseDetail_ReturnToWarehouseHead" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_StaffFoodDetail_StaffFoodHead" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_UserRights_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_Users_UserTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_VendorPayments_VendorPaymentTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_VendorPayments_Vendors" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_PurchaseFromVendorHead_Vendors" ManuallyRouted="false" />
+        <AssociationConnector Association="PosModel.FK_WastageDetail_WastageHead" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

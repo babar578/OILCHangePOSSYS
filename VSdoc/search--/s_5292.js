@@ -1,0 +1,1 @@
+search_result['5292']=["topic_0000000000000F10.html","fn_InventoryBalDataTable.CreateInstance Method","Creates a new instance of DataTable."];

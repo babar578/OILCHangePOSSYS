@@ -1,0 +1,1 @@
+search_result['3395']=["topic_00000000000009C7.html","WastageRepotDataTable.Clone Method","Clones the structure of the DataTable, including all DataTable schemas and constraints."];

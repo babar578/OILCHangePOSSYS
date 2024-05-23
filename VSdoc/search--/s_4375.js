@@ -1,0 +1,1 @@
+search_result['4375']=["topic_0000000000000C8B.html","fn_InventoryBalDataTable.GetRowType Method","Gets the row type."];

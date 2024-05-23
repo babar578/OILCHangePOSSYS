@@ -1,0 +1,1 @@
+c['1605']=[['1606',"Implicit Conversion (ClosingInventoryHead to ClosingInventoryHeadViewModel) Operator","topic_00000000000004A4.html",0],['1607',"Implicit Conversion (ClosingInventoryHeadViewModel to ClosingInventoryHead) Operator","topic_00000000000004A5.html",0]];

@@ -1,0 +1,1 @@
+search_result['1584']=["topic_000000000000048D_events--.html","ClosingInventoryDetailViewModel Events",""];

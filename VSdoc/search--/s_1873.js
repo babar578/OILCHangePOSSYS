@@ -1,0 +1,1 @@
+search_result['1873']=["topic_0000000000000559_events--.html","OpeningStockDetailViewModel Events",""];

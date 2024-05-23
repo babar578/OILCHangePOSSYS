@@ -1,0 +1,264 @@
+﻿@using POS.Utilities.ViewModel
+@model VehicaljobCardViewModel
+@{
+
+    <style>
+        .slidecontainer {
+            width: 100%;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 15px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+            .slider:hover {
+                opacity: 1;
+            }
+
+            .slider::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                background: #04AA6D;
+                cursor: pointer;
+            }
+
+            .slider::-moz-range-thumb {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                background: #04AA6D;
+                cursor: pointer;
+            }
+    </style>
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">job No <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.JobNo, new { @class = "form-control", placeholder = "Enter Job No ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">Job Date <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.JobData, new { @type = "date", @class = "form-control", placeholder = "Transaction Date * ", @required = "true", onkeydown = "return false" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">Car Registration No <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.CarRegistrationNo, new { @class = "form-control", placeholder = "Enter Car Registration # ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">Model Year <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.ModelYear, new { @class = "form-control", placeholder = "Enter Model Year # ", @required = "true" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">Milleage <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.Milleage, new { @class = "form-control", placeholder = "Enter Milleage # ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-3">
+
+            <div class="form-group ">
+                <label class="col-form-label">Data Time In <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.DataTimeIn, new { @type = "date", @class = "form-control", placeholder = "Data TimeIn  * ", @required = "true", onkeydown = "return false" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">Car Model <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.CarModel, new { @class = "form-control", placeholder = "Enter Car Model", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">VIN no <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.VINno, new { @class = "form-control", placeholder = "Enter Engine No ", @required = "true" })
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label"> Vehical # <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.CarMake, new { @class = "form-control", placeholder = "Enter Car Make", @required = "true" })
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">Customer Name <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control", placeholder = "Customer Name", @required = "true" })
+            </div>
+
+        </div>
+        <div class="col-md-3">
+
+            <div class="form-group ">
+                <label class="col-form-label">Customer Contact# <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.CustomerContactNo, new { @class = "form-control", placeholder = "Enter Customer Contact# ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">Engine No <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.EngineNo, new { @class = "form-control", placeholder = "Enter Engine No ", @required = "true" })
+            </div>
+        </div>
+
+    </div>
+    <label class="col-form-label">fuel status<b class="text-danger">*</b></label>
+    <div class="slidecontainer">
+        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        <p>Value: <span id="demo"></span></p>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label class="col-form-label">Report Defect<b class="text-danger">*</b></label>
+            @Html.TextAreaFor(model => model.Reporteddefect , new { @class = "form-control form-control-sm", @rows = 5, @id = "Reporteddefect", @required = "true", @row = 5, onkeypress = "this.style.width = ((this.value.length + 1) * 8) + 'px';" })
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Complete Action<b class="text-danger">*</b></label>
+            @Html.TextAreaFor(model => model.CompleteActione, new { @class = "form-control form-control-sm", @rows = 5, @id = "CompleteActione", @required = "true", @row = 5, onkeypress = "this.style.width = ((this.value.length + 1) * 8) + 'px';" })
+
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Vehicle Body Report<b class="text-danger">*</b></label>
+            @Html.TextAreaFor(model => model.VehicleBodyReportComents, new { @class = "form-control form-control-sm", @rows = 5, @id = "VehicleBodyReportComents", @required = "true", @row = 5, onkeypress = "this.style.width = ((this.value.length + 1) * 8) + 'px';" })
+
+            </div>
+    </div>
+   
+    
+
+
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="AddUnits" class="btn btn-primary"><span class="fa fa-save"></span> Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = slider.value;
+
+    slider.oninput = function () {
+        output.innerHTML = this.value;
+    }
+
+
+    $("#AddUnits").click(function () {
+        debugger
+        var id = $("#Id").val();
+        var jobNo = $("#JobNo").val();
+        var jobData = $("#JobData").val();
+        var carRegistrationNo = $("#CarRegistrationNo").val();
+        var modelYear = $("#ModelYear").val();
+        var milleage = $("#Milleage").val();
+        var dataTimeIn = $("#DataTimeIn").val();
+        var carModel = $("#CarModel").val();
+        var customerID = $("#CustomerID").val();
+        var customerContactNo = $("#CustomerContactNo").val();
+        var engineNo = $("#EngineNo").val();
+        var reporteddefect = $("#Reporteddefect").val();
+        var completeActione = $("#CompleteActione").val();
+        var patrol = $("#myRange").val();
+        var carMake = $("#CarMake").val();
+        var vINno = $("#VINno").val();
+        var vehicleBodyReportComents = $("#VehicleBodyReportComents").val();
+        var customerName = $("#CustomerName").val();
+
+        if (jobNo == "") {
+            alertify.error("Fill required fields.");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                Id:id,
+                JobNo: jobNo,
+                JobData: jobData,
+                CarRegistrationNo: carRegistrationNo,
+                ModelYear: modelYear,
+                Milleage: milleage,
+                DataTimeIn: dataTimeIn,
+                CarModel: carModel,
+                CustomerID: customerID,
+                CustomerContactNo: customerContactNo,
+                EngineNo: engineNo,
+                Reporteddefect: reporteddefect,
+                CompleteActione: completeActione,
+                Patrol: patrol,
+                CarMake: carMake,
+                VINno: vINno,
+                VehicleBodyReportComents: vehicleBodyReportComents,
+                CustomerName: customerName,
+            };
+            startLoader();
+            $.ajax({
+                url: '@Url.Action("AddUnit", "JobCard")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res.Status == true) {
+                    alertify.success(res.Message);
+                    callReport(res.PrintId);
+                    location.reload();
+                }
+                stopLoader();
+            });
+        }
+    });
+
+
+    function callReport(PrintId) {
+        debugger
+        var fromDate = null;
+        var toDate = null;
+        var CategoriesID = null;
+        var PrintId = PrintId
+
+        window.open("/Reports/JobCardVocherReport.aspx?fromDate=" + fromDate + "&toDate=" + toDate + "&PrintId=" + PrintId + "&CategoriesID=" + CategoriesID, "_blank")
+        //alertify.alert(res.Status);
+        //    window.open("/Reports/VendortowhereHouseVocherReport.aspx?PrintId=" + PrintId, "_blank")
+    }
+
+
+</script>

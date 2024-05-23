@@ -1,0 +1,1 @@
+search_result['1875']=["topic_0000000000000559_props--.html","OpeningStockDetailViewModel Properties",""];

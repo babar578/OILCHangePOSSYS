@@ -1,0 +1,1 @@
+c['2670']=[['2671',"Relations Property","topic_0000000000000956.html",0],['2672',"SchemaSerializationMode Property","topic_0000000000000954.html",0],['2673',"Tables Property","topic_0000000000000955.html",0],['2674',"VenderToWarhouse Property","topic_0000000000000953.html",0]];

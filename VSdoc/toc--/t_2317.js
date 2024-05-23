@@ -1,0 +1,1 @@
+c['2317']=[['2318',"Implicit Conversion (Vendor to VendorViewModel) Operator","topic_000000000000071A.html",0],['2319',"Implicit Conversion (VendorViewModel to Vendor) Operator","topic_000000000000071B.html",0]];

@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "InventoryBalance";
+}
+
+
+<div id="InventoryBalance"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetInventoryBalance();
+    });
+
+    function GetInventoryBalance() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Report/GetInventoryBalance/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#InventoryBalance").html(result);
+            stopLoader();
+        });
+    }
+</script>
+
+
+
+
+

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Customer";
+}
+
+
+
+<div id="Vendors"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetAllVendors();
+    });
+    function GetAllVendors() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Vendor/GetAllCustomers/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#Vendors").html(result);
+            stopLoader();
+        });
+    }
+
+    function SaveCustomer(modelData) {
+        debugger
+        startLoader();
+            $.ajax({
+                url: '@Url.Action("AddCustomer", "Vendor")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Save successfully");
+                    GetAllVendors();
+                    $("#customModal").modal('hide');
+                }
+                stopLoader();
+            });
+    }
+
+
+</script>
+

@@ -1,0 +1,122 @@
+﻿@using POS.Utilities.ViewModel
+@model CompanyViewModel
+@{
+
+    Layout = null;
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+    <div class="form-group ">
+        <label class="col-form-label">Company Name <b class="text-danger">*</b></label>
+        @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", placeholder = "Enter Company Name ", @required = "true" })
+    </div>
+    <div class="form-group ">
+        <label class="col-form-label">Company Name Urdu <b class="text-danger">*</b></label>
+        @Html.TextBoxFor(m => m.CompanyNameUrdu, new { @class = "form-control", placeholder = "Enter Company Name Urdu ", @required = "true" })
+    </div>
+    <div class="form-group ">
+        <label class="col-form-label">Phone Number 1 <b class="text-danger">*</b></label>
+        @Html.TextBoxFor(m => m.PhoneNumber1, new { @class = "form-control", placeholder = "Enter PhoneNumber1 ", @required = "true" })
+    </div>
+    <div class="form-group ">
+        <label class="col-form-label">Phone Number 2 <b class="text-danger">*</b></label>
+        @Html.TextBoxFor(m => m.PhoneNumber2, new { @class = "form-control", placeholder = "Enter Phone Number 2 ", @required = "true" })
+    </div>
+    <div class="form-group ">
+        <label class="col-form-label">Phone Number 3 <b class="text-danger">*</b></label>
+        @Html.TextBoxFor(m => m.PhoneNumber3, new { @class = "form-control", placeholder = "Enter Phone Number 3 ", @required = "true" })
+    <div class="form-group ">
+        <label class="col-form-label">NTN <b class="text-danger">*</b></label>
+        @Html.TextBoxFor(m => m.NTN, new { @class = "form-control", placeholder = "Enter NTN ", @required = "true" })
+    <div class="form-group ">
+        <label class="col-form-label">LOGO <b class="text-danger">*</b></label>
+        @Html.TextBoxFor(m => m.LOGO, new { @class = "form-control", placeholder = "LOGO  ", @required = "true" })
+        <div class="form-group ">
+            <label class="col-form-label">Email <b class="text-danger">*</b></label>
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter Email ", @required = "true" })
+        </div>
+        <div class="form-group ">
+            <label class="col-form-label">Address <b class="text-danger">*</b></label>
+            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Enter Address ", @required = "true" })
+        </div>
+        <div class="form-group ">
+            <label class="col-form-label">CNIC <b class="text-danger">*</b></label>
+            @Html.TextBoxFor(m => m.CNIC, new { @class = "form-control", placeholder = "Enter CNIC ", @required = "true" })
+     
+        
+
+        </div>
+
+    </div>
+    </div>
+
+    </div>
+
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="AddUnit" class="btn btn-primary"><span class="fa fa-save"></span> Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+}
+<script>
+
+    $("#AddUnit").click(function () {
+
+        var id = $("#Id").val();
+        var companyName = $("#CompanyName").val();
+        var companyNameUrdu = $("#CompanyNameUrdu").val();
+        var phoneNumber1 = $("#PhoneNumber1").val();
+        var phoneNumber2 = $("#PhoneNumber2").val();
+        var phoneNumber3 = $("#PhoneNumber3").val();
+        var nTN = $("#NTN").val();
+        var lOGO = $("#LOGO").val();
+        var email = $("#Email").val();
+        var address = $("#Address").val();
+        var cNIC = $("#CNIC").val();
+        
+
+        if (companyName == "") {
+            alertify.error("Fill required fields.");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                Id:id,
+                CompanyName: companyName,
+                CompanyNameUrdu: companyNameUrdu,
+                PhoneNumber1: phoneNumber1,
+                PhoneNumber2: phoneNumber2,
+                PhoneNumber3: phoneNumber3,
+                NTN: nTN,
+                LOGO: lOGO,
+                Email: email,
+                Address: address,
+                CNIC: cNIC,
+            
+            };
+            startLoader();
+            $.ajax({
+                url: '@Url.Action("AddCompany", "Menu")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Saved successfully");
+                    location.reload();
+                }
+                stopLoader();
+            });
+        }
+    });
+</script>

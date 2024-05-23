@@ -1,0 +1,1 @@
+search_result['5857']=["topic_000000000000108A.html","CompanyInfoDataTable.GetRowType Method","Gets the row type."];

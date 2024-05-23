@@ -1,0 +1,1 @@
+c['4007']=[['4008',"WastageRepotDataTable(SerializationInfo, StreamingContext) Constructor","topic_0000000000000F68.html",0],['4009',"WastageRepotDataTable() Constructor","topic_0000000000000F67.html",0]];

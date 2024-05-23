@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "VendorPayment";
+}
+
+
+<style>
+    .content-header {
+        display: none !important;
+    }
+</style>
+
+
+<div id="VendorPayment"></div>
+<div id="VendorPaymentLedger"></div>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        VendorPayment();
+    });
+
+
+
+
+    function VendorPayment() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Vendor/PartialVendorPayment/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#VendorPayment").html(result);
+            stopLoader();
+        });
+    }
+
+
+    function Payment() {
+        var transactionDate = $("#TransactionDate").val();
+        var docNo = $("#DocNo").val();
+        var vendorId = $("#VendorId").val();
+        var paymentTypeId = $("#PaymentTypeId").val();
+        var payment = $("#Payment").val();
+        var remarks = $("#Remarks").val();
+
+        if (transactionDate == "" || vendorId == "" || paymentTypeId == "" || payment == "") {
+            return alertify.error("Please Fill The Required Fields");
+        }
+        else {
+            var modelData = {
+                TransactionDate: transactionDate,
+                DocNo: docNo,
+                VendorId: vendorId,
+                PaymentTypeId: paymentTypeId,
+                Payment: payment,
+                Remarks: remarks,
+
+            };
+
+            SaveVendorPayment(modelData);
+
+        }
+
+    }
+
+    function SaveVendorPayment(modelData) {
+        startLoader();
+            $.ajax({
+                url: '@Url.Action("AddVendorPayment", "Vendor")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Save successfully");
+                    window.location.reload();
+                }
+                stopLoader();
+            });
+    }
+
+</script>
+

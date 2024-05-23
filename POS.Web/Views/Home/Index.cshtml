@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+<div id="dashboard"></div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetDashboard();
+    });
+    function GetDashboard() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Home/GetUserDashboard/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#dashboard").html(result);
+            stopLoader();
+        });
+    }
+
+</script>
+

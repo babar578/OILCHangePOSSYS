@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "All Wastage Items";
+}
+
+<div id="WastageItems"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetAllWastageItems();
+    });
+
+    function GetAllWastageItems() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/GetAllWastageItems/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#WastageItems").html(result);
+            stopLoader();
+        });
+    }
+</script>
+
+
+

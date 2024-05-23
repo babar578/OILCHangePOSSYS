@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "Issue To Location";
+}
+
+<style>
+    .content-header {
+        display: none !important;
+    }
+</style>
+
+
+<div id="IssueItemHead"></div>
+<div id="IssueItemDetail"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        IssueItemHead();
+        IssueItemDetail();
+    });
+    function IssueItemHead() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/IssueItemHead/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#IssueItemHead").html(result);
+            stopLoader();
+        });
+    }
+
+    function IssueItemDetail() {
+        debugger
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/IssueItemDetail/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#IssueItemDetail").html(result);
+            stopLoader();
+        });
+    }
+
+    function CalculateQty(itemId) {
+        debugger
+     
+
+
+
+        debugger
+        var phyQuantity = parseFloat($(`#PhyQuantity_${itemId}`).val());
+        var issQuantity = parseFloat($(`#IssQuantity_${itemId}`).val());
+
+        if (issQuantity > phyQuantity) {
+            RemoveIssueItem(itemId);
+            return alertify.error("Issuance Quantity Always Less Than Physical Quantity");
+            var issQuantity = 0;
+            RemoveIssueItem(itemId);
+        }
+        else {
+            var remaining = parseFloat(phyQuantity - issQuantity).toFixed(2);
+            $(`#RemQuantity_${itemId}`).html(remaining);
+            debugger;
+            if (itemId == "" || issQuantity == "") {
+                return alertify.error("values is empty");
+            }
+            else {
+
+                var modelData = {
+                    ItemId: itemId,
+                    Quantity: issQuantity,
+                }
+                debugger
+                startLoader();
+                $.ajax({
+                    url: '@Url.Action("UpdateIssueItem", "Inventory")',
+                    contentType: 'application/json; charset=utf-8',
+                    type: "POST",
+                    data: JSON.stringify(modelData),
+                    datatype: "Json",
+                }).done(function (res) {
+                    /*      IssueItemDetail();*/
+                    stopLoader();
+                });
+
+            }
+        }
+    }
+
+    function IssueItems() {
+        debugger
+        var IssueDate = $("#IssuanceDate").val();
+        var docNo = $("#DocNo").val();
+        var locationId = $("#LocationId").val();
+        var departmentId = $("#DepartmentId").val();
+        var remarks = $("#Remarks").val();
+
+        var itemData = [];
+
+        $("#tblSale tr").each(function () {
+            debugger
+            $this = $(this);
+            var itemId = $this.find("input.itemId").val();
+            var itemName = $this.find("span.itemName").text();
+            var quantity = $this.find("input.itemQuantity").val();
+            var itemRemarks = $this.find("input.itemRemarks").val();
+
+            if (itemId && quantity) {
+                var itemRow = {
+                    ItemId: itemId,
+                    ItemName: itemName,
+                    Quantity: quantity,
+                    Remarks: itemRemarks,
+                }
+                itemData.push(itemRow);
+            }
+        });
+
+        if (IssueDate == "" || locationId == "" || departmentId == "" || itemData.length == 0) {
+            return alertify.error("Please Fill The Required Fields");
+        }
+        else {
+            var modelData = {
+                IssuanceDate: IssueDate,
+                DocNo: docNo,
+                LocationId: locationId,
+                DepartmentId: departmentId,
+                Remarks: remarks,
+                IssueToLocationDetails: itemData,
+            };
+
+            SaveIssueToLocation(modelData);
+        }
+
+
+    }
+
+    function SaveIssueToLocation(modelData) {
+
+        console.log(modelData);
+        alertify.confirm("Are you sure you want to save Voucher", function (e, str) {
+            if (e) {
+        debugger
+         startLoader();
+            $.ajax({
+                url: '@Url.Action("AddIssueToLocation", "Inventory")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                debugger
+                if (res.Status == false) {
+                    debugger
+                    alertify.error("Something went wrong");
+                }
+                else if (res.Status == true) {
+                    debugger
+                    callReport(res.PrintId);
+                    alertify.success("Issue To Location Saved Successfully");
+                    debugger
+                    window.location.reload();
+                    window.location.href = "/Inventory/AllIssueItems";
+
+                }
+                stopLoader();
+            });
+            }
+            else
+            {
+                /* location.reload()*/
+            }
+        }, "Default Value");
+    }
+    function callReport(PrintId) {
+        debugger
+        var fromDate = null;
+        var toDate = null;
+        var CategoriesID = null;
+        var PrintId = PrintId
+
+        window.open("/Reports/IssueToDeptToWhareHouseVocherReport.aspx?fromDate=" + fromDate + "&toDate=" + toDate + "&PrintId=" + PrintId + "&CategoriesID=" + CategoriesID, "_blank")
+        //alertify.alert(res.Status);
+        //    window.open("/Reports/VendortowhereHouseVocherReport.aspx?PrintId=" + PrintId, "_blank")
+    }
+    function RemoveIssueItem(itemId) {
+        debugger
+         startLoader();
+            $.ajax({
+                url: '@Url.Action("RemoveIssueItem", "Inventory")',
+                type: "POST",
+                data: { ItemId: itemId},
+            }).done(function (res) {
+                IssueItemDetail();
+                stopLoader();
+            });
+    }
+</script>
+

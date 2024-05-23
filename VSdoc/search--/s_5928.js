@@ -1,0 +1,1 @@
+search_result['5928']=["topic_00000000000010C0.html","Invoice.GetSchemaSerializable Method","Returns a serializable XmlSchema instance."];

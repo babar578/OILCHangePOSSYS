@@ -1,0 +1,1 @@
+search_result['3240']=["topic_0000000000000957.html","Dock27PosWebPortalDataSet12.InitializeDerivedDataSet Method","Deserialize all of the tables data of the DataSet from the binary or XML stream."];

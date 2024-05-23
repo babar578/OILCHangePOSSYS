@@ -1,0 +1,1 @@
+c['906']=[['907',"InvoiceDataTable(SerializationInfo, StreamingContext) Constructor","topic_00000000000010C5.html",0],['908',"InvoiceDataTable() Constructor","topic_00000000000010C4.html",0]];

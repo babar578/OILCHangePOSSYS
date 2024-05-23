@@ -1,0 +1,1 @@
+search_result['432']=["topic_0000000000000138.html","OpeningHead.TotalNetAmount Property",""];

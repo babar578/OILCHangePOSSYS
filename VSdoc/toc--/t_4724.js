@@ -1,0 +1,1 @@
+c['4724']=[['4725',"ReturnVenderSummaryTableAdapter Constructor","topic_0000000000000E3E.html",0],['4726',"Properties","topic_0000000000000E3D_props--.html",1],['4730',"Methods","topic_0000000000000E3D_methods--.html",1]];

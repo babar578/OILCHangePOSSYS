@@ -1,0 +1,70 @@
+﻿@using POS.Utilities.ViewModel
+@model IEnumerable<ProcessViewModel>
+@{
+    Layout = null;
+}
+
+<script src="~/Scripts/Site.js"></script>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">List of All Process</h3>
+                <div class="card-tools">
+                    @{
+
+                        <div class="btn-group float-left" role="group">
+                            <div class="">
+                                <a href="/Fmo/AddPurchase" id="btn-add"
+                                   class="btn btn-primary waves-effect"
+                                   data-toggle="tooltip" data-placement="bottom" title="New Process"
+                                   data-caption="Add New Processe">
+                                    <span class="fas fa-plus"></span> Add New Process
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive">
+                <table id="bootstrap-data-table-export" class="table table-hover table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            @*<th>Code</th>*@
+                            <th>Payment</th>
+                            <th>TransactionDAte</th>
+
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var e in Model)
+                            {
+                                <tr class="dgrow" data-id="@e.Id">
+
+                                    @*<td>@e.Id</td>*@
+                                    <td>@e.Payment</td>
+                                    <td>@e.TransationDate</td>
+                                    <td>
+                                        <a href="/Fmo/Addprocess/" class="btn btn-xs btn-warning btn-edit" data-toggle="tooltip" data-placement="bottom" title="Edit Vendor" data-caption="Update Vendor Detail"><span class="fas fa-edit"></span></a>
+                                        <a href="/Fmo/Deleteprocess/" class="btn btn-xs btn-danger btn-delete" data-toggle="tooltip" data-placement="bottom" title="Delete Vendor"><span class="fas fa-trash"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
+
+

@@ -1,0 +1,1 @@
+c['2265']=[['2266',"VendorToWarehouseHeadViewModel Constructor","topic_00000000000006EA.html",0],['2267',"Properties","topic_00000000000006E9_props--.html",1],['2292',"Methods","topic_00000000000006E9_methods--.html",1]];

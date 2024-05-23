@@ -1,0 +1,1 @@
+c['1470']=[['1471',"BarInoviceFormat Method","topic_0000000000000433.html",0],['1472',"DessertInoviceFormat Method","topic_0000000000000434.html",0],['1473',"KitchenInoviceFormat Method","topic_0000000000000432.html",0],['1474',"PrintToSmallPrinter Method","topic_0000000000000431.html",0]];

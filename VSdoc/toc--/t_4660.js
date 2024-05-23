@@ -1,0 +1,1 @@
+c['4660']=[['4661',"IssueToDeptmentTableAdapter Class","topic_0000000000000A32.html",1],['4670',"TableAdapterManager Class","topic_0000000000000A39.html",1]];

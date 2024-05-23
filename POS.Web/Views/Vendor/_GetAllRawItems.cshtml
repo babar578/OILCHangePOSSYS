@@ -1,0 +1,85 @@
+﻿@using POS.Utilities.ViewModel
+@model IEnumerable<ItemViewModel>
+@{
+    Layout = null;
+}
+
+<script src="~/Scripts/Site.js"></script>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">List of Available Raw Items</h3>
+
+                <div class="card-tools">
+                    @{
+                        <div class="btn-group float-left" role="group">
+                            <div class="">
+                                <a href="/Vendor/RawItem" id="btn-add"
+                                   class="btn btn-primary waves-effect"
+                                   data-toggle="tooltip" data-placement="bottom" title="New Raw Item"
+                                   data-caption="Add Raw New Item">
+                                    <span class="fas fa-plus"></span> Add Raw New Item
+                                </a>
+                            </div>
+
+                        </div>
+                    }
+
+
+
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive">
+                <table id="bootstrap-data-table-export" class="table table-hover table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Group</th>
+                            <th>Category</th>
+                            <th>Name</th>
+                            <th>Unit</th>
+                            <th>Department</th>
+                            <th>Price</th>
+                            <th>Creation Date</th>
+                            @*<th>Action</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var e in Model)
+                            {
+                                <tr class="dgrow" data-id="@e.Id">
+                                    <td>@e.ItemGroupName</td>
+                                    <td>@e.CategoryName</td>
+                                    <td>@e.Name</td>
+                                    <td>@e.UnitName</td>
+                                    <td>@e.DepartmentName</td>
+                                    <td>@e.Price</td>
+                                    @*<td>@e.Tax</td>*@
+                                    @*<td>
+                                        @{
+                                            DateTime date = (DateTime)e.CreationDate;
+                                            @date.ToString("dd-MMM-yyyy")
+                                        }
+                                    </td>*@
+                                    <td>
+                                        <a href="/Vendor/RawItem/" class="btn btn-xs btn-warning btn-edit" data-toggle="tooltip" data-placement="bottom" title="Edit Item" data-caption="Update @e.Name Raw Item Detail"><span class="fas fa-edit"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card-body -->
+
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
+

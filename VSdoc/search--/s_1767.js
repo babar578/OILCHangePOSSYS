@@ -1,0 +1,1 @@
+search_result['1767']=["topic_000000000000050A.html","IssueToLocationHeadViewModel.Implicit Conversion (IssueToLocationHead to IssueToLocationHeadViewModel) Operator",""];

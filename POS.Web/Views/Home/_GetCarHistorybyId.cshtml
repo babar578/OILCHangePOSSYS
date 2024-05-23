@@ -1,0 +1,123 @@
+﻿@model IEnumerable<POS.Utilities.ViewModel.GetHistoryCarVoucherViewModel>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reading)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mobile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GstCharged)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DiscountCharged)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceCharged)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GrossAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalNetAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReceiptTotalCash)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReceiptTotalCredit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CarNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reading)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Mobile)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GstCharged)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DiscountCharged)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceCharged)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GrossAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalNetAmount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReceiptTotalCash)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReceiptTotalCredit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreationDate)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+        </td>
+    </tr>
+}
+
+</table>

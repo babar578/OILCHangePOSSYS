@@ -1,0 +1,1 @@
+c['1028']=[['1029',"Invoice(SerializationInfo, StreamingContext) Constructor","topic_00000000000010B6.html",0],['1030',"Invoice() Constructor","topic_00000000000010B5.html",0]];

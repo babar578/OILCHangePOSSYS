@@ -1,0 +1,1 @@
+search_result['1893']=["topic_000000000000056A.html","OpeningStockDetailViewModel.Implicit Conversion (OpeningStockDetailViewModel to OpeningDetail) Operator",""];

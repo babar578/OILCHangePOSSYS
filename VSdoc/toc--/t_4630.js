@@ -1,0 +1,1 @@
+c['4630']=[['4631',"VenderPaymentLedgerSummaryTableAdapter Constructor","topic_0000000000000C4E.html",0],['4632',"Properties","topic_0000000000000C4D_props--.html",1],['4636',"Methods","topic_0000000000000C4D_methods--.html",1]];

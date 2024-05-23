@@ -1,0 +1,1 @@
+c['3562']=[['3563',"ReturnVenderTowareHouseSummaryDataTable Constructor","topic_0000000000000D7B_overloads--.html",1],['3566',"Properties","topic_0000000000000D7A_props--.html",1],['3574',"Methods","topic_0000000000000D7A_methods--.html",1],['3589',"Events","topic_0000000000000D7A_events--.html",1]];

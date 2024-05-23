@@ -1,0 +1,1 @@
+search_result['2695']=["topic_00000000000007C0.html","InventoryController.WastageDetail Method",""];

@@ -1,0 +1,1 @@
+c['4535']=[['4536',"ComsumptionTableAdapter Constructor","topic_0000000000000BAA.html",0],['4537',"Properties","topic_0000000000000BA9_props--.html",1],['4541',"Methods","topic_0000000000000BA9_methods--.html",1]];

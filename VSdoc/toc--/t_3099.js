@@ -1,0 +1,1 @@
+c['3099']=[['3100',"ComsumptionDataTable Constructor","topic_0000000000000B7C_overloads--.html",1],['3103',"Properties","topic_0000000000000B7B_props--.html",1],['3112',"Methods","topic_0000000000000B7B_methods--.html",1],['3127',"Events","topic_0000000000000B7B_events--.html",1]];

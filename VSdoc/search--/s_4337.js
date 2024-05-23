@@ -1,0 +1,1 @@
+search_result['4337']=["topic_0000000000000C6E.html","fn_InventoryBalDataTable Class","Represents the strongly named DataTable class."];

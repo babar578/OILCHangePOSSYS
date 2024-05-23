@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "All Closing Inventories ";
+}
+
+<div id="ClosingInventory"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetAllClosingInventory();
+    });
+
+    function GetAllClosingInventory() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/GetAllClosingInventory/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#ClosingInventory").html(result);
+            stopLoader();
+        });
+    }
+</script>
+

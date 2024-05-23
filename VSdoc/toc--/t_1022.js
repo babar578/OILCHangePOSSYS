@@ -1,0 +1,1 @@
+c['1022']=[['1023',"InvoiceRowChangeEvent Constructor","topic_0000000000001132.html",0],['1024',"Properties","topic_0000000000001131_props--.html",1]];

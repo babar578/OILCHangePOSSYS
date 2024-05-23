@@ -1,0 +1,1 @@
+search_result['5817']=["topic_000000000000106B.html","CompanyInformation.ShouldSerializeTables Method","Gets a value indicating whether Tables property should be persisted."];

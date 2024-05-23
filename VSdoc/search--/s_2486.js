@@ -1,0 +1,1 @@
+search_result['2486']=["topic_000000000000071C_props--.html","WastageDetailViewModel Properties",""];

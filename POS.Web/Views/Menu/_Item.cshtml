@@ -1,0 +1,174 @@
+﻿@using POS.Utilities.Services
+@using POS.Utilities.ViewModel
+@model ItemViewModel
+@{
+
+    Layout = null;
+    Model.Categories = ItemServices.GetAllCategories(false);
+    //Model.SubCategories = ItemServices.GetAllSubCategories();
+    //Model.Units = ItemServices.GetAllUnits();
+    Model.Departments = ItemServices.GetAllDepartments();
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group ">
+                <label class="col-form-label">Name <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Name ", @required = "true" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group ">
+                <label class="col-form-label">Category <b class="text-danger">*</b></label>
+                @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categories, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "-- Select Category --", @required = "true" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group ">
+                <label class="col-form-label">Department <b class="text-danger">*</b></label>
+                @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "-- Select Department --", @required = "true" })
+            </div>
+        </div>
+
+        @*<div class="col-md-6">
+            <div class="form-group ">
+                <div id="subCategories">
+                    <label class="col-form-label">Sub Category</label>
+                    <input type="text" class="form-control" disabled />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group ">
+                <label class="col-form-label">Unit <b class="text-danger">*</b> </label>
+                @Html.DropDownListFor(m => m.UnitId, new SelectList(Model.Units, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "-- Select Category --", @required = "true" })
+            </div>
+        </div>*@
+        <div class="col-md-6">
+            <div class="form-group ">
+                <label class="col-form-label">Price <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "Price", @required = "true" })
+            </div>
+        </div>
+        @*<div class="col-md-6">
+            <div class="form-group ">
+                <label class="col-form-label">Tax </label>
+                @Html.TextBoxFor(m => m.Tax, new { type = "number", @class = "form-control", placeholder = "Tax", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-form-label">Discount </label>
+                @Html.TextBoxFor(m => m.Discount, new { type = "number", @class = "form-control", placeholder = "Discount", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-form-label">Promotion Start Date </label>
+                @Html.TextBoxFor(m => m.PromotionStartDate, new { type = "date", @class = "form-control ", placeholder = "Enter Start Date" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-form-label">Promotion End Date </label>
+                @Html.TextBoxFor(m => m.PromotionEndDate, new { type = "date", @class = "form-control ", placeholder = "Enter End Date" })
+            </div>
+        </div>*@
+    </div>
+
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="Item" class="btn btn-primary"><span class="fa fa-edit"></span> Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+
+}
+<script>
+
+
+    $("#CategoryId").change(function (e) {
+        e.preventDefault();
+        var categoryId = $("#CategoryId").val();
+        GetSubCategories(categoryId);
+    });
+
+    function GetSubCategories(categoryId) {
+        $.ajax(
+            {
+                url: "/Menu/GetSubCategoryByCategory/" + categoryId,
+                type: "Get",
+            }
+        ).done(function (result) {
+            $("#subCategories").html(result);
+        });
+    }
+
+
+    $("#Item").click(function () {
+
+        var id = $("#Id").val();
+        var name = $("#Name").val();
+        var categoryId = $("#CategoryId").val();
+        var subCategoryId = $("#SubCategoryId").val();
+        var unitId = $("#UnitId").val();
+        var departmentId = $("#DepartmentId").val();
+        var price = $("#Price").val();
+        var tax = $("#Tax").val();
+        var discount = $("#Discount").val();
+        var promotionStartDate = $("#PromotionStartDate").val();
+        var promotionEndDate = $("#PromotionEndDate").val();
+
+        if (name == "" || categoryId == "" || price == "" || departmentId == "") {
+            alertify.error("Fill required fields.");
+            return;
+        }
+        if (discount != "" && (promotionStartDate == "" || promotionEndDate == "")) {
+            alertify.error("Enter 'Promotion Start Date' and 'Promotion End Date'");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                Id: id,
+                Name: name,
+                CategoryId: categoryId,
+                SubCategoryId: subCategoryId,
+                UnitId: unitId,
+                DepartmentId: departmentId,
+                Price: price,
+                Tax: tax,
+                Discount: discount,
+                PromotionStartDate: promotionStartDate,
+                PromotionEndDate: promotionEndDate,
+            };
+            startLoader();
+            $.ajax({
+                url: '@Url.Action("AddItem", "Menu")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Update successfully");
+                    location.reload();
+                }
+                stopLoader();
+            });
+        }
+    });
+</script>
+
+

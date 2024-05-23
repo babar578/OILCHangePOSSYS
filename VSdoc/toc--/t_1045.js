@@ -1,0 +1,1 @@
+c['1045']=[['1046',"InvoiceTableAdapter Constructor","topic_0000000000001137.html",0],['1047',"Properties","topic_0000000000001136_props--.html",1],['1051',"Methods","topic_0000000000001136_methods--.html",1]];

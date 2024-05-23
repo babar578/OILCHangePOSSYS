@@ -1,0 +1,1 @@
+c['2827']=[['2828',"fn_InventoryBalDataTable Constructor","topic_0000000000000A54_overloads--.html",1],['2831',"Properties","topic_0000000000000A53_props--.html",1],['2849',"Methods","topic_0000000000000A53_methods--.html",1],['2864',"Events","topic_0000000000000A53_events--.html",1]];

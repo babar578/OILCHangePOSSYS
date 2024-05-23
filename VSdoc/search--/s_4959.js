@@ -1,0 +1,1 @@
+search_result['4959']=["topic_0000000000000E29.html","ReturnVenderSummaryDataTable.GetRowType Method","Gets the row type."];

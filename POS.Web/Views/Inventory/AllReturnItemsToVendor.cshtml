@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "All Return Items To Vendor";
+}
+
+<div id="ReturnVItems"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetAllReturnItemsToVendor();
+    });
+
+    function GetAllReturnItemsToVendor() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/GetAllReturnItemsToVendor/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#ReturnVItems").html(result);
+            stopLoader();
+        });
+    }
+</script>
+
+
+

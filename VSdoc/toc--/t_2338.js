@@ -1,0 +1,1 @@
+c['2338']=[['2339',"WastageHeadViewModel Constructor","topic_000000000000072D.html",0],['2340',"Properties","topic_000000000000072C_props--.html",1],['2358',"Methods","topic_000000000000072C_methods--.html",1]];

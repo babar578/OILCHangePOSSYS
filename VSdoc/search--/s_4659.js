@@ -1,0 +1,1 @@
+search_result['4659']=["topic_0000000000000D59.html","WastageRepotTableAdapter Class","Represents the connection and commands used to retrieve and save data."];

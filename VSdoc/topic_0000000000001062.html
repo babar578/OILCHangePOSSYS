@@ -1,0 +1,3502 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="GENERATOR" content="VSdocman - documentation generator; https://www.helixoft.com" />
+	<link rel="icon" href="favicon.ico">
+	<title>CompanyInformation Class</title>
+
+	<link rel="stylesheet" type="text/css" href="msdn2019/toc.css" />
+	<script src="msdn2019/toc.js"></script>
+	<link rel="stylesheet" type="text/css" href="msdn2019/msdn2019.css">
+	<script src="msdn2019/msdn2019.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shCore_helixoft.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shBrushVb.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shBrushCSharp.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shBrushFSharp.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shBrushCpp.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shBrushJScript.js" type="text/javascript"></script>
+	<link href="SyntaxHighlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+	<link href="SyntaxHighlighter/styles/shThemeMsdnLW.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+		SyntaxHighlighter.all();
+	</script>
+ <link rel="stylesheet" type="text/css" href="vsdocman_overrides.css"> 
+</head>
+
+<body style="direction: ltr;">
+	<div id="topic">
+<!--HEADER START-->
+  <div id="header">
+  	<div id="header-top-container">	
+	<div id="header-top-parent-container1">
+	  <div id="header-top-container1">
+	    <div id="runningHeaderText1"><a id="headerLogo" href="#" onclick="window.location.href = getCssCustomProperty('--headerLogoLink'); return false;">logo</a></div>
+	    <div id="runningHeaderText1b"><script>
+document.write(getCssCustomProperty('--headerTopCustomLineHtml'));
+</script></div>
+	  </div>
+	</div>
+  	<div id="header-top-container2">
+    <div id="runningHeaderText">SOLUTION-WIDE PROPERTIES Reference</div>
+   
+    <div id="search-bar-container">
+     <form id="search-bar" action="search--.html">
+      <input id="HeaderSearchInput" type="search" name="search" placeholder="Search" >
+      <button id="btn-search" class="c-glyph" title="Search">
+      <span>Search</span>
+     </button>
+     </form>
+     <button id="cancel-search" class="cancel-search" title="Cancel">
+     <span>Cancel</span>
+    </button>
+    </div>
+   </div>
+   </div>
+
+  	
+  	<hr />
+	<div id="header-breadcrumbs"></div>
+	<div id="headerLinks">
+	</div>
+		<hr />
+	</div>
+<!--HEADER END-->
+		<div id="mainSection">
+		
+  <div id="toc-area">
+   <div id="toc-container" class="stickthis full-height">
+    <div id="-1"></div>
+    <div id="c-1">
+  <div id="ci-1" class="inner-for-height"></div>
+</div>
+   </div>
+  </div>
+
+<div id="mainBody">
+		<h1 class="title">CompanyInformation Class</h1>
+        
+		<div class="metadata">
+        Namespace:
+<a href="topic_0000000000001061.html">POS.Reporting.DataSets</a>
+
+
+
+
+        <br />Assembly: POS.Reporting (in POS.Reporting.dll)
+
+		</div>
+
+       
+        <summary-info>Represents a strongly typed in-memory cache of data.</summary-info>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section_container">
+	<div id="syntaxSection" class="section">	
+	
+	
+	<div id="syntaxCodeBlocks">
+		<div class="codeSnippetContainer">		
+			<div class="codeSnippetTabs">
+				<div class="codeSnippetTabLeftCornerActive">
+				</div>
+				<div class="codeSnippetTab csFirstTab csActiveTab codeVB">
+					<a>VB</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCpp">
+					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
+				</div>
+				<div class="codeSnippetTab csLastTab csNaTab codeJScript">
+					<a href="javascript: CodeSnippet_SetLanguage('JScript');">JScript</a>
+				</div>
+				<div class="codeSnippetTabRightCorner">
+				</div>
+				<div style="clear:both;">
+				</div>
+			</div>
+	
+			<div class="codeSnippetCodeCollection">
+				<div class="codeSnippetToolbar">
+					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
+				</div>
+				
+				<div class="codeSnippetCode codeVB">
+					<pre xml:space="preserve" class="brush: vb">&lt;global::System.Serializable()&gt; _&nbsp;<br />&lt;global::System.ComponentModel.DesignerCategory(&quot;code&quot;)&gt; _&nbsp;<br />&lt;global::System.ComponentModel.ToolboxItem(true)&gt; _&nbsp;<br />&lt;global::System.Xml.Serialization.XmlSchemaProvider(&quot;GetTypedDataSetSchema&quot;)&gt; _&nbsp;<br />&lt;global::System.Xml.Serialization.XmlRoot(&quot;CompanyInformation&quot;)&gt; _&nbsp;<br />&lt;global::System.ComponentModel.Design.HelpKeyword(&quot;vs.data.DataSet&quot;)&gt; _&nbsp;<br />Public Class CompanyInformation&nbsp;<br />    Inherits <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a></pre>			
+				</div>
+				<div class="codeSnippetCode codeNA">
+					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
+				</div>
+			</div>
+		</div>
+		
+		<div class="codeSnippetContainer">
+			<div class="codeSnippetTabs">
+				<div class="codeSnippetTabLeftCorner">
+				</div>
+				<div class="codeSnippetTab csFirstTab csNaTab codeVB">
+					<a>VB</a>
+				</div>
+				<div class="codeSnippetTab csActiveTab codeCsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCpp">
+					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
+				</div>
+				<div class="codeSnippetTab csLastTab csNaTab codeJScript">
+					<a href="javascript: CodeSnippet_SetLanguage('JScript');">JScript</a>
+				</div>
+				<div class="codeSnippetTabRightCorner">
+				</div>
+				<div style="clear:both;">
+				</div>
+			</div>
+	
+			<div class="codeSnippetCodeCollection">
+				<div class="codeSnippetToolbar">
+					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
+				</div>
+				
+				<div class="codeSnippetCode codeCsharp">
+					<pre xml:space="preserve" class="brush: csharp">[global::System.Serializable()]&nbsp;<br />[global::System.ComponentModel.DesignerCategory(&quot;code&quot;)]&nbsp;<br />[global::System.ComponentModel.ToolboxItem(true)]&nbsp;<br />[global::System.Xml.Serialization.XmlSchemaProvider(&quot;GetTypedDataSetSchema&quot;)]&nbsp;<br />[global::System.Xml.Serialization.XmlRoot(&quot;CompanyInformation&quot;)]&nbsp;<br />[global::System.ComponentModel.Design.HelpKeyword(&quot;vs.data.DataSet&quot;)]&nbsp;<br />public class CompanyInformation : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a></pre>			
+				</div>
+				<div class="codeSnippetCode codeNA">
+					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
+				</div>
+			</div>
+		</div>
+
+
+		<div class="codeSnippetContainer">
+			<div class="codeSnippetTabs">
+				<div class="codeSnippetTabLeftCorner">
+				</div>
+				<div class="codeSnippetTab csFirstTab csNaTab codeVB">
+					<a>VB</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
+				</div>
+				<div class="codeSnippetTab csActiveTab codeCpp">
+					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
+				</div>
+				<div class="codeSnippetTab csLastTab csNaTab codeJScript">
+					<a href="javascript: CodeSnippet_SetLanguage('JScript');">JScript</a>
+				</div>
+				<div class="codeSnippetTabRightCorner">
+				</div>
+				<div style="clear:both;">
+				</div>
+			</div>
+	
+			<div class="codeSnippetCodeCollection">
+				<div class="codeSnippetToolbar">
+					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
+				</div>
+				
+				<div class="codeSnippetCode codeCpp">
+					<pre xml:space="preserve" class="brush: cpp">[global::System.Serializable()]&nbsp;<br />[global::System.ComponentModel.DesignerCategory(&quot;code&quot;)]&nbsp;<br />[global::System.ComponentModel.ToolboxItem(true)]&nbsp;<br />[global::System.Xml.Serialization.XmlSchemaProvider(&quot;GetTypedDataSetSchema&quot;)]&nbsp;<br />[global::System.Xml.Serialization.XmlRoot(&quot;CompanyInformation&quot;)]&nbsp;<br />[global::System.ComponentModel.Design.HelpKeyword(&quot;vs.data.DataSet&quot;)]&nbsp;<br />public ref class CompanyInformation : public <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system::data::dataset">DataSet</a>^</pre>			
+				</div>
+				<div class="codeSnippetCode codeNA">
+					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
+				</div>
+			</div>
+		</div>
+		
+		<div class="codeSnippetContainer">
+			<div class="codeSnippetTabs">
+				<div class="codeSnippetTabLeftCorner">
+				</div>
+				<div class="codeSnippetTab csFirstTab csNaTab codeVB">
+					<a>VB</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCpp">
+					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
+				</div>
+				<div class="codeSnippetTab csActiveTab csLastTab codeJScript">
+					<a href="javascript: CodeSnippet_SetLanguage('JScript');">JScript</a>
+				</div>
+				<div class="codeSnippetTabRightCornerActive">
+				</div>
+				<div style="clear:both;">
+				</div>
+			</div>
+	
+			<div class="codeSnippetCodeCollection">
+				<div class="codeSnippetToolbar">
+					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
+				</div>
+				
+				<div class="codeSnippetCode codeJScript">
+					<pre xml:space="preserve" class="brush: js">public &nbsp;<br />   global::System.Serializable()&nbsp;<br />   global::System.ComponentModel.DesignerCategory(&quot;code&quot;)&nbsp;<br />   global::System.ComponentModel.ToolboxItem(true)&nbsp;<br />   global::System.Xml.Serialization.XmlSchemaProvider(&quot;GetTypedDataSetSchema&quot;)&nbsp;<br />   global::System.Xml.Serialization.XmlRoot(&quot;CompanyInformation&quot;)&nbsp;<br />   global::System.ComponentModel.Design.HelpKeyword(&quot;vs.data.DataSet&quot;)&nbsp;<br />class CompanyInformation&nbsp;<br />   extends <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a></pre>			
+				</div>
+				<div class="codeSnippetCode codeNA">
+					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+</div>
+
+
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Constructors</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="ConstructorsSection" class="section">	
+  <table class="memberListTable">
+    <tr>
+      <th></th>
+      <th>
+        Name
+      </th>
+      <th>
+        Description
+      </th>
+    </tr>
+
+
+							<tr class="
+	
+	
+	">
+	  <td>
+      <img alt="Protected constructor" title="Protected constructor" src="msdn2019/protmethod.png"></img>
+
+    
+
+	
+	    
+	  </td>
+	  <td>
+	    <a href="topic_0000000000001064.html">CompanyInformation(SerializationInfo, StreamingContext)</a>
+
+	  </td>
+	  <td>
+	
+	
+	
+		</td>
+	</tr>
+						<tr class="
+	
+	
+	">
+	  <td>
+    <img alt="Public constructor" title="Public constructor" src="msdn2019/pubmethod.png"></img>
+
+	
+	    
+	  </td>
+	  <td>
+	    <a href="topic_0000000000001063.html">CompanyInformation()</a>
+
+	  </td>
+	  <td>
+	
+	
+	
+		</td>
+	</tr>
+		
+	
+
+
+  </table>
+
+  <a href="#mainBody">
+    Top
+  </a>
+
+	</div>					
+</div>
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Properties</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="PropertiesSection" class="section">	
+  <table class="memberListTable">
+    <tr>
+      <th></th>
+      <th>
+        Name
+      </th>
+      <th>
+        Description
+      </th>
+    </tr>
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.casesensitive">CaseSensitive</a>
+
+	</td>
+	<td>
+
+Gets or sets a value indicating whether string comparisons within <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable">DataTable</a> objects are case-sensitive.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000001065.html">CompanyInfo</a>
+
+	</td>
+	<td>
+
+
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent.container">Container</a>
+
+	</td>
+	<td>
+
+Gets the container for the component.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent">MarshalByValueComponent</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.datasetname">DataSetName</a>
+
+	</td>
+	<td>
+
+Gets or sets the name of the current <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.defaultviewmanager">DefaultViewManager</a>
+
+	</td>
+	<td>
+
+Gets a custom view of the data contained in the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> to allow filtering, searching, and navigating using a custom <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataviewmanager">DataViewManager</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent.designmode">DesignMode</a>
+
+	</td>
+	<td>
+
+Gets a value indicating whether the component is currently in design mode.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent">MarshalByValueComponent</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.enforceconstraints">EnforceConstraints</a>
+
+	</td>
+	<td>
+
+Gets or sets a value indicating whether constraint rules are followed when attempting any update operation.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.extendedproperties">ExtendedProperties</a>
+
+	</td>
+	<td>
+
+Gets the collection of customized user information associated with the <strong>DataSet</strong>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.haserrors">HasErrors</a>
+
+	</td>
+	<td>
+
+Gets a value indicating whether there are errors in any of the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable">DataTable</a> objects within this <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.isinitialized">IsInitialized</a>
+
+	</td>
+	<td>
+
+Gets a value that indicates whether the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> is initialized.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.locale">Locale</a>
+
+	</td>
+	<td>
+
+Gets or sets the locale information used to compare strings within the table.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.namespace">Namespace</a>
+
+	</td>
+	<td>
+
+Gets or sets the namespace of the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.prefix">Prefix</a>
+
+	</td>
+	<td>
+
+Gets or sets an XML prefix that aliases the namespace of the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000001068.html">Relations</a>
+
+	</td>
+	<td>
+
+
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.remotingformat">RemotingFormat</a>
+
+	</td>
+	<td>
+
+Gets or sets a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.serializationformat">SerializationFormat</a> for the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> used during remoting.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000001066.html">SchemaSerializationMode</a>
+
+	</td>
+	<td>
+
+Gets or sets a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.schemaserializationmode">SchemaSerializationMode</a> for a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.site">Site</a>
+
+	</td>
+	<td>
+
+Gets or sets an <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.isite">ISite</a> for the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+	
+		<tr class="
+
+
+">
+	<td>
+<img alt="Public property" title="Public property" src="msdn2019/pubproperty.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000001067.html">Tables</a>
+
+	</td>
+	<td>
+
+
+
+	</td>
+</tr>
+	
+
+
+  </table>
+
+  <a href="#mainBody">
+    Top
+  </a>
+
+	</div>					
+</div>
+
+
+
+
+
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Methods</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="MethodsSection" class="section">	
+  <table class="memberListTable">
+    <tr>
+      <th></th>
+      <th>
+        Name
+      </th>
+      <th>
+        Description
+      </th>
+    </tr>
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.acceptchanges">AcceptChanges</a>
+
+	</td>
+	<td>
+
+Commits all the changes made to this <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> since it was loaded or since the last time <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.acceptchanges">AcceptChanges</a> was called.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.begininit">BeginInit</a>
+
+	</td>
+	<td>
+
+Begins the initialization of a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> that is used on a form or used by another component. The initialization occurs at run time.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.clear">Clear</a>
+
+	</td>
+	<td>
+
+Clears the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> of any data by removing all rows in all tables.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_000000000000106A.html">Clone()</a>
+
+	</td>
+	<td>
+
+Copies the structure of the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>, including all <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable">DataTable</a> schemas, relations, and constraints. Does not copy any data.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.copy">Copy</a>
+
+	</td>
+	<td>
+
+Copies both the structure and data for this <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.createdatareader">CreateDataReader(DataTable[])</a>
+
+	</td>
+	<td>
+
+Returns a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatablereader">DataTableReader</a> with one result set per <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable">DataTable</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.createdatareader">CreateDataReader</a>
+
+	</td>
+	<td>
+
+Returns a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatablereader">DataTableReader</a> with one result set per <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable">DataTable</a>, in the same sequence as the tables appear in the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.tables">Tables</a> collection.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.determineschemaserializationmode">DetermineSchemaSerializationMode(XmlReader)</a>
+
+	</td>
+	<td>
+
+Determines the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.schemaserializationmode">SchemaSerializationMode</a> for a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.determineschemaserializationmode">DetermineSchemaSerializationMode(SerializationInfo, StreamingContext)</a>
+
+	</td>
+	<td>
+
+Determines the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.schemaserializationmode">SchemaSerializationMode</a> for a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent.dispose">Dispose</a>
+
+	</td>
+	<td>
+
+Releases all resources used by the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent">MarshalByValueComponent</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent">MarshalByValueComponent</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent.dispose">Dispose(Boolean)</a>
+
+	</td>
+	<td>
+
+Releases the unmanaged resources used by the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent">MarshalByValueComponent</a> and optionally releases the managed resources.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent">MarshalByValueComponent</a>).
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.endinit">EndInit</a>
+
+	</td>
+	<td>
+
+Ends the initialization of a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> that is used on a form or used by another component. The initialization occurs at run time.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.object.equals">Equals(Object)</a>
+
+	</td>
+	<td>
+
+Determines whether the specified object is equal to the current object.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.object">Object</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent.finalize">Finalize</a>
+
+	</td>
+	<td>
+
+Allows an object to try to free resources and perform other cleanup operations before it is reclaimed by garbage collection.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent">MarshalByValueComponent</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.getchanges">GetChanges(DataRowState)</a>
+
+	</td>
+	<td>
+
+Gets a copy of the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> containing all changes made to it since it was last loaded, or since <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.acceptchanges">AcceptChanges</a> was called, filtered by <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datarowstate">DataRowState</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.getchanges">GetChanges</a>
+
+	</td>
+	<td>
+
+Gets a copy of the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> that contains all changes made to it since it was loaded or since <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.acceptchanges">AcceptChanges</a> was last called.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.object.gethashcode">GetHashCode</a>
+
+	</td>
+	<td>
+
+Serves as the default hash function.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.object">Object</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.getobjectdata">GetObjectData(SerializationInfo, StreamingContext)</a>
+
+	</td>
+	<td>
+
+Populates a serialization information object with the data needed to serialize the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_000000000000106E.html">GetSchemaSerializable()</a>
+
+	</td>
+	<td>
+
+Returns a serializable <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.xml.schema.xmlschema">XmlSchema</a> instance.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.getserializationdata">GetSerializationData(SerializationInfo, StreamingContext)</a>
+
+	</td>
+	<td>
+
+Deserializes the table data from the binary or XML stream.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent.getservice">GetService(Type)</a>
+
+	</td>
+	<td>
+
+Gets the implementer of the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.iserviceprovider">IServiceProvider</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent">MarshalByValueComponent</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.object.gettype">GetType</a>
+
+	</td>
+	<td>
+
+Gets the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.type">Type</a> of the current instance.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.object">Object</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+	<img alt="Static" title="Static" src="msdn2019/static.png"></img>
+
+    
+	</td>
+	<td>
+	<a href="topic_000000000000106F.html">GetTypedDataSetSchema(XmlSchemaSet)</a>
+
+	</td>
+	<td>
+
+
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.getxml">GetXml</a>
+
+	</td>
+	<td>
+
+Returns the XML representation of the data stored in the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.getxmlschema">GetXmlSchema</a>
+
+	</td>
+	<td>
+
+Returns the XML Schema for the XML representation of the data stored in the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.haschanges">HasChanges(DataRowState)</a>
+
+	</td>
+	<td>
+
+Gets a value indicating whether the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> has changes, including new, deleted, or modified rows, filtered by <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datarowstate">DataRowState</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.haschanges">HasChanges</a>
+
+	</td>
+	<td>
+
+Gets a value indicating whether the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> has changes, including new, deleted, or modified rows.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.inferxmlschema">InferXmlSchema(String, String[])</a>
+
+	</td>
+	<td>
+
+Applies the XML schema from the specified file to the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.inferxmlschema">InferXmlSchema(XmlReader, String[])</a>
+
+	</td>
+	<td>
+
+Applies the XML schema from the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.xml.xmlreader">XmlReader</a> to the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.inferxmlschema">InferXmlSchema(Stream, String[])</a>
+
+	</td>
+	<td>
+
+Applies the XML schema from the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream">Stream</a> to the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.inferxmlschema">InferXmlSchema(TextReader, String[])</a>
+
+	</td>
+	<td>
+
+Applies the XML schema from the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.textreader">TextReader</a> to the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000001069.html">InitializeDerivedDataSet()</a>
+
+	</td>
+	<td>
+
+Deserialize all of the tables data of the DataSet from the binary or XML stream.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.isbinaryserialized">IsBinarySerialized(SerializationInfo, StreamingContext)</a>
+
+	</td>
+	<td>
+
+Inspects the format of the serialized representation of the <strong>DataSet</strong>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.load">Load(IDataReader, LoadOption, String[])</a>
+
+	</td>
+	<td>
+
+Fills a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> with values from a data source using the supplied <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.idatareader">IDataReader</a>, using an array of strings to supply the names for the tables within the <strong>DataSet</strong>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.load">Load(IDataReader, LoadOption, FillErrorEventHandler, DataTable[])</a>
+
+	</td>
+	<td>
+
+Fills a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> with values from a data source using the supplied <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.idatareader">IDataReader</a>, using an array of <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable">DataTable</a> instances to supply the schema and namespace information.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.load">Load(IDataReader, LoadOption, DataTable[])</a>
+
+	</td>
+	<td>
+
+Fills a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> with values from a data source using the supplied <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.idatareader">IDataReader</a>, using an array of <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable">DataTable</a> instances to supply the schema and namespace information.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone">MemberwiseClone</a>
+
+	</td>
+	<td>
+
+Creates a shallow copy of the current <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.object">Object</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.object">Object</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.merge">Merge(DataSet, Boolean)</a>
+
+	</td>
+	<td>
+
+Merges a specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> and its schema into the current <strong>DataSet</strong>, preserving or discarding any changes in this <strong>DataSet</strong> according to the given argument.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.merge">Merge(DataSet, Boolean, MissingSchemaAction)</a>
+
+	</td>
+	<td>
+
+Merges a specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> and its schema with the current <strong>DataSet</strong>, preserving or discarding changes in the current <strong>DataSet</strong> and handling an incompatible schema according to the given arguments.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.merge">Merge(DataTable)</a>
+
+	</td>
+	<td>
+
+Merges a specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable">DataTable</a> and its schema into the current <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.merge">Merge(DataTable, Boolean, MissingSchemaAction)</a>
+
+	</td>
+	<td>
+
+Merges a specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable">DataTable</a> and its schema into the current <strong>DataSet</strong>, preserving or discarding changes in the <strong>DataSet</strong> and handling an incompatible schema according to the given arguments.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.merge">Merge(DataRow[])</a>
+
+	</td>
+	<td>
+
+Merges an array of <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datarow">DataRow</a> objects into the current <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.merge">Merge(DataRow[], Boolean, MissingSchemaAction)</a>
+
+	</td>
+	<td>
+
+Merges an array of <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datarow">DataRow</a> objects into the current <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>, preserving or discarding changes in the <strong>DataSet</strong> and handling an incompatible schema according to the given arguments.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.merge">Merge(DataSet)</a>
+
+	</td>
+	<td>
+
+Merges a specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> and its schema into the current <strong>DataSet</strong>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.onpropertychanging">OnPropertyChanging(PropertyChangedEventArgs)</a>
+
+	</td>
+	<td>
+
+Raises the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.onpropertychanging">OnPropertyChanging</a> event.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.onremoverelation">OnRemoveRelation(DataRelation)</a>
+
+	</td>
+	<td>
+
+Occurs when a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datarelation">DataRelation</a> object is removed from a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable">DataTable</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+ 	<img alt="Internal protected (Protected Friend) method" title="Internal protected (Protected Friend) method" src="msdn2019/friendmethod.png"></img>
+    
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.onremovetable">OnRemoveTable(DataTable)</a>
+
+	</td>
+	<td>
+
+Occurs when a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable">DataTable</a> is removed from a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+ 	<img alt="Internal protected (Protected Friend) method" title="Internal protected (Protected Friend) method" src="msdn2019/friendmethod.png"></img>
+    
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.raisepropertychanging">RaisePropertyChanging(String)</a>
+
+	</td>
+	<td>
+
+Sends a notification that the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> property is about to change.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.readxml">ReadXml(String)</a>
+
+	</td>
+	<td>
+
+Reads XML schema and data into the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified file.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.readxml">ReadXml(XmlReader, XmlReadMode)</a>
+
+	</td>
+	<td>
+
+Reads XML schema and data into the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.xml.xmlreader">XmlReader</a> and <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.xmlreadmode">XmlReadMode</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.readxml">ReadXml(Stream)</a>
+
+	</td>
+	<td>
+
+Reads XML schema and data into the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream">Stream</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.readxml">ReadXml(Stream, XmlReadMode)</a>
+
+	</td>
+	<td>
+
+Reads XML schema and data into the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream">Stream</a> and <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.xmlreadmode">XmlReadMode</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.readxml">ReadXml(String, XmlReadMode)</a>
+
+	</td>
+	<td>
+
+Reads XML schema and data into the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified file and <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.xmlreadmode">XmlReadMode</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.readxml">ReadXml(TextReader, XmlReadMode)</a>
+
+	</td>
+	<td>
+
+Reads XML schema and data into the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.textreader">TextReader</a> and <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.xmlreadmode">XmlReadMode</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.readxml">ReadXml(XmlReader)</a>
+
+	</td>
+	<td>
+
+Reads XML schema and data into the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.xml.xmlreader">XmlReader</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.readxml">ReadXml(TextReader)</a>
+
+	</td>
+	<td>
+
+Reads XML schema and data into the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.textreader">TextReader</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.readxmlschema">ReadXmlSchema(String)</a>
+
+	</td>
+	<td>
+
+Reads the XML schema from the specified file into the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.readxmlschema">ReadXmlSchema(XmlReader)</a>
+
+	</td>
+	<td>
+
+Reads the XML schema from the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.xml.xmlreader">XmlReader</a> into the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.readxmlschema">ReadXmlSchema(Stream)</a>
+
+	</td>
+	<td>
+
+Reads the XML schema from the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream">Stream</a> into the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.readxmlschema">ReadXmlSchema(TextReader)</a>
+
+	</td>
+	<td>
+
+Reads the XML schema from the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.textreader">TextReader</a> into the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_000000000000106D.html">ReadXmlSerializable(XmlReader)</a>
+
+	</td>
+	<td>
+
+Ignores attributes and returns an empty DataSet.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.rejectchanges">RejectChanges</a>
+
+	</td>
+	<td>
+
+Rolls back all the changes made to the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> since it was created, or since the last time <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.acceptchanges">AcceptChanges</a> was called.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.reset">Reset</a>
+
+	</td>
+	<td>
+
+Clears all tables and removes all relations, foreign constraints, and tables from the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>. Subclasses should override <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.reset">Reset</a> to restore a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> to its original state.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_000000000000106C.html">ShouldSerializeRelations()</a>
+
+	</td>
+	<td>
+
+Gets a value indicating whether <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.relations">Relations</a> property should be persisted.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+  <img alt="Protected method" title="Protected method" src="msdn2019/protmethod.png"></img>
+
+    
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_000000000000106B.html">ShouldSerializeTables()</a>
+
+	</td>
+	<td>
+
+Gets a value indicating whether <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.tables">Tables</a> property should be persisted.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent.tostring">ToString</a>
+
+	</td>
+	<td>
+
+Returns a <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a> containing the name of the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.component">Component</a>, if any. This method should not be overridden.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent">MarshalByValueComponent</a>).
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexml">WriteXml(TextWriter)</a>
+
+	</td>
+	<td>
+
+Writes the current data for the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter">TextWriter</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexml">WriteXml(XmlWriter)</a>
+
+	</td>
+	<td>
+
+Writes the current data for the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> to the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.xml.xmlwriter">XmlWriter</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexml">WriteXml(String)</a>
+
+	</td>
+	<td>
+
+Writes the current data for the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> to the specified file.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexml">WriteXml(Stream, XmlWriteMode)</a>
+
+	</td>
+	<td>
+
+Writes the current data, and optionally the schema, for the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream">Stream</a> and <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.xmlwritemode">XmlWriteMode</a>. To write the schema, set the value for the <i>mode</i> parameter to <strong>WriteSchema</strong>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexml">WriteXml(TextWriter, XmlWriteMode)</a>
+
+	</td>
+	<td>
+
+Writes the current data, and optionally the schema, for the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter">TextWriter</a> and <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.xmlwritemode">XmlWriteMode</a>. To write the schema, set the value for the <i>mode</i> parameter to <strong>WriteSchema</strong>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexml">WriteXml(XmlWriter, XmlWriteMode)</a>
+
+	</td>
+	<td>
+
+Writes the current data, and optionally the schema, for the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.xml.xmlwriter">XmlWriter</a> and <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.xmlwritemode">XmlWriteMode</a>. To write the schema, set the value for the <i>mode</i> parameter to <strong>WriteSchema</strong>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexml">WriteXml(String, XmlWriteMode)</a>
+
+	</td>
+	<td>
+
+Writes the current data, and optionally the schema, for the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> to the specified file using the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.xmlwritemode">XmlWriteMode</a>. To write the schema, set the value for the <i>mode</i> parameter to <strong>WriteSchema</strong>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexml">WriteXml(Stream)</a>
+
+	</td>
+	<td>
+
+Writes the current data for the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> using the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream">Stream</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexmlschema">WriteXmlSchema(Stream, Converter&lt;Type, String&gt;)</a>
+
+	</td>
+	<td>
+
+Writes the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> structure as an XML schema to the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream">Stream</a> object.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexmlschema">WriteXmlSchema(String)</a>
+
+	</td>
+	<td>
+
+Writes the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> structure as an XML schema to a file.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexmlschema">WriteXmlSchema(String, Converter&lt;Type, String&gt;)</a>
+
+	</td>
+	<td>
+
+Writes the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> structure as an XML schema to a file.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexmlschema">WriteXmlSchema(TextWriter)</a>
+
+	</td>
+	<td>
+
+Writes the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> structure as an XML schema to the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter">TextWriter</a> object.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexmlschema">WriteXmlSchema(TextWriter, Converter&lt;Type, String&gt;)</a>
+
+	</td>
+	<td>
+
+Writes the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> structure as an XML schema to the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter">TextWriter</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexmlschema">WriteXmlSchema(XmlWriter)</a>
+
+	</td>
+	<td>
+
+Writes the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> structure as an XML schema to an <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.xml.xmlwriter">XmlWriter</a> object.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexmlschema">WriteXmlSchema(XmlWriter, Converter&lt;Type, String&gt;)</a>
+
+	</td>
+	<td>
+
+Writes the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> structure as an XML schema to the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.xml.xmlwriter">XmlWriter</a>.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+			<tr class="
+inheritedMember 
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2019/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexmlschema">WriteXmlSchema(Stream)</a>
+
+	</td>
+	<td>
+
+Writes the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> structure as an XML schema to the specified <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.stream">Stream</a> object.
+(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+  </table>
+
+  <a href="#mainBody">
+    Top
+  </a>
+
+	</div>					
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Extension Methods</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="ExtensionMethodsSection" class="section">	
+  <table class="memberListTable">
+    <tr>
+      <th></th>
+      <th>
+        Name
+      </th>
+      <th>
+        Description
+      </th>
+    </tr>
+
+
+	
+		<tr class="
+inheritedMember 
+
+
+">
+	<td>
+	<img alt="Public extension method" title="Public extension method" src="msdn2019/pubextensionmethod.png"></img>
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000427.html">SerializeAndCompress(this object)</a>
+
+	</td>
+	<td>
+
+
+(Defined by <a target="_top" href="topic_000000000000041C.html" onclick="this.target='';return true;">CartUtility</a>).
+
+	</td>
+</tr>
+	
+
+
+  </table>
+
+  <a href="#mainBody">
+    Top
+  </a>
+
+	</div>					
+</div>
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Events</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="EventsSection" class="section">	
+  <table class="memberListTable">
+    <tr>
+      <th></th>
+      <th>
+        Name
+      </th>
+      <th>
+        Description
+      </th>
+    </tr>
+
+	<tr class="
+		inheritedMember 
+	
+	
+	">
+	  <td>
+    <img alt="Public event" title="Public event" src="msdn2019/pubevent.png"></img>
+
+	
+	    
+	  </td>
+	  <td>
+	    <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent.disposed">Disposed</a>
+
+	  </td>
+	  <td>
+	
+	Adds an event handler to listen to the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent.disposed">Disposed</a> event on the component.
+		(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent">MarshalByValueComponent</a>).
+	
+		</td>
+	</tr>
+	<tr class="
+		inheritedMember 
+	
+	
+	">
+	  <td>
+    <img alt="Public event" title="Public event" src="msdn2019/pubevent.png"></img>
+
+	
+	    
+	  </td>
+	  <td>
+	    <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.initialized">Initialized</a>
+
+	  </td>
+	  <td>
+	
+	Occurs after the <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a> is initialized.
+		(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+	
+		</td>
+	</tr>
+	<tr class="
+		inheritedMember 
+	
+	
+	">
+	  <td>
+    <img alt="Public event" title="Public event" src="msdn2019/pubevent.png"></img>
+
+	
+	    
+	  </td>
+	  <td>
+	    <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.mergefailed">MergeFailed</a>
+
+	  </td>
+	  <td>
+	
+	Occurs when a target and source <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datarow">DataRow</a> have the same primary key value, and <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.enforceconstraints">EnforceConstraints</a> is set to true.
+		(inherited from <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">DataSet</a>).
+	
+		</td>
+	</tr>
+
+  </table>
+
+  <a href="#mainBody">
+    Top
+  </a>
+
+	</div>					
+</div>
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Classes</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="ClassSection" class="section">	
+  <table class="memberListTable">
+    <tr>
+      <th></th>
+      <th>
+        Name
+      </th>
+      <th>
+        Description
+      </th>
+    </tr>
+
+
+<!-- Classes -->
+	<tr class="
+	
+	
+	">
+	  <td>
+    <img alt="Public class" title="Public class" src="msdn2019/pubclass.png"></img>
+    
+
+    
+	  </td>
+	  <td>
+	    <a href="topic_0000000000001071.html">CompanyInfoDataTable</a>
+	  </td>
+	  <td>
+
+Represents the strongly named DataTable class.
+
+		</td>
+	</tr>
+	<tr class="
+	
+	
+	">
+	  <td>
+    <img alt="Public class" title="Public class" src="msdn2019/pubclass.png"></img>
+    
+
+    
+	  </td>
+	  <td>
+	    <a href="topic_0000000000001091.html">CompanyInfoRow</a>
+	  </td>
+	  <td>
+
+Represents strongly named DataRow class.
+
+		</td>
+	</tr>
+	<tr class="
+	
+	
+	">
+	  <td>
+    <img alt="Public class" title="Public class" src="msdn2019/pubclass.png"></img>
+    
+
+    
+	  </td>
+	  <td>
+	    <a href="topic_00000000000010B0.html">CompanyInfoRowChangeEvent</a>
+	  </td>
+	  <td>
+
+Row event argument class
+
+		</td>
+	</tr>
+
+<!-- Classes End -->
+
+<!-- Standard Modules -->
+
+<!-- Standard Modules End -->
+
+  </table>
+
+  <a href="#mainBody">
+    Top
+  </a>
+
+	</div>					
+</div>
+
+
+
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Delegates</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="DelegateSection" class="section">	
+  <table class="memberListTable">
+    <tr>
+      <th></th>
+      <th>
+        Name
+      </th>
+      <th>
+        Description
+      </th>
+    </tr>
+
+	<tr class="
+	
+	
+	">
+	  <td>
+    <img alt="Public delegate" title="Public delegate" src="msdn2019/pubdeligate.png"></img>
+    
+
+    
+	  </td>
+	  <td>
+	    <a href="topic_0000000000001070.html">CompanyInfoRowChangeEventHandler</a>
+	  </td>
+	  <td>
+
+
+
+		</td>
+	</tr>
+
+  </table>
+
+  <a href="#mainBody">
+    Top
+  </a>
+
+	</div>					
+</div>
+
+
+
+
+
+
+
+
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Inheritance Hierarchy</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+<div id="inheritanceHierarchySection" class="section">
+
+<div style="padding-left:0em;"><a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.object">System.Object</a>
+</div>
+
+<div style="padding-left:1em;"><a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.marshalbyvaluecomponent">System.ComponentModel.MarshalByValueComponent</a>
+</div>
+
+<div style="padding-left:2em;"><a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset">System.Data.DataSet</a>
+</div>
+
+
+
+<div style="padding-left:3em;">POS.Reporting.DataSets.CompanyInformation</div>
+
+				
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Applies to</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="frameworksSection" class="section">	
+  <h4 class="subHeading">.NET Framework</h4>Supported in: 4.5, 4.5.1, 4.5.2, 4.6, 4.6.1, 4.6.2, 4.7, 4.7.1<br />
+
+
+
+
+
+
+
+
+
+
+	
+	
+	</div>					
+</div>
+
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">See Also</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="seeAlsoSection" class="section">	
+		<div>
+	<a href="topic_0000000000001061.html">POS.Reporting.DataSets Namespace</a><br />
+
+
+	
+
+		</div>
+	</div>					
+</div>
+			</div>
+
+			<div id="internal-toc-area">
+				<div id="internal-toc-container" class="stickthis">
+					<h3 id="internal-toc-heading">In this article</h3>
+					<span id="internal-toc-definition-localized-text">Definition</span>
+				</div>
+			</div>
+
+			</div>
+      <div id="footer">
+	   <div id="footer-container">
+      	<p><span style="color: #FF0000;">Generated with unregistered version of <a target="_top" href="http://www.helixoft.com/vsdocman/overview.html">VSdocman</a></span>&nbsp;<br />Your own footer text will only be shown in registered version.</p>
+      </div>
+    </div>
+    </div>
+  </body>
+</html>
+

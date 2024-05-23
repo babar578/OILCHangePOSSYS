@@ -1,0 +1,1 @@
+c['1723']=[['1724',"Implicit Conversion (IssueToLocationHead to IssueToLocationHeadViewModel) Operator","topic_000000000000050A.html",0],['1725',"Implicit Conversion (IssueToLocationHeadViewModel to IssueToLocationHead) Operator","topic_000000000000050B.html",0]];

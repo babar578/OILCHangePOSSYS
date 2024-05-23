@@ -1,0 +1,1 @@
+c['1975']=[['1976',"CreationDate Property","topic_00000000000005F0.html",0],['1977',"Id Property","topic_00000000000005EC.html",0],['1978',"IsActive Property","topic_00000000000005EF.html",0],['1979',"ModifyDate Property","topic_00000000000005F1.html",0],['1980',"Name Property","topic_00000000000005ED.html",0],['1981',"TaxPercentage Property","topic_00000000000005EE.html",0]];

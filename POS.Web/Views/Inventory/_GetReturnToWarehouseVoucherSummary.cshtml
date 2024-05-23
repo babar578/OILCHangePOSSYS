@@ -1,0 +1,112 @@
+﻿@using POS.Utilities.ViewModel
+@model ReturnToWarehouseHeadViewModel
+@{
+    Layout = null;
+}
+
+
+<script src="~/Scripts/Site.js"></script>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body table-responsive">
+
+                @if (Model != null)
+                {
+                    @Html.HiddenFor(m => m.Id)
+                    <div class="row">
+                        <div class="col-4">
+                            <label for=""> <strong>Transaction Date : </strong> </label>
+                            @Model.TransactionDate.ToString("dddd, dd-MMM-yyyy")
+                        </div>
+                        <div class="col-4">
+                            <label for=""> <strong>Doc No : </strong> </label>
+                            @Model.DocNo
+                        </div>
+                        <div class="col-4">
+                            <label for=""> <strong>Location : </strong> </label>
+                            @Model.LocationName
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for=""> <strong>Department : </strong> </label>
+                            @Model.DepartmentName
+                        </div>
+                        <div class="col-4">
+                            <label for=""><strong>Creation By :</strong> </label>
+                            @Model.CreatedByName
+                        </div>
+                        <div class="col-4">
+                            <label for=""><strong>Creation Date :</strong> </label>
+                            @Model.CreationDate.ToString("dddd, dd-MMM-yyyy")
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for=""><strong>Remarks :</strong> </label>
+                            @Model.Remarks
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <!-- /.card-body -->
+
+
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            @*<div class="card-header">
+                <h3 class="card-title">List of Purchase Items From Vendor</h3>
+            </div>*@
+            <!-- /.card-header -->
+            <div class="card-body table-responsive">
+                <table id="bootstrap-data-table-export" class="table table-hover table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            @*<th>Code</th>*@
+                            <th>Voucher Line No</th>
+                            <th>Item Name</th>
+                            <th>Quantity</th>
+                            <th>Line Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model.ReturnToWarehouseDetails?.Count > 0)
+                        {
+                            foreach (var e in Model.ReturnToWarehouseDetails)
+                            {
+                                <tr class="dgrow" data-id="@e.Id">
+
+                                    @*<td>@e.Id</td>*@
+                                    <td>@e.VoucherLineNo</td>
+                                    <td>@e.ItemName</td>
+                                    <td>@e.Quantity</td>
+                                    <td>@e.LineRemarks</td>
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td><h6><b> Total Quantity : @Model.ReturnToWarehouseDetails.Sum(p => p.Quantity)</b></h6> </td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+

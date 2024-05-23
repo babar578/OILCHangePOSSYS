@@ -1,0 +1,1 @@
+search_result['5984']=["topic_00000000000010EF.html","InvoiceDataTable.Clone Method","Clones the structure of the DataTable, including all DataTable schemas and constraints."];

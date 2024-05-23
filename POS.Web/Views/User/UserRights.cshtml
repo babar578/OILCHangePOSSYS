@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "User Rights";
+}
+
+<style>
+    .content-header {
+        display: none;
+    }
+</style>
+
+
+<div class="row" style="padding-top: 10px;">
+    <div class="col-lg-2 col-md-4 col-sm-4">
+        <p class="font-weight-bold">Users</p>
+        @Html.Partial("_GetUsers")
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-8">
+        <p class="font-weight-bold">Menu Rights</p>
+        @*     @Html.Partial("_GetUserRights")*@
+        <div id="LoadUserRights"></div>
+    </div>
+</div>
+
+
+<script>
+
+
+
+
+    function GetUserRights(userId) {
+        startLoader();
+        $.ajax({
+            url: "/User/GetUserRights/",
+            type: "POST",
+            data: { UserId: userId },
+        }).done(function (result) {
+            $("#LoadUserRights").html(result);
+            stopLoader();
+        });
+    }
+</script>

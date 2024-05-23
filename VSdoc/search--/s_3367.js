@@ -1,0 +1,1 @@
+search_result['3367']=["topic_00000000000009B4.html","WastageRepotDataTable Class","Represents the strongly named DataTable class."];

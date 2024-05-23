@@ -1,0 +1,1 @@
+search_result['5884']=["topic_00000000000010A0.html","CompanyInfoRow.IsSTRNNull Method",""];

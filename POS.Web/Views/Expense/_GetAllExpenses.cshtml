@@ -1,0 +1,119 @@
+﻿@using POS.Utilities.ViewModel
+@model IEnumerable<ExpenseViewModel>
+@{
+    Layout = null;
+}
+<style>
+    .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 25px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+    }
+
+    .button1 {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    }
+
+    .button2:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+</style>
+<script src="~/Scripts/Site.js"></script>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">List of All Expense</h3>
+                <div class="card-tools">
+                    @{
+
+                        <div class="btn-group float-left" role="group">
+                            <div class="">
+                                <a href="/Expense/AddExpense" id="btn-add"
+                                   class="btn btn-primary waves-effect"
+                                   data-toggle="tooltip" data-placement="bottom" title="New Expense"
+                                   data-caption="Add New Expense">
+                                    <span class="fas fa-plus"></span> Add New Expense
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive">
+                <table id="bootstrap-data-table-export" class="table table-hover table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            @*<th>Code</th>*@
+                            <th>Amount</th>
+                            <th>reason</th>
+                            <th>CreatedBy</th>
+                            <th>CreationDate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var e in Model)
+                            {
+                                <tr class="dgrow" data-id="@e.Id">
+
+                                    @*<td>@e.Id</td>*@
+                                    <td>@e.Amount</td>
+                                    <td>@e.Reason</td>
+                                    <td>@e.username</td>
+                                    <td>@e.CreationDate</td>
+
+                                    <td>
+                                        <a href="/CE/AddExpense/" class="btn btn-xs btn-warning btn-edit disabled" data-toggle="tooltip" data-placement="bottom" title="Edit Expense" data-caption="Update Expense Detail"><span class="fas fa-edit"></span></a>
+                                        <a href="/CE/DeleteExpense/" class="btn btn-xs btn-danger btn-delete disabled" data-toggle="tooltip" data-placement="bottom" title="Delete Expense"><span class="fas fa-trash"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+
+                            <td><h6><b> Total Expenses: @Model.Sum(p => p.Amount)</b></h6> </td>
+
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
+<button class="button button2" onclick="ExportToExcel('xlsx')">Export table to excel</button>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+<script>
+    function ExportToExcel(type, fn, dl) {
+        var elt = document.getElementById('bootstrap-data-table-export');
+        var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+        return dl ?
+            XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+            XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+    }
+
+</script>
+
+
+
+
+

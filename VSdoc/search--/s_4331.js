@@ -1,0 +1,1 @@
+search_result['4331']=["topic_0000000000000C68.html","Dock27PosWebPortalDataSet284.ShouldSerializeTables Method","Gets a value indicating whether Tables property should be persisted."];

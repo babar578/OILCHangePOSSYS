@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "AllOrders";
+}
+
+
+<div id="AllOrders"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetAllOrders();
+    });
+    function GetAllOrders() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Home/GetAllOrders/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#AllOrders").html(result);
+            stopLoader();
+        });
+    }
+</script>

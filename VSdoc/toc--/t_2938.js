@@ -1,0 +1,1 @@
+c['2938']=[['2939',"IssueToDeptmentDataTable Constructor","topic_0000000000000ACB_overloads--.html",1],['2942',"Properties","topic_0000000000000ACA_props--.html",1],['2955',"Methods","topic_0000000000000ACA_methods--.html",1],['2971',"Events","topic_0000000000000ACA_events--.html",1]];

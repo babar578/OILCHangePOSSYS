@@ -1,0 +1,111 @@
+﻿@using POS.Utilities.Services
+@using POS.Utilities.ViewModel
+@model CustomerViewModel
+@{
+
+    Layout = null;
+    Model.Cities = VendorServices.GetAllCities();
+
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control", placeholder =" Customer Name * ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.CarNumber, new { @class = "form-control", placeholder = "Car Number * ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Address * ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.DropDownListFor(m => m.CityId, new SelectList(Model.Cities, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "City", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "E.g user@domain.com  ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", placeholder = "Mobile * ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Reading, new { @class = "form-control", placeholder = "Reading ", @required = "true" })
+            </div>
+        </div>
+      
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.CNIC, new { @class = "form-control", placeholder = "Car Model Year ", @required = "true" })
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="Vendor" class="btn btn-primary"><span class="fa fa-edit"></span> Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+
+}
+<script>
+
+    $("#Vendor").click(function () {
+
+        var id = $("#Id").val();
+        var CustomerName = $("#CustomerName").val();
+        var CarNumber = $("#CarNumber").val();
+        var address = $("#Address").val();
+        var cityId = $("#CityId").val();
+        var email = $("#Email").val();
+        var mobile = $("#Mobile").val();
+        var Reading = $("#Reading").val();
+
+        var cnic = $("#CNIC").val();
+     
+        if (CustomerName == "" || CarNumber == "" || address == "" || cityId == "" || Mobile == "") {
+            alertify.error("Fill required fields.");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                Id: id,
+                CustomerName: CustomerName,
+                CarNumber: CarNumber,
+                Address: address,
+                CityId: cityId,
+                Email: email,
+                Mobile: mobile,
+                Reading: Reading,
+                CNIC: cnic,
+              
+            };
+
+            SaveCustomer(modelData);
+        }
+    });
+</script>
+
+
+
+

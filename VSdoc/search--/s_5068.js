@@ -1,0 +1,1 @@
+search_result['5068']=["topic_0000000000000E74.html","ReturnToWareHouseDataTable.GetRowType Method","Gets the row type."];

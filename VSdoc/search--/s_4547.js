@@ -1,0 +1,1 @@
+search_result['4547']=["topic_0000000000000D0B.html","ComsumptionTableAdapter Class","Represents the connection and commands used to retrieve and save data."];

@@ -1,0 +1,1 @@
+c['4870']=[['4871',"TableAdapterManager Class","topic_000000000000089F.html",1],['4882',"fn_ItemsStockInHandTableAdapter Class","topic_0000000000000898.html",1]];

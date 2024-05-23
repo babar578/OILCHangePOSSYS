@@ -1,0 +1,1 @@
+c['2043']=[['2044',"Implicit Conversion (ReturnToVendorHead to ReturnToVendorHeadViewModel) Operator","topic_0000000000000628.html",0],['2045',"Implicit Conversion (ReturnToVendorHeadViewModel to ReturnToVendorHead) Operator","topic_0000000000000629.html",0]];

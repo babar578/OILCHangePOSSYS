@@ -1,0 +1,77 @@
+﻿@using POS.Utilities.ViewModel
+@model IEnumerable<FloorTableViewModel>
+@{
+    ViewBag.Title = "Tables";
+
+}
+
+<!-- Small boxes (Stat box) -->
+<div class="row">
+
+
+
+    @{
+        if (Model?.Count() > 0)
+        {
+            foreach (var p in Model)
+            {
+
+                if (p.IsHold)
+                {
+                    var order = POS.Utilities.Services.OrderServices.GetOrderByTableId(p.Id);
+                    if (order != null)
+                    {
+                        <div class="col-lg-3 col-6" data-toggle="tooltip" data-placement="bottom" title="Table is hold at this time">
+                            <a href="javascript:void(0)" onclick="GotoPosPanelWithOrderDetail(@p.Id, @order.Id, true);">
+                                <!-- small box -->
+                                <div class="small-box bg-danger">
+                                    <div class="inner" style="text-align:center">
+                                        <h3>@p.Name <small>( Order #:  @order.Id )</small> </h3>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-3 col-6" data-toggle="tooltip" data-placement="bottom" title="Table is hold at this time">
+                            <a href="/Home/POS/@p.Id">
+                                <!-- small box -->
+                                <div class="small-box bg-danger">
+                                    <div class="inner" style="text-align:center">
+                                        <h3>@p.Name</h3>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+
+                }
+                else
+                {
+                    <div class="col-lg-3 col-6" data-toggle="tooltip" data-placement="bottom" title="Table is free">
+                        <a href="javascript:void(0)" onclick="HoldTable(@p.Id,'@p.Name');">
+                            <!-- small box -->
+                            <div class="small-box bg-success">
+                                <div class="inner" style="text-align:center">
+                                    <h3>@p.Name</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+
+            }
+        }
+    }
+
+</div>
+<!-- /.row -->
+
+<script>
+    function GotoPosPanelWithOrderDetail(id, OrderId, IsUpdateMode) {
+        window.location.href = "/Home/POS?id=" + id + "&OrderId=" + OrderId + "&IsUpdateMode=" + IsUpdateMode;
+    }
+</script>

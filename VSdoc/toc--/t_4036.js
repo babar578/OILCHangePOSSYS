@@ -1,0 +1,1 @@
+c['4036']=[['4037',"WastageRepotRowChanged Event","topic_0000000000000F73.html",0],['4038',"WastageRepotRowChanging Event","topic_0000000000000F72.html",0],['4039',"WastageRepotRowDeleted Event","topic_0000000000000F75.html",0],['4040',"WastageRepotRowDeleting Event","topic_0000000000000F74.html",0]];

@@ -1,0 +1,46 @@
+﻿@using POS.Utilities.ViewModel
+@model CityViewModel
+@{
+
+    Layout = null;
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+    <div class="form-group ">
+        <label class="col-form-label">Name <b class="text-danger">*</b></label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Name ", @required = "true" })
+    </div>
+
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="AddCity" class="btn btn-primary"><span class="fa fa-save"></span> Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+}
+<script>
+
+    $("#AddCity").click(function () {
+
+        var id = $("#Id").val();
+        var name = $("#Name").val();
+
+        if (name == "") {
+            alertify.error("Fill required fields.");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                Id:id,
+                Name: name,
+            };
+            SaveCity(modelData);
+        }
+    });
+</script>
+
+

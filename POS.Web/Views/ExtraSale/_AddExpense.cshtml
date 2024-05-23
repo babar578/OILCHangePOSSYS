@@ -1,0 +1,65 @@
+﻿@using POS.Utilities.Services
+@using POS.Utilities.ViewModel
+@model ExtraSaleViewModel
+@{
+
+    Layout = null;
+
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", placeholder = "Amount * ", @required = "true" })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.Reason, new { @class = "form-control", placeholder = "Reason * ", @required = "true" })
+        </div>
+    </div>
+</div>
+
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="Vendor" class="btn btn-primary"><span class="fa fa-edit"></span> Extra Sale Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+
+}
+<script>
+
+    $("#Vendor").click(function () {
+
+        var id = $("#Id").val();
+        var amount = $("#Amount").val();
+        var reason = $("#Reason").val();
+
+        if (amount == "" ) {
+            alertify.error("Fill required fields.");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                Id: id,
+                Amount: amount,
+                Reason: reason,
+            };
+
+            SaveVendor(modelData);
+        }
+    });
+</script>
+
+
+
+
+
+

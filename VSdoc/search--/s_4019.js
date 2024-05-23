@@ -1,0 +1,1 @@
+search_result['4019']=["topic_0000000000000B8D.html","ComsumptionDataTable.CreateInstance Method","Creates a new instance of DataTable."];

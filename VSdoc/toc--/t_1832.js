@@ -1,0 +1,1 @@
+c['1832']=[['1833',"OpeningStockHeadViewModel Constructor","topic_000000000000056C.html",0],['1834',"Properties","topic_000000000000056B_props--.html",1],['1857',"Methods","topic_000000000000056B_methods--.html",1]];

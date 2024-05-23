@@ -1,0 +1,1 @@
+search_result['5001']=["topic_0000000000000E44.html","TableAdapterManager Class","TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios"];

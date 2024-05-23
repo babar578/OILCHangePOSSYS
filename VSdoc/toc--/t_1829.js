@@ -1,0 +1,1 @@
+c['1829']=[['1830',"Implicit Conversion (OpeningDetail to OpeningStockDetailViewModel) Operator","topic_0000000000000569.html",0],['1831',"Implicit Conversion (OpeningStockDetailViewModel to OpeningDetail) Operator","topic_000000000000056A.html",0]];

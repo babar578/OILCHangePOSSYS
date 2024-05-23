@@ -1,0 +1,1 @@
+c['3838']=[['3839',"ReturnVenderSummaryDataTable Constructor","topic_0000000000000EAF_overloads--.html",1],['3842',"Properties","topic_0000000000000EAE_props--.html",1],['3849',"Methods","topic_0000000000000EAE_methods--.html",1],['3864',"Events","topic_0000000000000EAE_events--.html",1]];

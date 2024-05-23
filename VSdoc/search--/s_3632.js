@@ -1,0 +1,1 @@
+search_result['3632']=["topic_0000000000000A70.html","fn_InventoryBalDataTable.NewRowFromBuilder Method","Creates a new row from an existing row."];

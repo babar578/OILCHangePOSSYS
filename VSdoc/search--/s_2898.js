@@ -1,0 +1,1 @@
+search_result['2898']=["topic_0000000000000860.html","fn_ItemsStockInHandDataTable.ClosingInventoryQuantityColumn Property",""];

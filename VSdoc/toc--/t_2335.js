@@ -1,0 +1,1 @@
+c['2335']=[['2336',"Implicit Conversion (WastageDetail to WastageDetailViewModel) Operator","topic_000000000000072A.html",0],['2337',"Implicit Conversion (WastageDetailViewModel to WastageDetail) Operator","topic_000000000000072B.html",0]];

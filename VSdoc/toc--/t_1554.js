@@ -1,0 +1,1 @@
+c['1554']=[['1555',"CartViewModel Constructor","topic_000000000000047A.html",0],['1556',"Properties","topic_0000000000000479_props--.html",1]];

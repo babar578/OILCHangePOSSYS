@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "ReturnToWasaHousesReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<body>
+    <div class=" row">
+        <div class=" col-md-12">
+            <div class="card card-custom accent-dark">
+                <div class="card-header card-blue">
+                    <div class="card-title">
+                        <span class="card-icon">
+                            <i class="flaticon2-line-chart text-primary"></i>
+                        </span>
+                        <h3 class="card-label">
+                            Return To  Store
+                            <small>(Report)</small>
+
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row min-h-500px">
+        <div class="col-sm-12">
+            <div class="card card-custom" id="kt_page_sticky_card">
+                <div class="card-body">
+                    <div id="divAdminPanelSpinner">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+
+                                            <label for="start">From Date:</label>
+                                            <input type="date" id="fromDate">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+
+                                            <label for="text">To Date:</label>
+                                            <input type="date" id="toDate">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div id="divAdminPanel">
+                            </div>
+                            <div class="float-right">
+                                <a href="javascript:void(0);" onclick="callReport()" class="btn btn-success btn-sm">Generate Report</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+<script>
+
+  $(document).ready(function () {
+    getDatePicker("fromDate");
+    getDatePicker("toDate");
+  });
+
+  function callReport() {
+
+    var fromDate = $('#fromDate').val();
+    var toDate = $('#toDate').val();
+      window.open("/Reports/ReturnToWasaHousesReport.aspx?fromDate=" + fromDate + "&toDate=" + toDate ,"_blank")
+  }
+</script>

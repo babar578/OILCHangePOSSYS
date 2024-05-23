@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="GENERATOR" content="VSdocman - documentation generator; https://www.helixoft.com" />
+	<link rel="icon" href="favicon.ico">
+	<title>InvoiceDataTable.AddInvoiceRow (String, Int32, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, Int32, DateTime, DateTime, Boolean, Boolean, Int32, Int32, String, Double, Double, Double, Double, Double, Int32) Method</title>
+
+	<link rel="stylesheet" type="text/css" href="msdn2019/toc.css" />
+	<script src="msdn2019/toc.js"></script>
+	<link rel="stylesheet" type="text/css" href="msdn2019/msdn2019.css">
+	<script src="msdn2019/msdn2019.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shCore_helixoft.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shBrushVb.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shBrushCSharp.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shBrushFSharp.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shBrushCpp.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shBrushJScript.js" type="text/javascript"></script>
+	<link href="SyntaxHighlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
+	<link href="SyntaxHighlighter/styles/shThemeMsdnLW.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+		SyntaxHighlighter.all();
+	</script>
+ <link rel="stylesheet" type="text/css" href="vsdocman_overrides.css"> 
+</head>
+
+<body style="direction: ltr;">
+	<div id="topic">
+<!--HEADER START-->
+  <div id="header">
+  	<div id="header-top-container">	
+	<div id="header-top-parent-container1">
+	  <div id="header-top-container1">
+	    <div id="runningHeaderText1"><a id="headerLogo" href="#" onclick="window.location.href = getCssCustomProperty('--headerLogoLink'); return false;">logo</a></div>
+	    <div id="runningHeaderText1b"><script>
+document.write(getCssCustomProperty('--headerTopCustomLineHtml'));
+</script></div>
+	  </div>
+	</div>
+  	<div id="header-top-container2">
+    <div id="runningHeaderText">SOLUTION-WIDE PROPERTIES Reference</div>
+   
+    <div id="search-bar-container">
+     <form id="search-bar" action="search--.html">
+      <input id="HeaderSearchInput" type="search" name="search" placeholder="Search" >
+      <button id="btn-search" class="c-glyph" title="Search">
+      <span>Search</span>
+     </button>
+     </form>
+     <button id="cancel-search" class="cancel-search" title="Cancel">
+     <span>Cancel</span>
+    </button>
+    </div>
+   </div>
+   </div>
+
+  	
+  	<hr />
+	<div id="header-breadcrumbs"></div>
+	<div id="headerLinks">
+	</div>
+		<hr />
+	</div>
+<!--HEADER END-->
+		<div id="mainSection">
+		
+  <div id="toc-area">
+   <div id="toc-container" class="stickthis full-height">
+    <div id="-1"></div>
+    <div id="c-1">
+  <div id="ci-1" class="inner-for-height"></div>
+</div>
+   </div>
+  </div>
+
+<div id="mainBody">
+		<h1 class="title">InvoiceDataTable.AddInvoiceRow (String, Int32, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, Int32, DateTime, DateTime, Boolean, Boolean, Int32, Int32, String, Double, Double, Double, Double, Double, Int32) Method</h1>
+        
+		<div class="metadata">
+        Namespace:
+<a href="topic_0000000000001061.html">POS.Reporting.DataSets</a>
+
+
+
+
+        <br />Assembly: POS.Reporting (in POS.Reporting.dll)
+
+		</div>
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section_container">
+	<div id="syntaxSection" class="section">	
+	
+	
+	<div id="syntaxCodeBlocks">
+		<div class="codeSnippetContainer">		
+			<div class="codeSnippetTabs">
+				<div class="codeSnippetTabLeftCornerActive">
+				</div>
+				<div class="codeSnippetTab csFirstTab csActiveTab codeVB">
+					<a>VB</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCpp">
+					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
+				</div>
+				<div class="codeSnippetTab csLastTab csNaTab codeJScript">
+					<a href="javascript: CodeSnippet_SetLanguage('JScript');">JScript</a>
+				</div>
+				<div class="codeSnippetTabRightCorner">
+				</div>
+				<div style="clear:both;">
+				</div>
+			</div>
+	
+			<div class="codeSnippetCodeCollection">
+				<div class="codeSnippetToolbar">
+					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
+				</div>
+				
+				<div class="codeSnippetCode codeVB">
+					<pre xml:space="preserve" class="brush: vb">&lt;global::System.Diagnostics.DebuggerNonUserCode()&gt; _&nbsp;<br />&lt;global::System.CodeDom.Compiler.GeneratedCode(&quot;System.Data.Design.TypedDataSetGenerator&quot;, &quot;16.0.0.0&quot;)&gt; _&nbsp;<br />Public Function AddInvoiceRow( _&nbsp;<br />   ByVal <i>InvoiceNumber</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a>, _&nbsp;<br />   ByVal <i>PaymentTypeId</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">Integer</a>, _&nbsp;<br />   ByVal <i>GSTPerentage</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>FOCDiscount</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>DiscountPercentage</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>BankDiscount</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>DiscountVoucher</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>Tip</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>ServiceChargesPerentage</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>GstCharged</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>DiscountCharged</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>ServiceCharged</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>GrossAmount</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>TotalNetAmount</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>ReceiptTotalCash</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>ReceiptTotalCredit</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>Change</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>TableId</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">Integer</a>, _&nbsp;<br />   ByVal <i>CreationDate</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.datetime">Date</a>, _&nbsp;<br />   ByVal <i>ModifyDate</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.datetime">Date</a>, _&nbsp;<br />   ByVal <i>IsUpdateMode</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">Boolean</a>, _&nbsp;<br />   ByVal <i>IsPayment</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">Boolean</a>, _&nbsp;<br />   ByVal <i>OrderId</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">Integer</a>, _&nbsp;<br />   ByVal <i>ItemId</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">Integer</a>, _&nbsp;<br />   ByVal <i>ItemName</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a>, _&nbsp;<br />   ByVal <i>Quantity</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>ItemPrice</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>ItemTotalPrice</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>ItemTaxAmount</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>ItemDiscount</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">Double</a>, _&nbsp;<br />   ByVal <i>ItemTableId</i> As <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">Integer</a> _&nbsp;<br />) As <a target="_top" href="topic_00000000000010FA.html" onclick="this.target='';return true;">InvoiceRow</a></pre>			
+				</div>
+				<div class="codeSnippetCode codeNA">
+					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
+				</div>
+			</div>
+		</div>
+		
+		<div class="codeSnippetContainer">
+			<div class="codeSnippetTabs">
+				<div class="codeSnippetTabLeftCorner">
+				</div>
+				<div class="codeSnippetTab csFirstTab csNaTab codeVB">
+					<a>VB</a>
+				</div>
+				<div class="codeSnippetTab csActiveTab codeCsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCpp">
+					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
+				</div>
+				<div class="codeSnippetTab csLastTab csNaTab codeJScript">
+					<a href="javascript: CodeSnippet_SetLanguage('JScript');">JScript</a>
+				</div>
+				<div class="codeSnippetTabRightCorner">
+				</div>
+				<div style="clear:both;">
+				</div>
+			</div>
+	
+			<div class="codeSnippetCodeCollection">
+				<div class="codeSnippetToolbar">
+					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
+				</div>
+				
+				<div class="codeSnippetCode codeCsharp">
+					<pre xml:space="preserve" class="brush: csharp">[global::System.Diagnostics.DebuggerNonUserCode()]&nbsp;<br />[global::System.CodeDom.Compiler.GeneratedCode(&quot;System.Data.Design.TypedDataSetGenerator&quot;, &quot;16.0.0.0&quot;)]&nbsp;<br />public <a target="_top" href="topic_00000000000010FA.html" onclick="this.target='';return true;">InvoiceRow</a> AddInvoiceRow(&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a> <i>InvoiceNumber</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> <i>PaymentTypeId</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>GSTPerentage</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>FOCDiscount</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>DiscountPercentage</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>BankDiscount</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>DiscountVoucher</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>Tip</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ServiceChargesPerentage</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>GstCharged</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>DiscountCharged</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ServiceCharged</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>GrossAmount</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>TotalNetAmount</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ReceiptTotalCash</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ReceiptTotalCredit</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>Change</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> <i>TableId</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.datetime">DateTime</a> <i>CreationDate</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.datetime">DateTime</a> <i>ModifyDate</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">bool</a> <i>IsUpdateMode</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">bool</a> <i>IsPayment</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> <i>OrderId</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> <i>ItemId</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a> <i>ItemName</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>Quantity</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ItemPrice</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ItemTotalPrice</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ItemTaxAmount</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ItemDiscount</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> <i>ItemTableId</i>&nbsp;<br />)</pre>			
+				</div>
+				<div class="codeSnippetCode codeNA">
+					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
+				</div>
+			</div>
+		</div>
+
+
+		<div class="codeSnippetContainer">
+			<div class="codeSnippetTabs">
+				<div class="codeSnippetTabLeftCorner">
+				</div>
+				<div class="codeSnippetTab csFirstTab csNaTab codeVB">
+					<a>VB</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
+				</div>
+				<div class="codeSnippetTab csActiveTab codeCpp">
+					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
+				</div>
+				<div class="codeSnippetTab csLastTab csNaTab codeJScript">
+					<a href="javascript: CodeSnippet_SetLanguage('JScript');">JScript</a>
+				</div>
+				<div class="codeSnippetTabRightCorner">
+				</div>
+				<div style="clear:both;">
+				</div>
+			</div>
+	
+			<div class="codeSnippetCodeCollection">
+				<div class="codeSnippetToolbar">
+					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
+				</div>
+				
+				<div class="codeSnippetCode codeCpp">
+					<pre xml:space="preserve" class="brush: cpp">[global::System.Diagnostics.DebuggerNonUserCode()]&nbsp;<br />[global::System.CodeDom.Compiler.GeneratedCode(&quot;System.Data.Design.TypedDataSetGenerator&quot;, &quot;16.0.0.0&quot;)]&nbsp;<br />public: &nbsp;<br /><a target="_top" href="topic_00000000000010FA.html" onclick="this.target='';return true;">InvoiceRow</a>^ AddInvoiceRow(&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a>^ <i>InvoiceNumber</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> <i>PaymentTypeId</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>GSTPerentage</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>FOCDiscount</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>DiscountPercentage</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>BankDiscount</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>DiscountVoucher</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>Tip</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ServiceChargesPerentage</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>GstCharged</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>DiscountCharged</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ServiceCharged</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>GrossAmount</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>TotalNetAmount</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ReceiptTotalCash</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ReceiptTotalCredit</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>Change</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> <i>TableId</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.datetime">DateTime</a> <i>CreationDate</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.datetime">DateTime</a> <i>ModifyDate</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">bool</a> <i>IsUpdateMode</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">bool</a> <i>IsPayment</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> <i>OrderId</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> <i>ItemId</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a>^ <i>ItemName</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>Quantity</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ItemPrice</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ItemTotalPrice</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ItemTaxAmount</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> <i>ItemDiscount</i>,&nbsp;<br />   <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> <i>ItemTableId</i>&nbsp;<br />) </pre>			
+				</div>
+				<div class="codeSnippetCode codeNA">
+					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
+				</div>
+			</div>
+		</div>
+		
+		<div class="codeSnippetContainer">
+			<div class="codeSnippetTabs">
+				<div class="codeSnippetTabLeftCorner">
+				</div>
+				<div class="codeSnippetTab csFirstTab csNaTab codeVB">
+					<a>VB</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeCpp">
+					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
+				</div>
+				<div class="codeSnippetTab csActiveTab csLastTab codeJScript">
+					<a href="javascript: CodeSnippet_SetLanguage('JScript');">JScript</a>
+				</div>
+				<div class="codeSnippetTabRightCornerActive">
+				</div>
+				<div style="clear:both;">
+				</div>
+			</div>
+	
+			<div class="codeSnippetCodeCollection">
+				<div class="codeSnippetToolbar">
+					<a title="Copy to clipboard." href="javascript:void(0)" onclick="CopyCode(this);">Copy</a>
+				</div>
+				
+				<div class="codeSnippetCode codeJScript">
+					<pre xml:space="preserve" class="brush: js">public &nbsp;<br />   global::System.Diagnostics.DebuggerNonUserCode()&nbsp;<br />   global::System.CodeDom.Compiler.GeneratedCode(&quot;System.Data.Design.TypedDataSetGenerator&quot;, &quot;16.0.0.0&quot;)&nbsp;<br />function AddInvoiceRow(&nbsp;<br />    <i>InvoiceNumber</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a>,&nbsp;<br />    <i>PaymentTypeId</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>,&nbsp;<br />    <i>GSTPerentage</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>FOCDiscount</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>DiscountPercentage</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>BankDiscount</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>DiscountVoucher</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>Tip</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>ServiceChargesPerentage</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>GstCharged</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>DiscountCharged</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>ServiceCharged</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>GrossAmount</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>TotalNetAmount</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>ReceiptTotalCash</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>ReceiptTotalCredit</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>Change</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>TableId</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>,&nbsp;<br />    <i>CreationDate</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.datetime">DateTime</a>,&nbsp;<br />    <i>ModifyDate</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.datetime">DateTime</a>,&nbsp;<br />    <i>IsUpdateMode</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">boolean</a>,&nbsp;<br />    <i>IsPayment</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">boolean</a>,&nbsp;<br />    <i>OrderId</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>,&nbsp;<br />    <i>ItemId</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>,&nbsp;<br />    <i>ItemName</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.string">String</a>,&nbsp;<br />    <i>Quantity</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>ItemPrice</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>ItemTotalPrice</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>ItemTaxAmount</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>ItemDiscount</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a>,&nbsp;<br />    <i>ItemTableId</i> : <a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a>&nbsp;<br />) : <a target="_top" href="topic_00000000000010FA.html" onclick="this.target='';return true;">InvoiceRow</a>;</pre>			
+				</div>
+				<div class="codeSnippetCode codeNA">
+					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+
+<h4 class="subHeading">
+	Parameters</h4><dl paramName="InvoiceNumber" class="parameterList">
+	<dt>
+		<span class="parameter">
+			InvoiceNumber
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="PaymentTypeId" class="parameterList">
+	<dt>
+		<span class="parameter">
+			PaymentTypeId
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="GSTPerentage" class="parameterList">
+	<dt>
+		<span class="parameter">
+			GSTPerentage
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="FOCDiscount" class="parameterList">
+	<dt>
+		<span class="parameter">
+			FOCDiscount
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="DiscountPercentage" class="parameterList">
+	<dt>
+		<span class="parameter">
+			DiscountPercentage
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="BankDiscount" class="parameterList">
+	<dt>
+		<span class="parameter">
+			BankDiscount
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="DiscountVoucher" class="parameterList">
+	<dt>
+		<span class="parameter">
+			DiscountVoucher
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="Tip" class="parameterList">
+	<dt>
+		<span class="parameter">
+			Tip
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="ServiceChargesPerentage" class="parameterList">
+	<dt>
+		<span class="parameter">
+			ServiceChargesPerentage
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="GstCharged" class="parameterList">
+	<dt>
+		<span class="parameter">
+			GstCharged
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="DiscountCharged" class="parameterList">
+	<dt>
+		<span class="parameter">
+			DiscountCharged
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="ServiceCharged" class="parameterList">
+	<dt>
+		<span class="parameter">
+			ServiceCharged
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="GrossAmount" class="parameterList">
+	<dt>
+		<span class="parameter">
+			GrossAmount
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="TotalNetAmount" class="parameterList">
+	<dt>
+		<span class="parameter">
+			TotalNetAmount
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="ReceiptTotalCash" class="parameterList">
+	<dt>
+		<span class="parameter">
+			ReceiptTotalCash
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="ReceiptTotalCredit" class="parameterList">
+	<dt>
+		<span class="parameter">
+			ReceiptTotalCredit
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="Change" class="parameterList">
+	<dt>
+		<span class="parameter">
+			Change
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="TableId" class="parameterList">
+	<dt>
+		<span class="parameter">
+			TableId
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="CreationDate" class="parameterList">
+	<dt>
+		<span class="parameter">
+			CreationDate
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.datetime">DateTime</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="ModifyDate" class="parameterList">
+	<dt>
+		<span class="parameter">
+			ModifyDate
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.datetime">DateTime</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="IsUpdateMode" class="parameterList">
+	<dt>
+		<span class="parameter">
+			IsUpdateMode
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">bool</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="IsPayment" class="parameterList">
+	<dt>
+		<span class="parameter">
+			IsPayment
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.boolean">bool</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="OrderId" class="parameterList">
+	<dt>
+		<span class="parameter">
+			OrderId
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="ItemId" class="parameterList">
+	<dt>
+		<span class="parameter">
+			ItemId
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="ItemName" class="parameterList">
+	<dt>
+		<span class="parameter">
+			ItemName
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.string">string</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="Quantity" class="parameterList">
+	<dt>
+		<span class="parameter">
+			Quantity
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="ItemPrice" class="parameterList">
+	<dt>
+		<span class="parameter">
+			ItemPrice
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="ItemTotalPrice" class="parameterList">
+	<dt>
+		<span class="parameter">
+			ItemTotalPrice
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="ItemTaxAmount" class="parameterList">
+	<dt>
+		<span class="parameter">
+			ItemTaxAmount
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="ItemDiscount" class="parameterList">
+	<dt>
+		<span class="parameter">
+			ItemDiscount
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.double">double</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+<dl paramName="ItemTableId" class="parameterList">
+	<dt>
+		<span class="parameter">
+			ItemTableId
+		</span>
+	</dt>
+	<dd>
+		<a target="_top" href="https://docs.microsoft.com/en-us/dotnet/api/system.int32">int</a> 
+	</dd>
+</dl>
+<p>
+	 
+</p>
+
+<p />
+
+	<h4 class="subHeading">
+		Return Value</h4>
+	<a target="_top" href="topic_00000000000010FA.html" onclick="this.target='';return true;">InvoiceRow</a> 
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Applies to</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="frameworksSection" class="section">	
+  <h4 class="subHeading">.NET Framework</h4>Supported in: 4.5, 4.5.1, 4.5.2, 4.6, 4.6.1, 4.6.2, 4.7, 4.7.1<br />
+
+
+
+
+
+
+
+
+
+
+	
+	
+	</div>					
+</div>
+
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">See Also</a></span>
+		<div>&nbsp;</div>
+	</div>
+
+	<div id="seeAlsoSection" class="section">	
+		<div>
+			<a href="topic_00000000000010C3.html">InvoiceDataTable Class</a><br />
+
+
+
+<a href="topic_0000000000001061.html">POS.Reporting.DataSets Namespace</a><br />
+
+
+			
+
+		</div>
+	</div>					
+</div>
+			</div>
+
+			<div id="internal-toc-area">
+				<div id="internal-toc-container" class="stickthis">
+					<h3 id="internal-toc-heading">In this article</h3>
+					<span id="internal-toc-definition-localized-text">Definition</span>
+				</div>
+			</div>
+
+			</div>
+      <div id="footer">
+	   <div id="footer-container">
+      	<p><span style="color: #FF0000;">Generated with unregistered version of <a target="_top" href="http://www.helixoft.com/vsdocman/overview.html">VSdocman</a></span>&nbsp;<br />Your own footer text will only be shown in registered version.</p>
+      </div>
+    </div>
+    </div>
+  </body>
+</html>
+

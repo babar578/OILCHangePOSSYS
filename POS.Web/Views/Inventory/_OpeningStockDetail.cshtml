@@ -1,0 +1,97 @@
+﻿
+@using POS.Utilities.Services
+@using POS.Utilities.Utilities
+@using POS.Utilities.ViewModel
+@{
+    Layout = null;
+    List<ItemViewModel> items = Session[WebUtil.SearchItems] as List<ItemViewModel>;
+    double GrossAmount = 0;
+    double maxAmount = 0;
+    int Count = 0;
+    if (items?.Count > 0)
+    {
+        maxAmount = (double)items.Select(i => i.SubTotal).Sum();
+        GrossAmount = Math.Round(maxAmount, 2);
+        Count = items.Count();
+    }
+}
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-height: 500px;">
+            <div class="card">
+                <!-- /.card-Detailer -->
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-striped table-hover text-wrap" id="tblSale">
+                        <thead>
+                            <tr>
+                                <th class="">Item Name</th>
+                                <th class="">Rate</th>
+                                <th class="">Quantity</th>
+                                <th class="">Sub Total</th>
+                                <th class="">Line Remarks</th>
+                                <th class="">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{
+                                if (items?.Count > 0)
+                                {
+                                    foreach (var p in items)
+                                    {
+                                        <tr>
+                                            <td class=""> @Html.HiddenFor(m => p.Id, new { @class = "itemId" }) <span class="itemName">@p.Name </span>  </td>
+                                            <td class=""><input type="text" id="Price_@p.Id" class="form-control itemPrice" value="@p.Price" onchange="CalculateSubTotalAmount(@p.Id)" /></td>
+                                            <td class=""> <input type="text" id="Quantity_@p.Id" class="form-control itemQuantity" value="@p.Quantity" onchange="CalculateSubTotalAmount(@p.Id)" /></td>
+                                            <td class=""><span id="SubTotal_@p.Id" class="subTotalPrice">@p.SubTotal</span></td>
+                                            <td class=""><input type="text" id="Remarks_@p.Id" class="form-control itemRemarks" /></td>
+                                            <td class=""><span class="fa fa-trash" style="cursor:pointer;" onclick="RemoveVendorToWarehouse(@p.Id)"></span></td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                        <tfoot>
+
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card card-widget widget-user-2">
+                <div class="widget-user-header bg-warning">
+                    <h3 style="text-align:center">Calculation</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                SubTotal <span class="float-right badge bg-primary" id="GrossAmount">@GrossAmount</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                Item Count <span class="float-right badge bg-info">@Count</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                Total Bill <span class="float-right badge bg-success" id="TotalAmount">@GrossAmount</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="javascript: void(0)" onclick="Purchase()" class="btn btn-block btn-outline-success">
+                                SAVE
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

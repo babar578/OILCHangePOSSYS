@@ -1,0 +1,1 @@
+search_result['248']=["topic_00000000000000B7.html","fn_ItemsStockInHand_Result.WastageQuantity Property",""];

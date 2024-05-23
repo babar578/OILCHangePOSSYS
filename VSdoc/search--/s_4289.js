@@ -1,0 +1,1 @@
+search_result['4289']=["topic_0000000000000C4D.html","VenderPaymentLedgerSummaryTableAdapter Class","Represents the connection and commands used to retrieve and save data."];

@@ -1,0 +1,1 @@
+search_result['3468']=["topic_00000000000009F7.html","Dock27PosWebPortalDataSet2.SchemaSerializationMode Property","Gets or sets a SchemaSerializationMode for a DataSet."];

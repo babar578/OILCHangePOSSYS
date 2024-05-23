@@ -1,0 +1,1 @@
+c['619']=[['620',"VendorPaymentType Constructor","topic_000000000000027B.html",0],['621',"Properties","topic_000000000000027A_props--.html",1]];

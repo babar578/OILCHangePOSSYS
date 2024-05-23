@@ -1,0 +1,1 @@
+search_result['2712']=["topic_00000000000007D1.html","InventoryController.GetClosingInventoryVoucherSummary Method",""];

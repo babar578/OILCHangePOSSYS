@@ -1,0 +1,80 @@
+﻿@using POS.Utilities.ViewModel
+@model IEnumerable<UserViewModel>
+@{
+    ViewBag.Title = "All User";
+}
+
+
+<script src="~/Scripts/Site.js"></script>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">List of All Users</h3>
+                <div class="card-tools">
+                    @{
+
+                        <div class="btn-group float-left" role="group">
+                            <div class="">
+                                <a href="/User/AddUser" id="btn-add"
+                                   class="btn btn-primary waves-effect"
+                                   data-toggle="tooltip" data-placement="bottom" title="New User"
+                                   data-caption="Add New User">
+                                    <span class="fas fa-plus"></span> Add New User
+                                </a>
+                            </div>
+                        </div>
+
+                    }
+
+
+
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive">
+                <table id="bootstrap-data-table-export" class="table table-hover table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Full Name</th>
+                            <th>Father Name</th>
+                            <th>CNIC</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var e in Model)
+                            {
+                                <tr class="dgrow" data-id="@e.Id">
+
+                                    <td>@e.UserName</td>
+                                    <td>@e.Email</td>
+                                    <td>@e.Mobile</td>
+                                    <td>@e.FullName</td>
+                                    <td>@e.FatherName</td>
+                                    <td>@e.CNIC</td>
+                                    <td>
+                                        <a href="/User/AddUser/" class="btn btn-xs btn-warning btn-edit" data-toggle="tooltip" data-placement="bottom" title="Edit User" data-caption="Update User Detail"><span class="fas fa-edit"></span></a>
+                                        <a href="/User/DeleteUser/" class="btn btn-xs btn-danger btn-delete" data-toggle="tooltip" data-placement="bottom" title="Delete User"><span class="fas fa-trash"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card-body -->
+
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+
+

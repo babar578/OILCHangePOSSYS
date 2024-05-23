@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "WarehouseItems";
+}
+
+<div id="WarehouseItems"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetAllWarehouseItems();
+    });
+
+    function GetAllWarehouseItems() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/GetAllWarehouseItems/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#WarehouseItems").html(result);
+            stopLoader();
+        });
+    }
+</script>
+

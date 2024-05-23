@@ -1,0 +1,1 @@
+search_result['2472']=["topic_0000000000000712.html","VendorViewModel.NTN Property",""];

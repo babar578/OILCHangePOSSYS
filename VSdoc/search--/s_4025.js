@@ -1,0 +1,1 @@
+search_result['4025']=["topic_0000000000000B93.html","ComsumptionDataTable.OnRowDeleted Method","Raises the RowDeleted event."];

@@ -1,0 +1,1 @@
+c['1638']=[['1639',"Implicit Conversion (Department to DepartmentViewModel) Operator","topic_00000000000004C0.html",0],['1640',"Implicit Conversion (DepartmentViewModel to Department) Operator","topic_00000000000004C1.html",0]];

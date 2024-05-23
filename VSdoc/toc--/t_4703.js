@@ -1,0 +1,1 @@
+c['4703']=[['4704',"ReturnToVendorTableAdapter Constructor","topic_0000000000000DF7.html",0],['4705',"Properties","topic_0000000000000DF6_props--.html",1],['4709',"Methods","topic_0000000000000DF6_methods--.html",1]];

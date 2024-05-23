@@ -1,0 +1,1 @@
+search_result['5313']=["topic_0000000000000F20.html","fn_InventoryBalRow.OpeningBalanceQuantity Property",""];

@@ -1,0 +1,1 @@
+search_result['2114']=["topic_0000000000000610.html","ReturnToVendorDetailViewModel.Implicit Conversion (ReturnToVendorDetailViewModel to ReturnToVendorDetail) Operator",""];

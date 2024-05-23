@@ -1,0 +1,1 @@
+search_result['3507']=["topic_0000000000000A15.html","IssueToDeptmentDataTable.Clone Method","Clones the structure of the DataTable, including all DataTable schemas and constraints."];

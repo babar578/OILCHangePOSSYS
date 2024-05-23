@@ -1,0 +1,1 @@
+c['2016']=[['2017',"Implicit Conversion (ReturnToVendorDetail to ReturnToVendorDetailViewModel) Operator","topic_000000000000060F.html",0],['2018',"Implicit Conversion (ReturnToVendorDetailViewModel to ReturnToVendorDetail) Operator","topic_0000000000000610.html",0]];

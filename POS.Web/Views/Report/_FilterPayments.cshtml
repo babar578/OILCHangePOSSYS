@@ -1,0 +1,70 @@
+﻿@model POS.Utilities.ReportsModel.FilterVendorPayment
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-form-label">From Date <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.FromDate, new { @type = "date", @class = "form-control", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-form-label">To Date <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.ToDate, new { @type = "date", @class = "form-control", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group ">
+                <label class="col-form-label">Vendor </label>
+                @Html.DropDownListFor(m => m.VendorId, new SelectList(Model.Vendors, "Id", "VendorName"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Vendors", @required = "true" })
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="Search" class="btn btn-primary"><span class="fa fa-search"></span> Search</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+}
+
+<script>
+
+    $("#Search").click(function () {
+
+        var fromDate = $("#FromDate").val();
+        var toDate = $("#ToDate").val();
+        var vendorId = $("#VendorId").val();
+
+
+        if (fromDate == "" || toDate == "" ) {
+            alertify.error("Please Enter Valid Date Range.");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                FromDate: fromDate,
+                ToDate: toDate,
+                VendorId: vendorId,
+            };
+            startLoader();
+            $.ajax({
+                url: '@Url.Action("VendorPayments", "Report")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                alertify.success("Saved successfully");
+                window.location.href = "/Report/VendorPayments";
+            });
+        }
+    });
+</script>
+

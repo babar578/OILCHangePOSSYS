@@ -1,0 +1,64 @@
+﻿@using POS.Utilities.Services
+@using POS.Utilities.ViewModel
+@model ProcessViewModel
+@{
+
+    Layout = null;
+
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Payment, new { @class = "form-control", placeholder = "Payment * ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.TransationDate, new { @class = "form-control", type = "Date", placeholder = "Transaction Date *", @required = "true" })
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="Vendor" class="btn btn-primary"><span class="fa fa-edit"></span> Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+
+}
+<script>
+
+    $("#Vendor").click(function () {
+
+        var id = $("#Id").val();
+        var payment = $("#Payment").val();
+        var transationDate = $("#TransationDate").val();
+
+        if (payment == "" || transationDate == "") {
+            alertify.error("Fill required fields.");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                Id: id,
+                Payment: payment,
+                TransationDate: transationDate,
+            };
+
+            SaveVendor(modelData);
+        }
+    });
+</script>
+
+
+
+
+

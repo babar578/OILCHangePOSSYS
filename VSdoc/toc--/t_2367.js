@@ -1,0 +1,1 @@
+c['2367']=[['2368',"fn_ItemsStockInHandDataTable(SerializationInfo, StreamingContext) Constructor","topic_0000000000000858.html",0],['2369',"fn_ItemsStockInHandDataTable() Constructor","topic_0000000000000857.html",0]];

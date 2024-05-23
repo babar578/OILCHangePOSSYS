@@ -1,0 +1,1 @@
+search_result['4252']=["topic_0000000000000C32.html","VenderPaymentLedgerSummaryDataTable.NewRowFromBuilder Method","Creates a new row from an existing row."];

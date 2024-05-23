@@ -1,0 +1,1 @@
+search_result['4848']=["topic_0000000000000DDC.html","ReturnToVendorDataTable.GetRowType Method","Gets the row type."];

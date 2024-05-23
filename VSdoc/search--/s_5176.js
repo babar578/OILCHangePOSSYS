@@ -1,0 +1,1 @@
+search_result['5176']=["topic_0000000000000EBE.html","ReturnVenderSummaryDataTable.CreateInstance Method","Creates a new instance of DataTable."];

@@ -1,0 +1,1 @@
+c['4077']=[['4078',"IssueToDeptmentDataTable(SerializationInfo, StreamingContext) Constructor","topic_0000000000000FB6.html",0],['4079',"IssueToDeptmentDataTable() Constructor","topic_0000000000000FB5.html",0]];

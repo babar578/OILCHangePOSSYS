@@ -1,0 +1,185 @@
+﻿
+@{
+    ViewBag.Title = "ReturnToVendor";
+}
+
+<style>
+    .content-header {
+        display: none !important;
+    }
+</style>
+
+
+<div id="ReturnToVendorHead"></div>
+<div id="ReturnToVendorDetail"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        ReturnToVendorHead();
+        ReturnToVendorDetail();
+    });
+    function ReturnToVendorHead() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/ReturnToVendorHead/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#ReturnToVendorHead").html(result);
+            stopLoader();
+        });
+    }
+
+    function ReturnToVendorDetail() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/ReturnToVendorDetail/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#ReturnToVendorDetail").html(result);
+            stopLoader();
+        });
+    }
+
+    function CalculateRVQty(itemId) {
+        var phyQuantity = parseFloat($(`#PhyQuantity_${itemId}`).val());
+        var issQuantity = parseFloat($(`#IssQuantity_${itemId}`).val());
+        var issPrice = parseFloat($(`#Price_${itemId}`).val());
+        if (issQuantity > phyQuantity) {
+            return alertify.error("Return Quantity Always Less Than And Equal To Physical Quantity");
+        }
+        
+        var remaining = parseFloat(phyQuantity - issQuantity).toFixed(2);
+        $(`#RemQuantity_${itemId}`).html(remaining);
+
+        if (itemId == "" || issQuantity == "" || issPrice==" ") {
+            return alertify.error("values is empty");
+        }
+        else {
+
+            var modelData = {
+                ItemId : itemId,
+                Quantity: issQuantity,
+                AverageRate: issPrice
+            }
+
+            startLoader();
+            $.ajax({
+                url: '@Url.Action("UpdateReturnToVendor", "Inventory")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                ReturnToVendorDetail();
+                stopLoader();
+            });
+
+        }
+
+    }
+
+    function ReturnToVendor() {
+        debugger
+        var transactionDate = $("#TransactionDate").val();
+        var docNo = $("#DocNo").val();
+        var vendorId = $("#VendorId").val();
+        var locationId = $("#LocationId").val();
+        var departmentId = $("#DepartmentId").val();
+        var remarks = $("#Remarks").val();
+
+        var itemData = [];
+
+        $("#tblSale tr").each(function () {
+            $this = $(this);
+            var itemId = $this.find("input.itemId").val();
+            var rate = $this.find("input.itemPrice").val();
+            var itemName = $this.find("span.itemName").text();
+            var quantity = $this.find("input.itemQuantity").val();
+            var itemRemarks = $this.find("input.itemRemarks").val();
+
+            if (itemId && quantity) {
+                debugger
+                var itemRow = {
+                    ItemId: itemId,
+                    Rate: rate,
+                    ItemName: itemName,
+                    Quantity: quantity,
+                    Remarks: itemRemarks,
+                }
+                itemData.push(itemRow);
+            }
+        });
+
+        if (transactionDate == "" || vendorId == "" || itemData.length == 0) {
+            return alertify.error("Please Fill The Required Fields");
+        }
+        else {
+            var modelData = {
+                TransactionDate: transactionDate,
+                DocNo: docNo,
+                VendorId: vendorId,
+                LocationId: locationId,
+                DepartmentId: departmentId,
+                Remarks: remarks,
+                ReturnToVendorDetails: itemData,
+            };
+
+            SaveReturnToVendor(modelData);
+        }
+
+
+    }
+
+    function SaveReturnToVendor(modelData) {
+        
+
+        console.log(modelData);
+        alertify.confirm("Are you sure you want to save Voucher", function (e, str) {
+            if (e) {
+         startLoader();
+            $.ajax({
+                url: '@Url.Action("AddReturnToVendor", "Inventory")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    window.location.reload();
+                    alertify.success("Return To Vendor Saved Successfully");
+                    window.location.href = "/Inventory/AllReturnItemsToVendor";
+                }
+                stopLoader();
+            });
+            }
+            else
+            {
+        /* location.reload()*/
+            }
+        }, "Default Value");
+    }
+
+    function RemoveReturnToVendor(itemId) {
+         startLoader();
+            $.ajax({
+                url: '@Url.Action("RemoveReturnToVendor", "Inventory")',
+                type: "POST",
+                data: { ItemId: itemId},
+            }).done(function (res) {
+                ReturnToVendorDetail();
+                stopLoader();
+            });
+    }
+</script>
+
+
+

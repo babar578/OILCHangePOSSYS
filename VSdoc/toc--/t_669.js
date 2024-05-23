@@ -1,0 +1,1 @@
+c['669']=[['670',"WastageHead Constructor","topic_00000000000002A9.html",0],['671',"Properties","topic_00000000000002A8_props--.html",1]];

@@ -1,0 +1,1 @@
+c['4076']=[['4077',"IssueToDeptmentDataTable Constructor","topic_0000000000000FB5_overloads--.html",1],['4080',"Properties","topic_0000000000000FB4_props--.html",1],['4092',"Methods","topic_0000000000000FB4_methods--.html",1],['4108',"Events","topic_0000000000000FB4_events--.html",1]];

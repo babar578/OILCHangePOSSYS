@@ -1,0 +1,90 @@
+﻿@using POS.Utilities.Services
+@using POS.Utilities.ViewModel
+@model VendorPaymentViewModel
+@{
+
+    Layout = null;
+    Model.Vendors = VendorServices.GetAllVendors();
+    Model.VendorPaymentTypes = VendorServices.GetAllVendorPaymentTypes();
+
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="col-form-label">Transaction Date <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.TransactionDate, new { @type = "date", @class = "form-control", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="col-form-label">DocNo</label>
+                @Html.TextBoxFor(m => m.DocNo, new { @class = "form-control", placeholder = "DocNo ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">Vendor <b class="text-danger">*</b></label>
+                @Html.DropDownListFor(m => m.VendorId, new SelectList(Model.Vendors, "Id", "VendorName"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Vendors", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">Payment Type <b class="text-danger">*</b></label>
+                @Html.DropDownListFor(m => m.PaymentTypeId, new SelectList(Model.VendorPaymentTypes, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Payment Types", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="col-form-label">Payment <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.Payment, new { @class = "form-control", placeholder = "Payment E.g. 50000 ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-form-label">Remarks </label>
+                @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control", placeholder = "Remarks", @required = "true" })
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="form-group  pull-right">
+                <label class="col-form-label">. </label>
+                <a href="javascript: void(0)" onclick="Payment()" class="btn btn-block btn-success">SAVE Payment</a>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $('select').selectpicker();
+    });
+
+    $("#VendorId").change(function () {
+
+        var id = $("#VendorId").val();
+        startLoader();
+        $.ajax(
+            {
+                url: "/Vendor/PartialVendorPaymentLedger/" + id,
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#VendorPaymentLedger").html(result);
+            stopLoader();
+        });
+    });
+</script>
+
+
+
+
+
+

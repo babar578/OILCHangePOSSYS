@@ -1,0 +1,1 @@
+search_result['1879']=["topic_000000000000055C.html","OpeningStockDetailViewModel.RefId Property",""];

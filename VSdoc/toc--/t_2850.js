@@ -1,0 +1,1 @@
+c['2850']=[['2851',"Addfn_InventoryBalRow(int, string, string, string, double, double, double, double, double, double, double, double, double, double, double) Method","topic_0000000000000A6C.html",0],['2852',"Addfn_InventoryBalRow(fn_InventoryBalRow) Method","topic_0000000000000A6B.html",0]];

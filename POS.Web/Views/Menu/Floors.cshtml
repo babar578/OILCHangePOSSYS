@@ -1,0 +1,66 @@
+﻿@using POS.Utilities.ViewModel
+@model IEnumerable<FloorViewModel>
+@{
+    ViewBag.Title = "Floors";
+    var searchKeyword = ViewBag.search;
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">List of Available Floors</h3>
+
+                <div class="card-tools">
+                    @{
+
+                        <div class="btn-group float-left" role="group">
+                            <div class="">
+                                <a href="/Menu/Floor" id="btn-add"
+                                   class="btn btn-primary waves-effect"
+                                   data-toggle="tooltip" data-placement="bottom" title="New Floor"
+                                   data-caption="Add New Floor">
+                                    <span class="fas fa-plus"></span> Add New Floor
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive">
+                <table id="bootstrap-data-table-export" class="table table-hover table-striped text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Floor Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (Model != null && Model.Count() > 0)
+                        {
+                            foreach (var e in Model)
+                            {
+                                <tr class="dgrow" data-id="@e.Id">
+
+                                    <td>@e.Id</td>
+                                    <td>@e.Name</td>
+                                    <td>
+                                        <a href="/Menu/Floor/" class="btn btn-xs btn-warning btn-edit" data-toggle="tooltip" data-placement="bottom" title="Edit Floor" data-caption="Update Floor Detail"><span class="fas fa-edit"></span></a>
+                                        <a href="/Menu/DeleteFloor/" class="btn btn-xs btn-danger btn-delete" data-toggle="tooltip" data-placement="bottom" title="Delete Floor"><span class="fas fa-trash"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Locations";
+}
+
+
+
+<div id="Locations"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetAllLocations();
+    });
+
+    function GetAllLocations() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Vendor/GetAllLocations/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#Locations").html(result);
+            stopLoader();
+        });
+    }
+
+    function SaveLocation(modelData) {
+        startLoader();
+            $.ajax({
+                url: '@Url.Action("AddLocation", "Vendor")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Save successfully");
+                    GetAllLocations();
+                    $("#customModal").modal('hide');
+                }
+                stopLoader();
+            });
+    }
+
+
+</script>
+

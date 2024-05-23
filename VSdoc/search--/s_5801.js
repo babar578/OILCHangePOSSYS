@@ -1,0 +1,1 @@
+search_result['5801']=["topic_0000000000001062.html","CompanyInformation Class","Represents a strongly typed in-memory cache of data."];

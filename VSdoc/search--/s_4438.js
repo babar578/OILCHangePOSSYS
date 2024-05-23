@@ -1,0 +1,1 @@
+search_result['4438']=["topic_0000000000000CC0.html","fn_InventoryBalTableAdapter Class","Represents the connection and commands used to retrieve and save data."];

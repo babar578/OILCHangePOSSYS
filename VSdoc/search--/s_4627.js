@@ -1,0 +1,1 @@
+search_result['4627']=["topic_0000000000000D43.html","WastageRepotDataTable.GetRowType Method","Gets the row type."];

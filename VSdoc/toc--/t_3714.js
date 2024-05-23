@@ -1,0 +1,1 @@
+c['3714']=[['3715',"AddReturnVenderSummaryRow(string, string, double) Method","topic_0000000000000E24.html",0],['3716',"AddReturnVenderSummaryRow(ReturnVenderSummaryRow) Method","topic_0000000000000E23.html",0]];

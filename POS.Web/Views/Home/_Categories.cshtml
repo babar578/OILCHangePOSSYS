@@ -1,0 +1,35 @@
+﻿@using POS.Utilities.Services
+@{
+    Layout = null;
+}
+
+
+<div class="">
+    <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-height: 700px;">
+
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            @{
+                if (ItemServices.GetAllCategories(true)?.Count > 0)
+                {
+                    foreach (var p in ItemServices.GetAllCategories(true))
+                    {
+                        <div class="col-md-12">
+                            <a href="javascript:void(0)" onclick="GetCategoryDetail(@p.Id);">
+                                <!-- small box -->
+                                <div class="small-box btn-info">
+                                    <div class="inner" style="text-align:center">
+                                        <p>@p.Name</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- ./col -->
+                    }
+                }
+            }
+        </div>
+        <!-- /.row -->
+    </div>
+</div>
+

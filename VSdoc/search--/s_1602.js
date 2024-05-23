@@ -1,0 +1,1 @@
+search_result['1602']=["topic_0000000000000499_methods--.html","ClosingInventoryHeadViewModel Methods",""];

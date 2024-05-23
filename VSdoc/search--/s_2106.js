@@ -1,0 +1,1 @@
+search_result['2106']=["topic_0000000000000608.html","ReturnToVendorDetailViewModel.TotalRate Property",""];

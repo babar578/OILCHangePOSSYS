@@ -1,0 +1,1 @@
+search_result['5822']=["topic_0000000000001070.html","CompanyInfoRowChangeEventHandler Delegate",""];

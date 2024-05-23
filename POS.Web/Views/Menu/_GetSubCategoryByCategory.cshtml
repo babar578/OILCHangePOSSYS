@@ -1,0 +1,18 @@
+﻿@using POS.Utilities.ViewModel
+@model ItemViewModel
+@{
+    Layout = null;
+}
+
+<div class="">
+    <div class=" ">
+        <label class="col-form-label">Sub Category</label>
+        @Html.DropDownListFor(m => m.SubCategoryId, new SelectList(Model.SubCategories, "Id", "Name"),
+        new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "-- Select Sub Category --", @required = "true" })
+    </div>
+</div>
+
+
+<script>
+    $('select').selectpicker();
+</script>

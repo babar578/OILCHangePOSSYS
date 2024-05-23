@@ -1,0 +1,1 @@
+c['3680']=[['3681',"ReturnToVendorRowChangeEvent Constructor","topic_0000000000000DF2.html",0],['3682',"Properties","topic_0000000000000DF1_props--.html",1]];

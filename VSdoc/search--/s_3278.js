@@ -1,0 +1,1 @@
+search_result['3278']=["topic_0000000000000974.html","VenderToWarhouseDataTable.Clone Method","Clones the structure of the DataTable, including all DataTable schemas and constraints."];

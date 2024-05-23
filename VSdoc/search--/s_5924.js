@@ -1,0 +1,1 @@
+search_result['5924']=["topic_00000000000010BC.html","Invoice.Clone Method","Copies the structure of the DataSet, including all DataTable schemas, relations, and constraints. Does not copy any data."];

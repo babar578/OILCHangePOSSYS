@@ -1,0 +1,1 @@
+c['4798']=[['4799',"WastageRepotTableAdapter Constructor","topic_0000000000000D5A.html",0],['4800',"Properties","topic_0000000000000D59_props--.html",1],['4804',"Methods","topic_0000000000000D59_methods--.html",1]];

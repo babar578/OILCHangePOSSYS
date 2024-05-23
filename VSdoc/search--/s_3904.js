@@ -1,0 +1,1 @@
+search_result['3904']=["topic_0000000000000B3C.html","fn_VenderPaymentLedgerDataTable.GetRowType Method","Gets the row type."];

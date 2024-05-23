@@ -1,0 +1,1 @@
+c['4093']=[['4094',"AddIssueToDeptmentRow(DateTime, string, double, double, double, double, string, string) Method","topic_0000000000000FC7.html",0],['4095',"AddIssueToDeptmentRow(IssueToDeptmentRow) Method","topic_0000000000000FC6.html",0]];

@@ -1,0 +1,147 @@
+﻿@using POS.Utilities.Services
+@using POS.Utilities.Utilities
+@using POS.Utilities.ViewModel
+@model UserViewModel
+
+@{
+    Model.Customers = VendorServices.GetAllCustomers();
+}
+
+<body>
+    <div class="modal-header">
+        <h4 class="modal-title" id="customerModal-label"> Select Customer</h4>
+        @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+    </div>
+    <div class="modal-body">
+        @Html.DropDownListFor(m => m.Id, new SelectList(Model.Customers, "Id", "CarNumber"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = " Select Customer ", @required = "true" })
+        </a>
+        @*<input type="number" class="form-control" min="0" max="100" id="Guests" placeholder="0000">*@
+    </div>
+    <div class="modal-footer">
+        <a href="/Vendor/Customers"
+                    <span class="fas fa-plus"> Add New Customer</span>
+                    </a>
+        <a href="/Home/Index">Back</a>
+        <button type="button" class="btn btn-primary" onclick="callHistoryReport()">Get History</button>
+        @*<button href="/Home/Index"target="_blank"type="submit"class="btn btn-primary">Back</button>*@
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card card-custom brass-card">
+                <div class="card-body" id="divGridSpinner">
+                    <table class="table table-separate table-head-custom collapsed kt_datatable" id="table_id">
+                        <thead>
+                            <tr>
+                                <th> Sr No</th>
+                                <th>Bill Date </th>
+                                <th> Customer Name</th>
+                                <th>Car Number</th>
+                                <th>Item Name </th>
+                                <th>Quantity </th>
+                                <th>Price</th>
+                                <th> Total Price</th>
+                                <th>Total Net Amount</th>
+                                <th>Reading</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+<script>
+
+  
+
+    function callHistoryReport() {
+
+        if ($("#Id").val() != "") {
+            debugger
+            var itemId = $("#Id").val();
+            GetCarHsitory(itemId);
+        }
+        else {
+            var itemId = '0';
+        }
+        function GetCarHsitory(itemId) {
+            debugger
+            $.ajax
+                ({
+                    url: "/Home/GetCarHistorybyId",
+                    type: "POST",
+                    dataType: 'JSON',
+                    data: { ItemId: itemId },
+                }).done(function (result) {
+                    debugger
+                    console.log(result)
+
+                    generateGrid(result.getHistoryCars);
+
+                    stopLoader();
+                });
+        }
+
+    }
+
+
+
+    function generateGrid(obj) {
+
+        debugger;
+        if (obj.length > 0) {
+            $('#table_id').DataTable().clear();
+            $('#table_id').DataTable().draw();
+            $.each(obj, function (index, itm) {
+                $('#table_id').dataTable().fnAddData([
+                    (parseInt(index) + 1),
+                    (itm.DateDate == null ? "-" : itm.DateDate),
+                    (itm.CustomerName == null ? "-" : itm.CustomerName),
+                    (itm.CarNumber == null ? "-" : itm.CarNumber),
+                    (itm.ItemName == null ? "-" : itm.ItemName),
+                    (itm.Quantity == null ? "-" : itm.Quantity),
+                    (itm.Price == null ? "-" : itm.Price),
+                    (itm.TotalPrice == null ? "-" : itm.TotalPrice),
+                    (itm.TotalNetAmount == null ? "-" : itm.TotalNetAmount),
+                    (itm.Reading == null ? "-" : itm.Reading),
+                   
+
+                ]);
+            });
+        }
+        else {
+            $('#table_id').DataTable().clear();
+            $('#table_id').DataTable().draw();
+        }
+    }
+ 
+
+    //function GetCarHsitory(itemId) {
+    //    debugger
+    //    $.ajax
+    //        ({
+    //            url: "/Home/GetCarHistorybyId/",
+    //            type: "POST",
+    //            data: { ItemId: itemId },
+    //        }).done(function (result) {
+    //            console.log(result);
+    //            if (res == "Error" || res == "") {
+    //                alertify.error("Something went wrong");
+    //            }
+    //            else if (res == "Success") {
+    //                alertify.success("Saved successfully");
+    //                RefreshCart();
+    //                location.reload();
+    //            }
+    //            stopLoader();
+    //        });
+    //}
+
+
+</script>

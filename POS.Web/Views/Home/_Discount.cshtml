@@ -1,0 +1,134 @@
+﻿@{
+    Layout = null;
+
+    int? tableId = null;
+
+    if (Session["CurrentTableId"] != null)
+    {
+        tableId = (int)Session["CurrentTableId"];
+
+    }
+}
+
+<!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-lg-4 col-6">
+        <a href="javascript:void(0)" onclick="FullofCostDiscount(@tableId)" data-dismiss="modal">
+            <!-- small box -->
+            <div class="small-box btn-outline-info">
+                <div class="inner" style="text-align:center">
+                    <h4>Full Of Cost</h4>
+                </div>
+            </div>
+        </a>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-4 col-6">
+        <a href="javascript:void(0)" onclick="DiscountVoucher(1500,@tableId)" data-dismiss="modal">
+            <!-- small box -->
+            <div class="small-box btn-outline-success">
+                <div class="inner" style="text-align:center">
+                    <h4>Voucher 500</h4>
+                </div>
+
+            </div>
+        </a>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-4 col-6">
+        <a href="javascript:void(0)" onclick="CustomModal('/Home/DiscountPer','Discount ')">
+            <!-- small box -->
+            <div class="small-box btn-outline-secondary">
+                <div class="inner" style="text-align:center">
+                    <h4>Discount </h4>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
+<!-- /.row -->
+
+<script>
+    function DiscountVoucher(price, tableId) {
+        alertify.confirm("Are you sure you want to voucher discount", function (e, str) {
+            if (e) {
+                if (price == "") {
+                    alertify.error("Please Enter Valid Number.");
+                    return;
+                }
+                else
+                {
+                    var modelData = {
+                        DiscountVoucher: price,
+                        TableId: tableId,
+                    };
+                    startLoader();
+                    $.ajax({
+                        url: '@Url.Action("CreateTicket", "Home")',
+                        contentType: 'application/json; charset=utf-8',
+                        type: "POST",
+                        data: JSON.stringify(modelData),
+                        datatype: "Json",
+                    }).done(function (res) {
+                        console.log(res);
+                        if (res == "Error" || res == "") {
+                            alertify.error("Something went wrong");
+                        }
+                        else if (res == "Success") {
+                            alertify.success("Saved successfully");
+                            RefreshCart();
+                        }
+                        stopLoader();
+                    });
+                }
+            }
+            else {
+                // user clicked "cancel"
+            }
+        }, "Default Value");
+    }
+
+    function FullofCostDiscount(tableId) {
+        var totalAmount = $("#totalAmount").text();
+        var fOCDiscount = parseFloat(totalAmount);
+
+        alertify.confirm("Are you sure you want to full of cost discount", function (e, str) {
+            if (e) {
+                if (fOCDiscount == "") {
+                    alertify.error("Please Enter Valid Amount.");
+                    return;
+                }
+                else
+                {
+                    var modelData = {
+                        FOCDiscount: fOCDiscount,
+                        TableId: tableId,
+                    };
+                    startLoader();
+                    $.ajax({
+                        url: '@Url.Action("CreateTicket", "Home")',
+                        contentType: 'application/json; charset=utf-8',
+                        type: "POST",
+                        data: JSON.stringify(modelData),
+                        datatype: "Json",
+                    }).done(function (res) {
+                        console.log(res);
+                        if (res == "Error" || res == "") {
+                            alertify.error("Something went wrong");
+                        }
+                        else if (res == "Success") {
+                            alertify.success("Saved successfully");
+                            RefreshCart();
+                        }
+                        stopLoader();
+                    });
+                }
+            }
+            else {
+                // user clicked "cancel"
+            }
+        }, "Default Value");
+    }
+
+</script>

@@ -1,0 +1,1 @@
+search_result['5987']=["topic_00000000000010F2.html","InvoiceDataTable.NewRowFromBuilder Method","Creates a new row from an existing row."];

@@ -1,0 +1,1131 @@
+﻿@using POS.Utilities.ViewModel
+@using POS.Utilities.Utilities
+@using POS.Utilities.Services
+
+@{
+    Layout = null;
+
+    double tip = 0;
+    double servicePer = 0;
+    double discountPer = 0;
+    double ServiceCharges = 0;
+
+    double AlignmentAmount = 0;
+    double wheelBalanceAmount = 0;
+
+
+
+    double NitrogenGas = 0;
+    double TPMS = 0;
+
+
+    double alignmentAmounts = 0;
+    double wheelBalanceAmounts = 0;
+
+
+    double NitrogenGass = 0;
+    double TPMSs = 0;
+
+
+    double DiscountCharges = 0;
+    double TotalAmount = 0;
+    double GSTPer = 0;
+    double GSTCharged = 0;
+    double subTotalVoid = 0;
+    double subTotalComplimentary = 0;
+    List<double> subTotalVoidList = new List<double>();
+    List<double> subTotalComplimentaryList = new List<double>();
+    double GrossAmount = 0;
+
+    OrderViewModel order = new OrderViewModel();
+    List<CartItemViewModel> CartItems = new List<CartItemViewModel>();
+    //bool IsUpdateMode = false;
+
+    int? tableId = null;
+
+    if (Session["CurrentTableId"] != null)
+    {
+        tableId = (int)Session["CurrentTableId"];
+        order = CartUtility.CurrentOrder(tableId);
+        CartItems = CartUtility.GetCartItems(tableId);
+        //CartItems = CartUtility.GetCartItemsWithTable(tableId);
+    }
+    else
+    {
+        order = CartUtility.CurrentOrder();
+        CartItems = CartUtility.GetCartItems();
+    }
+
+}
+
+<style>
+    .input-group {
+        width: max-content !important;
+    }
+</style>
+
+@Html.HiddenFor(m => tableId)
+@Html.HiddenFor(m => order.Id, new { id = "OrderId" })
+@Html.HiddenFor(m => order.NoOfGuest, new { id = "IsSavedGuests" })
+<div class="">
+    <div class="overflow-auto  p-3 mb-3 mb-md-0 mr-md-3  bg-light" style="max-height: 400px;">
+
+        <div class="card">
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+                <table class="table table-striped table-hover text-wrap">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>SubTotal</th>
+                            <th>Cancel</th>
+                            <th>Void</th>
+                            <th>Complimentary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @{
+                            if (CartItems?.Count > 0)
+                            {
+                                foreach (var p in CartItems)
+                                {
+                                    if (!p.IsVoid && !p.IsComplimentary)
+                                    {
+
+                                        <tr>
+                                            <td class="itemName" id="itemName"><small style="display:block"> @p.ItemName </small></td>
+                                            <td class="itemPrice price" id="itemPrice_@p.ItemId"> <small>@p.Price</small></td>
+                                            <td style="padding-left:0px; padding-right:0px;">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" style="background-color:white">
+                                                            <i class="fas fa-minus" style="cursor:pointer" onclick='MinusQuantity(@p.ItemId, "@p.ItemName",@tableId);'></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="number" min="1" max="100" value="@p.Quantity" id="UnitItemQty_@p.ItemId" class="form-control itemQuantity" onkeyup="UpdateQuantity(this, @p.ItemId)">
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text" style="background-color:white">
+                                                            <i class="fas fa-plus" style="cursor:pointer" onclick='PlusQuantity(@p.ItemId,  "@p.ItemName",@tableId);'></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text" style="background-color:blue ">
+                                                            <i class="fas fa-plus" style="cursor:pointer" onclick='PointQuantity(@p.ItemId,  "@p.ItemName",@tableId);'></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="subTotal" id="subTotal_@p.ItemId">
+                                                @{
+                                                    var subTotal = (double)p.Quantity * p.Price;
+                                                    <small>
+                                                        @subTotal
+                                                    </small>
+                                                }
+                                            </td>
+                                            <td><span class="fa fa-trash" style="cursor:pointer;" onclick='RemoveItem(@p.ItemId,  "@p.ItemName",@tableId)'></span></td>
+                                            <td><button type="button" onclick='VoidItem(@p.ItemId,  "@p.ItemName",@tableId)' class="btn btn-sm btn-danger" style="cursor:pointer;">Void</button> </td>
+                                            <td><button type="button" onclick='ComplimentaryItem(@p.ItemId,  "@p.ItemName",@tableId)' class="btn btn-sm btn-success" style="cursor:pointer;">Complimentary</button> </td>
+                                        </tr>
+                                        if (p.Remarks != null)
+                                        {
+                                            <tr>
+                                                <td colspan="7" style="padding: 0rem 1.5rem 0rem;background: bisque;">
+                                                    <small>@p.Remarks</small>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    }
+                                    else if (p.IsVoid)
+                                    {
+
+                                        <tr class="bg-danger">
+                                            <td class="itemName" id="itemName"><small style="display:block"> @p.ItemName </small></td>
+                                            <td class="itemPrice price" id="itemPrice_@p.ItemId"> <small>@p.Price</small></td>
+                                            <td style="padding-left:0px; padding-right:0px;">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" style="background-color:white">
+                                                            <i class="fas fa-minus" style="cursor:pointer"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="number" min="1" max="100" value="@p.Quantity" id="UnitItemQty_@p.ItemId" class="form-control itemQuantity" onkeyup="UpdateQuantity(this, @p.ItemId)" disabled>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text" style="background-color:white">
+                                                            <i class="fas fa-plus" style="cursor:pointer"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="subTotal" id="subTotal_@p.ItemId">
+                                                @{
+                                                    subTotalVoid = (Double)p.Quantity * p.Price;
+                                                    subTotalVoidList.Add(subTotalVoid);
+                                                    <small>
+                                                        @subTotalVoid
+                                                    </small>
+                                                }
+                                            </td>
+                                            <td><span class="fa fa-trash" style="cursor:pointer;"></span></td>
+                                            <td><button type="button" onclick='ReleaseVoidItem(@p.ItemId,  "@p.ItemName",@tableId)' class="btn btn-sm btn-default" style="cursor:pointer;">Undo</button> </td>
+                                            <td><button type="button" class="btn btn-sm btn-default" style="cursor:pointer;">Complimentary</button> </td>
+                                        </tr>
+                                        if (p.Remarks != null)
+                                        {
+                                            <tr>
+                                                <td colspan="7" style="padding: 0rem 1.5rem 0rem;background: bisque;">
+                                                    <small>@p.Remarks</small>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else if (p.IsComplimentary)
+                                    {
+
+                                        <tr class="bg-success">
+                                            <td class="itemName" id="itemName"><small style="display:block"> @p.ItemName </small></td>
+                                            <td class="itemPrice price" id="itemPrice_@p.ItemId"> <small>@p.Price</small></td>
+                                            <td style="padding-left:0px; padding-right:0px;">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" style="background-color:white">
+                                                            <i class="fas fa-minus" style="cursor:pointer"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="number" min="1" max="100" value="@p.Quantity" id="UnitItemQty_@p.ItemId" class="form-control itemQuantity" onkeyup="UpdateQuantity(this, @p.ItemId)" disabled>
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text" style="background-color:white">
+                                                            <i class="fas fa-plus" style="cursor:pointer"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="subTotal" id="subTotal_@p.ItemId">
+                                                @{
+                                                    subTotalComplimentary = (Double)p.Quantity * p.Price;
+                                                    subTotalComplimentaryList.Add(subTotalComplimentary);
+                                                    <small>
+                                                        @subTotalComplimentary
+                                                    </small>
+                                                }
+                                            </td>
+                                            <td><span class="fa fa-trash" style="cursor:pointer;"></span></td>
+                                            <td><button type="button" class="btn btn-sm btn-default" style="cursor:pointer;">Void</button> </td>
+                                            <td><button type="button" onclick='ReleaseComplimentaryItem(@p.ItemId,  "@p.ItemName",@tableId)' class="btn btn-sm btn-default" style="cursor:pointer;">Undo</button> </td>
+                                        </tr>
+                                        if (p.Remarks != null)
+                                        {
+                                            <tr>
+                                                <td colspan="7" style="padding: 0rem 1.5rem 0rem;background: bisque;">
+                                                    <small>@p.Remarks</small>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+
+    </div>
+</div>
+
+@{
+    var SubTotalAmount = (double)CartItems.Select(i => i.Price * i.Quantity).Sum();
+
+    GrossAmount = SubTotalAmount - subTotalVoidList.ToList().Sum() - subTotalComplimentaryList.ToList().Sum();
+
+    var TaxAmount = (double)CartItems.Select(i => i.TaxAmount).Sum();
+
+    if (order != null)
+    {
+
+
+        servicePer = order.ServiceChargesPerentage;
+        ServiceCharges = (double)(servicePer );
+
+
+
+
+
+        discountPer = order.DiscountPercentage;
+        if (order.DiscountPercentage > 0)
+        {
+            order.FOCDiscount = 0;
+            DiscountCharges = (double)(discountPer) ;
+        }
+        else if (order.DiscountVoucher > 0)
+        {
+            order.FOCDiscount = 0;
+            DiscountCharges = order.DiscountVoucher;
+        }
+
+
+        alignmentAmounts = order.AlignmentAmount;
+        wheelBalanceAmounts = order.wheelBalanceAmount;
+
+
+        NitrogenGass= order.NitrogenGas;
+        TPMSs = order.TPMS;
+
+        tip = order.Tip;
+        GSTPer = order.GSTPerentage;
+        GSTCharged = (double)(GSTPer / 100) * (GrossAmount - DiscountCharges);
+
+
+
+        TotalAmount = GrossAmount + GSTCharged +NitrogenGass + TPMSs + ServiceCharges + alignmentAmounts  + wheelBalanceAmounts - DiscountCharges;
+        if (order.FOCDiscount > 0)
+        {
+            DiscountCharges = TotalAmount;
+            TotalAmount = 0;
+        }
+    }
+    else
+    {
+        TotalAmount = GrossAmount + GSTCharged + ServiceCharges + alignmentAmounts + NitrogenGass + TPMSs + wheelBalanceAmounts - DiscountCharges;
+    }
+}
+<div>
+
+    <div class="">
+        <table class="table">
+            <tr>
+                <td>
+                    <strong>Subtotal</strong>
+                    <br />
+                    <strong>
+                        Discount @{ if (discountPer > 0)
+                            { <span id="discountPercentage">@discountPer </span> }}
+                    </strong>
+                    <br />
+                    <strong>Reading</strong>
+                    <br />
+                    <strong>Service Charges <span style="color:red" id="servicePercentage"> @servicePer </span>  </strong>
+                    <br />
+
+                    <strong>Alignment Amounts <span style="color:red" id="servicePercentage"> @alignmentAmounts </span>  </strong>
+                    <br />
+
+                    <strong>wheel Balance Amounts<span style="color:red" id="servicePercentage"> @wheelBalanceAmounts </span>  </strong>
+                    <br />
+
+                    <strong>NitrogenGas Amounts <span style="color:red" id="servicePercentage"> @NitrogenGass </span>  </strong>
+                    <br />
+
+                    <strong>TPMS Amounts<span style="color:red" id="servicePercentage"> @TPMSs </span>  </strong>
+                    <br />
+
+
+
+                    <strong>GST <span id="GSTpercentage"> @GSTPer </span>  % </strong>
+                    <br />
+                    <strong style="color:red">Ticket Total Rs.</strong>
+                </td>
+                <td>
+                    <span id="subTotalAmount">@GrossAmount</span>
+                    <br />
+                    <span id="discountCharges">@DiscountCharges</span>
+                    <br />
+                    <span id="tip">@tip</span>
+                    <br />
+                    <span id="serviceCharges">@ServiceCharges</span>
+                    <br />
+
+
+                    <span id="alignmentAmounts">@alignmentAmounts</span>
+                    <br />
+
+                    <span id="wheelBalanceAmounts">@wheelBalanceAmounts</span>
+                    <br />
+
+
+                    <span id="NitrogenGass">@NitrogenGass</span>
+                    <br />
+
+                    <span id="TPMSs">@TPMSs</span>
+                    <br />
+
+
+                    <span id="gstCharged">@GSTCharged</span>
+                    <br />
+                    <strong style="color:red" id="totalAmount">@TotalAmount</strong>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    @{
+        if (order != null )
+        {
+            <div class="btn-group-sm">
+                <div class="form-row" style="margin-bottom: 1%;">
+                    <div class="col-sm-3">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/GST','Goods and Services Tax (GST)')" class="btn btn-block btn-outline-secondary">GST %</a>
+                    </div>
+                    <div class="col-sm-3">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/Discount','Discount')" class="btn btn-block btn-outline-secondary">DISCOUNT</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/Tip','Reading')" class="btn btn-block btn-outline-secondary">Reading</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/ServiceCharges','Service Washing')" class="btn btn-block btn-outline-secondary">Wash Service</a>
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/AlignmentAmount','Alignment Amount')" class="btn btn-block btn-outline-secondary">Alignment Amount</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/WheelBalanceAmount','Wheel Balance Amount')" class="btn btn-block btn-outline-secondary">Wheel Balance Amount</a>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/NitrogenGas','Nitrogen Gas Amount')" class="btn btn-block btn-outline-secondary">Nitrogen Gas Amount</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/TPMS','TPMS Amount')" class="btn btn-block btn-outline-secondary">TPMS Amount</a>
+                    </div>
+
+                </div>
+                @*<div class="form-row" style="margin-bottom: 1%;">
+                        <div class="col-sm-3">
+                            <a href="javascript:void(0)" onclick="CustomModal('/Home/GST','Goods and Services Tax (GST)')" class="btn btn-block btn-outline-secondary">GST %</a>
+                        </div>
+                        <div class="col-sm-3">
+                            <a href="javascript:void(0)" onclick="CustomModal('/Home/Discount','Discount')" class="btn btn-block btn-outline-secondary">DISCOUNT</a>
+                        </div>
+                        <div class="col-sm-2">
+                            <a href="javascript:void(0)" onclick="CustomModal('/Home/Tip','Tip In Rupees')" class="btn btn-block btn-outline-secondary">Reading</a>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="javascript:void(0)" onclick="CustomModal('/Home/ServiceCharges','Service Charges Percentage (%)')" class="btn btn-block btn-outline-secondary">Service Charges</a>
+                        </div>
+                    </div>*@
+
+                <div class="btn-group-sm">
+                    <div class="form-row" style="margin-bottom: 1%;">
+                        <div class="col-sm-6">
+                            <a href="javascript:void(0)" onclick="Order_Void_Or_Complimentary(@order.Id, 'false', 'false', 'false', 'true','Successfully, Undo void full order','Are You Sure want to undo void all order')" class="btn btn-block btn-danger">Void  ALL Order</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="javascript:void(0)" onclick="Order_Void_Or_Complimentary(@order.Id,'false', 'false', 'false', 'true', 'Successfully, Undo compliment full order','Are You Sure want to undo compliment all order')" class="btn btn-block btn-success">Complimentary ALL Order</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" style="margin-bottom: 1%;">
+                    <div class="col-sm-6">
+                        <a href="javascript:void(0)" onclick="PartialPaymentModal()" class="btn btn-block btn-outline-success">Partial PAYMENT</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="javascript:void(0)" onclick="SaveWithOutPayment()" class="btn btn-block btn-outline-warning">Save Order</a>
+                    </div>
+                </div>
+
+
+                <div class="form-row" style="margin-bottom: 1%;">
+                    <div class="col-sm-12">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/Payment','Current Ticket Payment')" class="btn btn-block btn-success" data-caption=""><span class="fa fa-save"></span> Full PAYMENT</a>
+                    </div>
+                </div>
+
+
+
+            </div>
+        }
+        @*if (order != null && order.Id > 0)
+        {
+            <div class="btn-group-sm">
+                <div class="form-row" style="margin-bottom: 1%;">
+                    <div class="col-sm-3">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/GST','Goods and Services Tax (GST)')" class="btn btn-block btn-outline-secondary">GST %</a>
+                    </div>
+                    <div class="col-sm-3">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/Discount','Discount')" class="btn btn-block btn-outline-secondary">DISCOUNT</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/Tip','Reading')" class="btn btn-block btn-outline-secondary">Reading</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/ServiceCharges','Service & Alinement ')" class="btn btn-block btn-outline-secondary">Service & Alignment</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group-sm">
+                <div class="form-row" style="margin-bottom: 1%;">
+                    @*<div class="col-sm-3">
+                            <a href="javascript:void(0)" class="btn btn-block btn-outline-secondary">Bill Print</a>
+                        </div>
+                        <div class="col-sm-3">
+                            <a href="javascript:void(0)" class="btn btn-block btn-outline-secondary">Print Kitchen</a>
+                        </div>
+                        <div class="col-sm-3">
+                            <a href="javascript:void(0)" class="btn btn-block btn-outline-secondary">Print Bar</a>
+                        </div>
+                        <div class="col-sm-3">
+                            <a href="javascript:void(0)" class="btn btn-block btn-outline-secondary">Print Bakery</a>
+                        </div>*@
+                @*</div>
+            </div>*@
+
+            @*<div class="btn-group-sm">
+                <div class="form-row" style="margin-bottom: 1%;">
+                    <div class="col-sm-6">
+                        <a href="javascript:void(0)" class="btn btn-block btn-outline-secondary">Change Duck</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="javascript:void(0)" onclick="CustomModal('/Home/AddOrderFeedBack','Please Add Current Order Feed Back')" class="btn btn-block btn-outline-secondary">Guest Count</a>
+                    </div>
+                </div>
+            </div>
+            {*@
+
+                @*if (!order.IsVoid && !order.IsComplimentary)
+                {
+                    <div class="btn-group-sm">
+                        <div class="form-row" style="margin-bottom: 1%;">
+                            <div class="col-sm-6">
+                                <a href="javascript:void(0)" onclick="Order_Void_Or_Complimentary(@order.Id, 'true', 'false', 'true', 'false', 'Successfully, Full Order has been void','Are You Sure want to void all order')" class="btn btn-block btn-outline-danger">Void  ALL Order</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="javascript:void(0)" onclick="Order_Void_Or_Complimentary(@order.Id, 'false', 'true', 'true', 'false', 'Successfully, Full Order has been void','Are You Sure want to compliment all order')" class="btn btn-block btn-outline-success">Complimentary ALL Order</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (order.IsVoid)
+                {
+                    <div class="btn-group-sm">
+                        <div class="form-row" style="margin-bottom: 1%;">
+                            <div class="col-sm-6">
+                                <a href="javascript:void(0)" onclick="Order_Void_Or_Complimentary(@order.Id, 'false', 'false', 'false', 'true','Successfully, Undo void full order','Are You Sure want to undo void all order')" class="btn btn-block btn-danger">Void  ALL Order</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="javascript:void(0)" class="btn btn-block btn-default">Complimentary ALL Order</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (order.IsComplimentary)
+                {
+                    <div class="btn-group-sm">
+                        <div class="form-row" style="margin-bottom: 1%;">
+                            <div class="col-sm-6">
+                                <a href="javascript:void(0)" class="btn btn-block btn-default">Void  ALL Order</a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="javascript:void(0)" onclick="Order_Void_Or_Complimentary(@order.Id,'false', 'false', 'false', 'true', 'Successfully, Undo compliment full order','Are You Sure want to undo compliment all order')" class="btn btn-block btn-success">Complimentary ALL Order</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }*@
+
+            @*<div class="btn-group-sm">
+
+                <div class="form-row" style="margin-bottom: 1%;">
+                    <div class="col-sm-6">
+                        <a href="javascript:void(0)" onclick="PartialPaymentModal()" class="btn btn-block btn-outline-success">Partial PAYMENT</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="javascript:void(0)" onclick="SaveWithOutPayment()" class="btn btn-block btn-outline-warning">Save Order</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row" style="margin-bottom: 1%;">
+                <div class="col-sm-12">
+                    <a href="javascript:void(0)" onclick="CustomModal('/Home/Payment','Current Ticket Payment')" class="btn btn-block btn-success" data-caption=""><span class="fa fa-save"></span> Full PAYMENT</a>
+                </div>
+            </div>*@
+
+        }
+        @*else
+        {
+            <div class="form-row" style="margin-bottom: 1%;">
+                <div class="col-sm-12">
+                    <a href="javascript:void(0)" onclick="SaveWithOutPayment()" class="btn btn-block btn-outline-success" data-caption=""><span class="fa fa-save"></span> Save Order</a>
+                </div>
+            </div>
+        }*@
+    }
+
+
+
+    @*<div class="btn-group-sm">
+
+            @{
+                bool payment = false;
+
+                if (Session["IsPayment"] != null)
+                {
+                    payment = (bool)Session["IsPayment"];
+                }
+
+                <div class="form-row" style="margin-bottom: 1%;">
+                    <div class="col-sm-12">
+                        @if (payment)
+                        {
+                            <a href="javascript:void(0)" onclick="CustomModal('/Home/Payment','Current Ticket Payment')" class="btn btn-block btn-outline-success">PAYMENT</a>
+                        }
+                        else
+                        {
+                            <a href="javascript:void(0)" onclick="SaveWithOutPayment()" class="btn btn-block btn-outline-success" data-caption=""><span class="fa fa-save"></span> Save Order</a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>*@
+</div>
+
+<div id="InvoiceFormat" style="display:none"></div>
+
+<div class="modal fade" id="partialPaymentModal" tabindex="-1" role="dialog" aria-labelledby="partialPaymentModal-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="partialPaymentModal-label">Partial Payment Mode</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>Total Amount</label>
+                        <input type="text" id="TotalNetAmount" class="form-control" readonly />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Credit Received</label>
+                        <input type="text" id="CreditReceived" class="form-control" />
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label>Remaining Payment</label>
+                        <input type="text" id="remainingPayment" class="form-control" readonly />
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label>Cash Received</label>
+                        <input type="text" id="CashReceived" class="form-control" />
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label>Change</label>
+                        <input type="text" id="Changed" class="form-control" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" onclick="SaveOrderWithPartialPayment()" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    var orderId = $("#OrderId").val();
+    var tableId = $("#tableId").val();
+    var amount = $("#totalAmount").text();
+    var totalAmount = parseFloat(amount);
+    $("#TotalNetAmount").val(totalAmount);
+
+    var amount = $("#subTotalAmount").text();
+    debugger
+    var subTotalAmount = parseFloat(amount);
+
+
+    var gstPer = $("#GSTpercentage").text();
+    var GSTpercentage = parseFloat(gstPer);
+
+    var gst = $("#gstCharged").text();
+    var gstCharged = parseFloat(gst);
+
+    var discountPer = $("#discountPercentage").text();
+    var discountPercentage = parseFloat(discountPer);
+
+    var discount = $("#discountCharges").text();
+    var discountCharges = parseFloat(discount);
+
+
+    var servicePer = $("#servicePercentage").text();
+    var servicePercentage = parseFloat(servicePer);
+
+    var alimentamount = $("#alignmentAmounts").text();
+    var alignmentAmounts = parseFloat(alimentamount);
+
+
+    var wheelBalanceAmountss = $("#wheelBalanceAmounts").text();
+    var wheelBalanceAmounts = parseFloat(wheelBalanceAmountss);
+
+
+
+    var NitrogenGas = $("#NitrogenGass").text();
+    var NitrogenGass = parseFloat(NitrogenGas);
+
+
+    var TPMS = $("#TPMSs").text();
+    var TPMS = parseFloat(TPMS);
+
+
+
+
+
+    var service = $("#serviceCharges").text();
+    var serviceCharges = parseFloat(service);
+
+
+    var isSavedGuests = $("#IsSavedGuests").val();
+
+    $(document).ready(function () {
+
+        if (isSavedGuests == "") {
+            $("#customerModal").modal({
+                backdrop: 'static',
+                keyboard: false,
+                autoOpen: false,
+                draggable: false,
+                resizable: false,
+            });
+        }
+    });
+
+    function SaveGuests() {
+        debugger
+        var guests = $("#Guests").val();
+        if (guests == "") {
+            alertify.error("Please Enter Valid Number.");
+            return;
+        }
+        else {
+            var modelData = {
+                NoOfGuest: guests,
+                TableId: tableId,
+            };
+            startLoader();
+            $.ajax({
+                url: '@Url.Action("CreateTicket", "Home")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Saved successfully");
+                    RefreshCart();
+                    location.reload();
+                }
+                stopLoader();
+            });
+
+        }
+
+
+    }
+
+     function GetCarHistory() {
+        debugger
+        var guests = $("#Guests").val();
+        if (guests == "") {
+            alertify.error("Please Enter Valid Number.");
+            return;
+        }
+        else {
+            var modelData = {
+                NoOfGuest: guests,
+                TableId: tableId,
+            };
+            startLoader();
+            $.ajax({
+                url: '@Url.Action("GetCarHistory", "Home")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Saved successfully");
+
+                    location.reload();
+                }
+                stopLoader();
+            });
+
+        }
+
+
+    }
+
+    function SaveItemRemarks() {
+        var itemId = $("#itemID").val();
+        var itemRemarks = $("#itemRemarks").val();
+        if (itemId == "" || itemRemarks == "") {
+            alertify.error("Please Enter Remarks.");
+            return;
+        }
+        else {
+            var modelData = {
+                Id: itemId,
+                Remarks: itemRemarks,
+                TableId: tableId,
+            };
+            startLoader();
+            $.ajax({
+                url: '@Url.Action("CurrentItemRemarks", "Home")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Saved successfully");
+                    $("#itemRemarks").val('');
+                    RefreshCart();
+                    //location.reload();
+                }
+                stopLoader();
+            });
+
+        }
+
+
+    }
+
+    function SaveOrderWithReason() {
+        debugger
+        var orderId = $("#orderID").val();
+        var orderReason = $("#orderReason").val();
+        if (orderId == "" || orderReason == "") {
+            alertify.error("Please Enter Valid Reason.");
+            return;
+        }
+        else {
+            var modelData = {
+                Id: orderId,
+                Reason: orderReason,
+            };
+            startLoader();
+
+            $.ajax({
+                url: '@Url.Action("CurrentOrderReason", "Home")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Saved successfully");
+                    $("#orderID").val('');
+                    $("#orderReason").val('');
+                    //RefreshCart();
+                    //location.reload();
+
+                    location.href = "/Home/AllOrders"
+                }
+                stopLoader();
+            });
+
+        }
+
+
+    }
+
+    function SaveWithOutPayment() {
+        debugger
+        if (totalAmount == "") {
+            alertify.error("Total Amount Is InValid Number.");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                TotalNetAmount: totalAmount,
+                TableId: tableId,
+                GSTPerentage: GSTpercentage,
+                GstCharged: gstCharged,
+                DiscountPercentage: discountPercentage,
+                DiscountCharged: discountCharges,
+                ServiceChargesPerentage: servicePercentage,
+                ServiceCharged: serviceCharges,
+
+                AlignmentAmount: alignmentAmounts,
+                wheelBalanceAmount: wheelBalanceAmounts,
+
+
+                NitrogenGas: NitrogenGass,
+                TPMS: TPMSs,
+
+
+
+                IsPayment: false,
+                IsUpdateMode: true,
+                ReceiptTotalCash: 0,
+                Change: 0,
+            };
+            SaveOrder(modelData);
+        }
+    }
+
+    function SaveWithPayment(CashReceived, remaining) {
+
+        if (totalAmount == "") {
+            alertify.error("Total Amount Is InValid Number.");
+            return;
+        }
+        else {
+            var modelData = {
+                TotalNetAmount: totalAmount,
+                ReceiptTotalCash: CashReceived,
+                Change: remaining,
+                TableId: tableId,
+                GSTPerentage: GSTpercentage,
+                GstCharged: gstCharged,
+                DiscountPercentage: discountPercentage,
+                DiscountCharged: discountCharges,
+                ServiceChargesPerentage: servicePercentage,
+                ServiceCharged: serviceCharges,
+                AlignmentAmount: alignmentAmounts,
+                wheelBalanceAmount: wheelBalanceAmounts,
+
+                NitrogenGas: NitrogenGass,
+                TPMS: TPMSs,
+
+
+                IsPayment: true,
+            };
+            SaveOrder(modelData);
+        }
+    }
+
+    function SaveOrderUsingMachine(PaymentTypeId,GSTPer) {
+
+        var gstcharges = GstChargesCal(GSTPer, subTotalAmount, discountCharges);
+
+        if (totalAmount == "") {
+            alertify.error("Total Amount Is InValid Number.");
+            return;
+        }
+        else {
+            var modelData = {
+                TotalNetAmount: totalAmount,
+                ReceiptTotalCredit: totalAmount,
+                TableId: tableId,
+                GSTPerentage: GSTPer,
+                GstCharged: gstcharges,
+                DiscountPercentage: discountPercentage,
+                DiscountCharged: discountCharges,
+                ServiceChargesPerentage: servicePercentage,
+                ServiceCharged: serviceCharges,
+                AlignmentAmount: alignmentAmounts,
+                wheelBalanceAmount: wheelBalanceAmounts,
+
+                NitrogenGas: NitrogenGass,
+                TPMS: TPMSs,
+
+                IsPayment: true,
+                PaymentTypeId: PaymentTypeId,
+            };
+            SaveOrder(modelData);
+        }
+    }
+
+
+
+    function PointQuantity(id, name, currentTableId) {
+        debugger
+        startLoader();
+        $.ajax
+            ({
+                url: '/Home/PointQuantity/',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify({ id: id, tableId: currentTableId })
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success(name + " Plus Item successfully");
+                    RefreshCart();
+                }
+
+                stopLoader();
+            });
+    }
+
+    function PaymentMessage() {
+        alertify.alert("This Transaction is disable for this order.");
+    }
+
+    function SaveOrder(modelData, Isflag) {
+
+        console.log(modelData);
+
+
+         startLoader();
+            $.ajax({
+                url: '@Url.Action("CreateTicket", "Home")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    RefreshCart();
+                    $.ajax({
+                        url: '@Url.Action("AddOrder", "Home")',
+                        type: "POST",
+                        data: { tableId: tableId },
+                    }).done(function (res) {
+                        console.log(res);
+                        debugger
+                        if (res.massage == "Error" || res == "") {
+                            alertify.error("Something went wrong");
+                        }
+                        else if (res.massage == "Success") {
+                            debugger
+                            if (modelData.IsPayment == true) {
+                                TableRelease(tableId);
+                            }
+                            alertify.alert("Order Saved successfully");
+                            debugger
+                            if (res.Id) {
+                                debugger
+                                GetInvoice(res.Id);
+                            }
+                            GetInvoice(orderId);
+
+
+                            //location.reload();
+                            alertify.success("Successfully Print Sent ");
+
+                        }
+                    });
+                }
+                stopLoader();
+            });
+    }
+
+    function GstChargesCal(GSTPer, GrossAmount, DiscountCharges) {
+        var GSTCharged = (GSTPer / 100) * (GrossAmount - DiscountCharges);
+        return GSTCharged;
+    }
+
+    $("#CreditReceived").change(function (e) {
+        e.preventDefault();
+        CreditReceived = $("#CreditReceived").val();
+        if (parseFloat(CreditReceived) > 0) {
+            remaining = parseFloat(totalAmount) - parseFloat(CreditReceived);
+            $("#remainingPayment").val(remaining);
+            if (remaining > 0) {
+                $("#CashReceived").prop("disabled", false);
+            }
+            else {
+                $("#CashReceived").prop("disabled", true);
+            }
+        }
+        else {
+            alertify.alert("Please Enter Valid Number For Credit Payment.");
+            return;
+        }
+    });
+
+    $("#CashReceived").change(function (e) {
+        e.preventDefault();
+
+       var CashReceived = $("#CashReceived").val();
+        var remainingPayment = $("#remainingPayment").val();
+
+        if (parseFloat(CashReceived) >= parseFloat(remainingPayment)) {
+            changed = parseFloat(CashReceived) - parseFloat(remainingPayment);
+            $("#Changed").val(changed);
+        }
+        else {
+            alertify.alert("Please Enter Valid Number For Cash Payment.");
+            return;
+        }
+
+    });
+
+    function SaveOrderWithPartialPayment() {
+
+        var CreditReceived = $("#CreditReceived").val();
+        var CashReceived = $("#CashReceived").val();
+        if (totalAmount == "") {
+            alertify.error("Total Amount Is InValid Number.");
+            return;
+        }
+        else {
+            var modelData = {
+                TotalNetAmount: totalAmount,
+                ReceiptTotalCredit: CreditReceived,
+                ReceiptTotalCash: CashReceived,
+                Change: remaining,
+                TableId: tableId,
+                GSTPerentage: GSTpercentage,
+                GstCharged: gstCharged,
+                DiscountPercentage: discountPercentage,
+                DiscountCharged: discountCharges,
+                ServiceChargesPerentage: servicePercentage,
+                ServiceCharged: serviceCharges,
+                AlignmentAmount: alignmentAmounts,
+                wheelBalanceAmount: wheelBalanceAmounts,
+
+                NitrogenGas: NitrogenGass,
+                TPMS: TPMSs,
+
+
+                IsPayment: true,
+                PaymentTypeId: 4,
+            };
+            SaveOrder(modelData);
+        }
+    }
+
+    function PartialPaymentModal() {
+        $("#partialPaymentModal").modal({
+            backdrop: 'static',
+            keyboard: false,
+            autoOpen: false,
+            draggable: false,
+            resizable: false,
+        });
+    }
+
+</script>

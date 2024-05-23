@@ -1,0 +1,1 @@
+search_result['2253']=["topic_0000000000000673.html","ShopStatusViewModel.Implicit Conversion (ShopStatus to ShopStatusViewModel) Operator",""];

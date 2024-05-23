@@ -1,0 +1,1 @@
+search_result['4620']=["topic_0000000000000D3D.html","WastageRepotDataTable.AddWastageRepotRow (Int32, String, String, Double, Double, Double, DateTime) Method",""];

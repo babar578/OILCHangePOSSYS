@@ -1,0 +1,134 @@
+﻿@using POS.Utilities.Services
+@using POS.Utilities.ViewModel
+@model ItemViewModel
+@{
+
+    Layout = null;
+    Model.Categories = ItemServices.GetAllCategories(true);
+    //Model.SubCategories = ItemServices.GetAllSubCategories();
+    Model.Units = ItemServices.GetAllUnits();
+    Model.Departments = ItemServices.GetAllDepartments();
+    Model.ItemGroups = ItemServices.GetAllItemGroups();
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.DropDownListFor(m => m.ItemGroupId, new SelectList(Model.ItemGroups, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Item Group *", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categories, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Category *", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Item Name ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.DropDownListFor(m => m.UnitId, new SelectList(Model.Units, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Unit *", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Department", @required = "true" })
+            </div>
+        </div>
+
+        @*<div class="col-md-6">
+            <div class="form-group ">
+                <div id="subCategories">
+                    <label class="col-form-label">Sub Category</label>
+                    <input type="text" class="form-control" disabled />
+                </div>
+            </div>
+        </div>*@
+
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "Price", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group ">
+                @Html.TextAreaFor(m => m.Remarks, new { @rows="3" ,@class = "form-control", placeholder = "Remarks", @required = "true" })
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="Item" class="btn btn-primary"><span class="fa fa-edit"></span> Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+
+}
+<script>
+
+
+    $("#CategoryId").change(function (e) {
+        e.preventDefault();
+        var categoryId = $("#CategoryId").val();
+        GetSubCategories(categoryId);
+    });
+
+    function GetSubCategories(categoryId) {
+        $.ajax(
+            {
+                url: "/Menu/GetSubCategoryByCategory/" + categoryId,
+                type: "Get",
+            }
+        ).done(function (result) {
+            $("#subCategories").html(result);
+        });
+    }
+
+
+    $("#Item").click(function () {
+
+        var id = $("#Id").val();
+        var itemGroupId = $("#ItemGroupId").val();
+        var categoryId = $("#CategoryId").val();
+        var name = $("#Name").val();
+        var subCategoryId = $("#SubCategoryId").val();
+        var unitId = $("#UnitId").val();
+        var departmentId = $("#DepartmentId").val();
+        var price = $("#Price").val();
+        var remarks = $("#Remarks").val();
+
+
+        if (name == "" || itemGroupId == ""  ||  categoryId == "" || price == "") {
+            alertify.error("Fill required fields.");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                Id: id,
+                ItemGroupId: itemGroupId,
+                CategoryId: categoryId,
+                Name: name,
+                SubCategoryId: subCategoryId,
+                UnitId: unitId,
+                DepartmentId: departmentId,
+                Price: price,
+                IsRawMaterial: true,
+                Remarks: remarks,
+            };
+            SaveRawItem(modelData);
+        }
+    });
+</script>
+
+
+

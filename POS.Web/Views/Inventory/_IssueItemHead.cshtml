@@ -1,0 +1,139 @@
+﻿@using POS.Utilities.Services
+@using POS.Utilities.ViewModel
+@model IssueToLocationHeadViewModel
+@{
+
+    Layout = null;
+    Model.Locations = VendorServices.GetAllLocations();
+    Model.Departments = ItemServices.GetAllDepartments();
+    Model.PurchaseItems = VendorServices.GetAllPurchaseItemsName();
+    Model.RawItems = ItemServices.GetAllItems(true);
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+    <div class=" row">
+        <div class=" col-md-12">
+            <div class="card card-custom accent-dark">
+                <div class="card-header card-blue">
+                    <div class="card-title">
+                        <span class="card-icon">
+                            <i class="flaticon2-line-chart text-primary"></i>
+                        </span>
+                        <h3 class="card-label">
+                            Issue To Departments
+
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="col-form-label">Transaction Date <b class="text-danger">*</b></label>
+                @Html.TextBoxFor(m => m.IssuanceDate, new { @type = "date", @class = "form-control", placeholder = "Transaction Date * ", @required = "true", onkeydown = "return false" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="col-form-label">Doc No</label>
+                @Html.TextBoxFor(m => m.DocNo, new { @class = "form-control", placeholder = "DocNo ", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">Location <b class="text-danger">*</b></label>
+                @Html.DropDownListFor(m => m.LocationId, new SelectList(Model.Locations, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Locations", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="col-form-label">Department <b class="text-danger">*</b></label>
+                @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Departments", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                
+                @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control", placeholder = "Remarks", @required = "true" })
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                
+                <div class="input-group">
+                    @Html.DropDownListFor(m => m.ItemId, new SelectList(Model.PurchaseItems, "ItemId", "ItemName"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Import Purchase Items", @required = "true" })
+                    <span class="input-group-append">
+                        <button type="button" id="btnImport" class="btn btn-info btn-flat">Import Item</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group  pull-right">
+                <a href="javascript: void(0)" onclick="IssueItems()" class="btn btn-block btn-success" >SAVE</a>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $('select').selectpicker();
+    });
+    var today = new Date();
+    var min = today.getMonth() + 1;
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("IssuanceDate").setAttribute("max", today);
+    min = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("IssuanceDate").setAttribute("min", min);
+    //var today = new Date();
+    //var dd = today.getDate();
+    //var mm = today.getMonth() + 1; //January is 0!
+    //var yyyy = today.getFullYear();
+    //if (dd < 10) {
+    //    dd = '0' + dd
+    //}
+    //if (mm < 10) {
+    //    mm = '0' + mm
+    //}
+
+    //today = yyyy + '-' + mm + '-' + dd;
+    //document.getElementById("datefield1").setAttribute("max", today);
+
+
+    $("#btnImport").click(function () {
+        var itemId = $("#ItemId").val();
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/SearchWarehouseItem?ItemId=" + itemId,
+                type: "POST"
+            }
+        ).done(function (result) {
+            IssueItemDetail();
+            stopLoader();
+        });
+    });
+
+</script>
+
+
+
+
+

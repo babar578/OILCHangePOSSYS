@@ -1,0 +1,1 @@
+search_result['5816']=["topic_000000000000106A.html","CompanyInformation.Clone Method","Copies the structure of the DataSet, including all DataTable schemas, relations, and constraints. Does not copy any data."];

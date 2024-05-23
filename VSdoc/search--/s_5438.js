@@ -1,0 +1,1 @@
+search_result['5438']=["topic_0000000000000F80.html","WastageRepotDataTable.OnRowDeleted Method","Raises the RowDeleted event."];

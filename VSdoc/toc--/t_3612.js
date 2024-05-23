@@ -1,0 +1,1 @@
+c['3612']=[['3613',"Dock27PosWebPortalDataSet32(SerializationInfo, StreamingContext) Constructor","topic_0000000000000D6D.html",0],['3614',"Dock27PosWebPortalDataSet32() Constructor","topic_0000000000000D6C.html",0]];

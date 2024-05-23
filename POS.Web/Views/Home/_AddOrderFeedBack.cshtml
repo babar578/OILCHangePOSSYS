@@ -1,0 +1,183 @@
+﻿@using POS.Utilities.Services
+@using POS.Utilities.ViewModel
+@model OrderFeedbackViewModel
+@{
+
+    Layout = null;
+
+    var OrderFeedbackStatuses = OrderServices.GetAllOrderFeedbackStatuses();
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.OrderId)
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.FoodExcellence, new SelectList(OrderFeedbackStatuses, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Food Excellence", @required = "true" })
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.ServiceLevel, new SelectList(OrderFeedbackStatuses, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Service Level", @required = "true" })
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.AmbienceTheme, new SelectList(OrderFeedbackStatuses, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Ambience & Theme", @required = "true" })
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.SelectionOfMusic, new SelectList(OrderFeedbackStatuses, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Selection of Music", @required = "true" })
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.OverallExperience, new SelectList(OrderFeedbackStatuses, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Overall Experience", @required = "true" })
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group ">
+                @Html.TextAreaFor(m => m.Comments, new { @rows = "4", @class = "form-control", placeholder = "Enlighten us with valuable observations & comments ", @required = "true" })
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group ">
+                @Html.TextBoxFor(m => m.GuestName, new { @class = "form-control", placeholder = "Enter Guest Name ", @required = "true" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.TextBoxFor(m => m.ContactNumber, new { @class = "form-control", placeholder = "Contact Number ", @required = "true" })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.TextBoxFor(m => m.Email, new { type = "Email", @class = "form-control", placeholder = "E.g. User@domain.com ", @required = "true" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h5>
+                Our Marketing & Customer Care Teams can contact you
+            </h5>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-3">
+            <div class="checkbox">
+                <label>
+                    Email <input type="checkbox">
+                </label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="checkbox">
+                <label>
+                    SMS <input type="checkbox">
+                </label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="checkbox">
+                <label>
+                    WhatsApp <input type="checkbox">
+                </label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="checkbox">
+                <label>
+                    Phone <input type="checkbox">
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="Item" class="btn btn-primary"><span class="fa fa-edit"></span> Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+
+}
+
+<script>
+
+    $("#Item").click(function () {
+
+        var id = $("#Id").val();
+        var name = $("#Name").val();
+        var categoryId = $("#CategoryId").val();
+        var subCategoryId = $("#SubCategoryId").val();
+        var unitId = $("#UnitId").val();
+        var departmentId = $("#DepartmentId").val();
+        var price = $("#Price").val();
+        var tax = $("#Tax").val();
+        var discount = $("#Discount").val();
+        var promotionStartDate = $("#PromotionStartDate").val();
+        var promotionEndDate = $("#PromotionEndDate").val();
+
+        if (name == "" || categoryId == "" || price == "" || departmentId == "") {
+            alertify.error("Fill required fields.");
+            return;
+        }
+        if (discount != "" && (promotionStartDate == "" || promotionEndDate == "")) {
+            alertify.error("Enter 'Promotion Start Date' and 'Promotion End Date'");
+            return;
+        }
+        else
+        {
+            var modelData = {
+                Id: id,
+                Name: name,
+                CategoryId: categoryId,
+                SubCategoryId: subCategoryId,
+                UnitId: unitId,
+                DepartmentId: departmentId,
+                Price: price,
+                Tax: tax,
+                Discount: discount,
+                PromotionStartDate: promotionStartDate,
+                PromotionEndDate: promotionEndDate,
+            };
+            startLoader();
+            $.ajax({
+                url: '@Url.Action("AddItem", "Menu")',
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                data: JSON.stringify(modelData),
+                datatype: "Json",
+            }).done(function (res) {
+                console.log(res);
+                if (res == "Error" || res == "") {
+                    alertify.error("Something went wrong");
+                }
+                else if (res == "Success") {
+                    alertify.success("Update successfully");
+                    location.reload();
+                }
+                stopLoader();
+            });
+        }
+    });
+</script>
+
+
+

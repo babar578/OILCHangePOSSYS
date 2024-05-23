@@ -1,0 +1,70 @@
+﻿@{
+
+    Layout = null;
+}
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label>Total Net Amount</label>
+            <input type="text" id="TotalNetAmount" class="form-control" readonly />
+        </div>
+        <div class="form-group col-md-4">
+            <label>Cash Received From Customer</label>
+            <input type="text" id="CashReceived" class="form-control" />
+        </div>
+        <div class="form-group col-md-4">
+            <label>Change</label>
+            <input type="text" id="Changed" class="form-control" readonly />
+        </div>
+    </div>
+
+
+    <div class="modal-footer col-md-12">
+        <div class="form-group">
+            <button type="button" id="AddPayment" class="btn btn-primary"><span class="fa fa-save"></span> Payment</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        </div>
+    </div>
+}
+<script>
+
+    var remaining = 0;
+    var CashReceived = 0;
+    var amount = $("#totalAmount").text();
+    var totalAmount = parseFloat(amount);
+    $("#TotalNetAmount").val(totalAmount);
+
+    $("#CashReceived").change(function (e) {
+        e.preventDefault();
+         CashReceived = $("#CashReceived").val();
+        if (parseFloat(CashReceived) >= parseFloat(totalAmount)) {
+            remaining = parseFloat(CashReceived) - parseFloat(totalAmount);
+            $("#Changed").val(remaining);
+        }
+        else {
+            alertify.alert("Please Enter Valid Number.");
+            return;
+        }
+
+    });
+
+
+    $("#AddPayment").click(function () {
+        if (totalAmount == "") {
+            alertify.error("Please Enter Valid Number.");
+            return;
+        }
+        if (parseFloat(CashReceived) < parseFloat(totalAmount)) {
+            alertify.alert("Please Enter Valid Number.");
+            return;
+        }
+        else
+        {
+            SaveWithPayment(CashReceived, remaining);
+        }
+    });
+</script>
+

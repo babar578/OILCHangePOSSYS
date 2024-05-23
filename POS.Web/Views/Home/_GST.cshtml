@@ -1,0 +1,92 @@
+﻿@{
+    Layout = null;
+
+    int? tableId = null;
+
+    if (Session["CurrentTableId"] != null)
+    {
+        tableId = (int)Session["CurrentTableId"];
+
+    }
+}
+
+<!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-lg-4 col-6">
+        <a href="javascript:void(0)" onclick="ApplyGST(0,@tableId)" data-dismiss="modal">
+            <!-- small box -->
+            <div class="small-box btn-outline-info">
+                <div class="inner" style="text-align:center">
+                    <h4>GST 0 %</h4>
+                </div>
+            </div>
+        </a>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-4 col-6">
+        <a href="javascript:void(0)" onclick="ApplyGST(5,@tableId)" data-dismiss="modal">
+            <!-- small box -->
+            <div class="small-box btn-outline-success">
+                <div class="inner" style="text-align:center">
+                    <h4>GST 5 %</h4>
+                </div>
+
+            </div>
+        </a>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-4 col-6">
+        <a href="javascript:void(0)" onclick="ApplyGST(16,@tableId)" data-dismiss="modal">
+            <!-- small box -->
+            <div class="small-box btn-outline-secondary">
+                <div class="inner" style="text-align:center">
+                    <h4>GST 16 %</h4>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<!-- /.row -->
+
+<script>
+    function ApplyGST(GST, tableId) {
+
+        var amount = $("#subTotalAmount").text();
+        var subTotalAmount = parseFloat(amount);
+
+        var gstPrice = (GST / 100) * subTotalAmount;
+
+        alertify.confirm("Are you sure you want to apply " + GST + "% GST", function (e, str) {
+            if (e) {
+
+                var modelData = {
+                        GSTPerentage: GST,
+                        GstCharged: gstPrice,
+                        TableId: tableId,
+                };
+                startLoader();
+                $.ajax({
+                    url: '@Url.Action("CreateTicket", "Home")',
+                    contentType: 'application/json; charset=utf-8',
+                    type: "POST",
+                    data: JSON.stringify(modelData),
+                    datatype: "Json",
+                }).done(function (res) {
+                    console.log(res);
+                    if (res == "Error" || res == "") {
+                        alertify.error("Something went wrong");
+                    }
+                    else if (res == "Success") {
+                        alertify.success("Saved successfully");
+                        RefreshCart();
+                    }
+                    stopLoader();
+                });
+            }
+            else {
+                // user clicked "cancel"
+            }
+        }, "Default Value");
+    }
+
+</script>

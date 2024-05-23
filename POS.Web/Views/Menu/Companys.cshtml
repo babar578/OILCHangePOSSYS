@@ -1,0 +1,38 @@
+﻿@using POS.Utilities.ViewModel
+@model CompanyViewModel
+@{
+    ViewBag.Title = "Units";
+    var searchKeyword = ViewBag.search;
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">List of Available Categories</h3>
+
+                <div class="card-tools">
+                    @{
+
+                        <div class="btn-group float-left" role="group">
+                            <div class="">
+                                <a href="/Menu/Company" id="btn-add"
+                                   class="btn btn-primary waves-effect"
+                                   data-toggle="tooltip" data-placement="bottom" title="New Unit"
+                                   data-caption="Add New Company">
+                                    <span class="fas fa-plus"></span> Add New Company 
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <!-- /.card-header -->
+         
+            <!-- /.card-body -->
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+

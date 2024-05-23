@@ -1,0 +1,1 @@
+search_result['3744']=["topic_0000000000000AC7.html","Dock27PosWebPortalDataSet235.GetSchemaSerializable Method","Returns a serializable XmlSchema instance."];

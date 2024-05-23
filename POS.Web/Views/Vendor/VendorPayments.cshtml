@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Vendor Payments";
+}
+
+
+
+<div id="VendorPayments"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetAllVendorPayments();
+    });
+    function GetAllVendorPayments() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Vendor/GetAllVendorPayments/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#VendorPayments").html(result);
+            stopLoader();
+        });
+    }
+</script>
+
+

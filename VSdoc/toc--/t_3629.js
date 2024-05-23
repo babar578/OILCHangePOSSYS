@@ -1,0 +1,1 @@
+c['3629']=[['3630',"ReturnToVendorDataTable Constructor","topic_0000000000000DC6_overloads--.html",1],['3633',"Properties","topic_0000000000000DC5_props--.html",1],['3643',"Methods","topic_0000000000000DC5_methods--.html",1],['3659',"Events","topic_0000000000000DC5_events--.html",1]];

@@ -1,0 +1,1 @@
+c['2131']=[['2132',"SubCategoryViewModel Constructor","topic_0000000000000676.html",0],['2133',"Properties","topic_0000000000000675_props--.html",1],['2142',"Methods","topic_0000000000000675_methods--.html",1]];

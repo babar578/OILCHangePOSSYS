@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"SOLUTION-WIDE PROPERTIES Reference","topic_0000000000001149.html"],['765',"POS.Reporting Namespace","topic_000000000000103A.html"],['766',"CachedCrystalReport1 Class","topic_0000000000001045.html"]];

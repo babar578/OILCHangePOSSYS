@@ -1,0 +1,1 @@
+search_result['1395']=["topic_0000000000000410.html","Nul Field","Usually indicates the end of a string."];

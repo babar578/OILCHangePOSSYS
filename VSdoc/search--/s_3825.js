@@ -1,0 +1,1 @@
+search_result['3825']=["topic_0000000000000B05.html","IssueToDeptmentTableAdapter Class","Represents the connection and commands used to retrieve and save data."];

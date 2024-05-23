@@ -1,0 +1,1 @@
+search_result['3281']=["topic_0000000000000977.html","VenderToWarhouseDataTable.NewRowFromBuilder Method","Creates a new row from an existing row."];

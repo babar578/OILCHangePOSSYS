@@ -1,0 +1,1 @@
+c['3147']=[['3148',"ComsumptionRowChangeEvent Constructor","topic_0000000000000BA5.html",0],['3149',"Properties","topic_0000000000000BA4_props--.html",1]];

@@ -1,0 +1,1 @@
+search_result['3669']=["topic_0000000000000A90.html","fn_InventoryBalRow.IsOpeningQuantityNull Method",""];

@@ -1,0 +1,1 @@
+c['1971']=[['1972',"Implicit Conversion (Order to OrderViewModel) Operator","topic_00000000000005E9.html",0],['1973',"Implicit Conversion (OrderViewModel to Order) Operator","topic_00000000000005EA.html",0]];

@@ -1,0 +1,1 @@
+c['4059']=[['4060',"Dock27PosWebPortalDataSet67(SerializationInfo, StreamingContext) Constructor","topic_0000000000000F59.html",0],['4061',"Dock27PosWebPortalDataSet67() Constructor","topic_0000000000000F58.html",0]];

@@ -1,0 +1,1 @@
+c['2474']=[['2475',"AddVenderToWarhouseRow(string, double, double, double, DateTime, double, string, double, string) Method","topic_00000000000008CC.html",0],['2476',"AddVenderToWarhouseRow(VenderToWarhouseRow) Method","topic_00000000000008CB.html",0]];

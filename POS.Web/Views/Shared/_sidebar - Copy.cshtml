@@ -1,0 +1,209 @@
+﻿@using POS.Utilities.Services
+@{
+
+    Layout = null;
+
+}
+
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/Home/Index" class="brand-link">
+        <img src="~/Content/dist01/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light">Admin Panel</span>
+    </a>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="~/Content/dist01/img/user1-128x128.jpg" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="/Home/Index" class="d-block">XYZ Name</a>
+            </div>
+        </div>
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item has-treeview menu-open">
+                    <a href="/Home/Index" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item has-treeview">
+                    <a href="/Menu/Items" class="nav-link">
+                        <i class="nav-icon fas fa-file-alt"></i>
+                        <p>
+                            Item Setup
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/Menu/Items" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Items</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Promotion Items</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/Menu/Categories" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Categories</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/Menu/SubCategories" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Sub-Categories</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/Menu/Units" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Units</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                    @*<ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Inventory Stock</p>
+                    </a>
+                </li>
+            </ul>*@
+                </li>
+
+                <li class="nav-item has-treeview">
+                    <a href="/Menu/Tables" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Tables
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/Menu/FloorTables" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Tables</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/Menu/Floors" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Floors</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                    @{
+                        if (ItemServices.GetAllFloors()?.Count > 0)
+                        {
+                            foreach (var p in ItemServices.GetAllFloors())
+                            {
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/Menu/Tables/@p.Id" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>@p.Name</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                        }
+                    }
+                </li>
+
+                <li class="nav-item">
+                    <a href="/Home/POS" class="nav-link">
+                        <i class="nav-icon fas fa-desktop"></i>
+                        <p>
+                            POS Panel
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item has-treeview">
+                    <a href="/Home/AllOrders" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>
+                            Order Setup
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/Home/AllOrders" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Close Orders</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/Home/OpenOrders" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Open Orders</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/Home/DraftOrders" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Draft Orders</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-pencil-ruler"></i>
+                        <p>
+                            Reports
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Users
+                        </p>
+                    </a>
+                </li>
+
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

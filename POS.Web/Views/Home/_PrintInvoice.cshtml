@@ -1,0 +1,361 @@
+﻿
+@using POS.Utilities.ViewModel
+@model OrderViewModel
+@using POS.Utilities.Services
+@using POS.Utilities.Utilities
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+    var NextReading = Convert.ToDouble( Model.Reading);
+    var CurrentReading = Model.Tip;
+    Model.NextReading = NextReading + CurrentReading;
+
+    var s = ItemServices.GetCompanyById();
+    string imagePath = new Uri(Server.MapPath(s.LOGO)).AbsoluteUri;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    @*<style>
+            #invoice-POS {
+                box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+                padding: 2mm;
+                margin: 0 auto;
+                width: 44mm;
+                background: #FFF;
+            }
+
+
+
+            h1 {
+                font-size: 1.5em;
+                color: #222;
+            }
+
+            h2 {
+                font-size: .9em;
+            }
+
+            h3 {
+                font-size: 1.2em;
+                font-weight: 300;
+                line-height: 2em;
+            }
+
+            p {
+                font-size: .7em;
+                color: #666;
+                line-height: 1.2em;
+            }
+
+            #top, #mid, #bot { /* Targets all id with 'col-' */
+                border-bottom: 1px solid #EEE;
+            }
+
+            #top {
+                min-height: 100px;
+            }
+
+            #mid {
+                min-height: 80px;
+            }
+
+            #bot {
+                min-height: 50px;
+            }
+
+            #top .logo {
+                //float: left;
+                height: 60px;
+                width: 60px;
+                background: url(http://michaeltruong.ca/images/logo1.png) no-repeat;
+                background-size: 60px 60px;
+            }
+
+            .clientlogo {
+                float: left;
+                height: 60px;
+                width: 60px;
+                background: url(http://michaeltruong.ca/images/client.jpg) no-repeat;
+                background-size: 60px 60px;
+                border-radius: 50px;
+            }
+
+            .info {
+                display: block;
+                //float:left;
+                margin-left: 0;
+            }
+
+            .title {
+                float: right;
+            }
+
+                .title p {
+                    text-align: right;
+                }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            td {
+                //padding: 5px 0 5px 15px;
+                //border: 1px solid #EEE
+            }
+
+            .tabletitle {
+                //padding: 5px;
+                font-size: .5em;
+                background: #EEE;
+            }
+
+            .service {
+                border-bottom: 1px solid #EEE;
+            }
+
+            .item {
+                width: 24mm;
+            }
+
+            .itemtext {
+                font-size: .5em;
+            }
+
+            #legalcopy {
+                margin-top: 5mm;
+            }
+
+            }
+        </style>*@
+</head>
+<body>
+    <div id="invoice-POS" style="box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+  padding:2mm;
+  margin: 0 auto;
+  width: 90mm;
+  background: #FFF;">
+        @{
+            if (Model != null)
+            {
+                <center id="top" style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#EEE;">
+
+                    @*<img style="  height: 70px;width: 90px;" src=@ss alt="Alternate Text" />*@
+                    <img style="  height: 70px;width: 90px;" src=@imagePath />
+
+
+                    <div class="info" style="display:block;margin-left:0;" onClick="window.print();return false">
+
+                        <h1 style="font-size:10mm;">@s.CompanyName</h1>
+                        <div class="info" style="display:block;margin-left:0;">
+                            <p style="font-size:1.0em;">@s.Address <br />   Ph: @s.PhoneNumber2</p>
+
+                        </div>
+                        <h2 style="font-size:1.0em;">Timing 9am - 10pm</h2>
+                    </div><!--End Info-->
+                </center><!--End InvoiceTop-->
+
+                <div id="mid" style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#EEE; font-weight: bold;">
+                    <div class="info" style="display:block;margin-left:0;">
+                        @*<h2 style="font-size:0.9em;">Contact Info</h2>*@
+                        <p style="font-size: 1.0em; color: #000000; line-height: 2.0em;">
+                            Invoice Data # : @Model.CreationDate<br>
+                            Order # : @Model.InvoiceNumber<br>
+                            Customer Name : @Model.CustomerName<br>
+                            Car No# : @Model.CarNo<br>
+                            Reading : @Model.Tip<br>
+                            Next Reading : @Model.NextReading<br>
+                        </p>
+                    </div>
+                </div><!--End Invoice Mid-->
+
+                <div id="bot" style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#EEE;min-height:90px;">
+
+                    <div id="table" style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#EEE;">
+                        <table class="table table-bordered" style="width:100%;border-collapse:collapse;">
+
+                            <thead>
+
+                                <tr class="tabletitle" style="font-size: 0.70em; background: #f2f2f2; background-image: none; background-repeat: repeat; background-position: top left; background-attachment: scroll; ">
+
+
+                                    <td class="item col-4" style="width:70mm;"><h1 style="font-size:1.5em;">Item</h1></td>
+                                    <td class="Rate col-3"><h1 style="font-size:1.5em;">Rate|</h1></td>
+                                    <td class="Qty col-3"><h1 style="font-size:1.5em;">Qty|</h1></td>
+                                    <td class="Amount col-3"><h1 style="font-size:1.5em;">Amount|</h1></td>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @{
+                                    if (Model.OrderItems?.Count > 0)
+                                    {
+                                        foreach (var p in Model.OrderItems.Where(p => p.IsVoid == false && p.IsComplimentary == false).ToList())
+                                        {
+
+                                            var subTotal = (p.Price * p.Quantity);
+                                            <row>
+                                                <tr class="service" style="border-bottom-width:5px;border-bottom-style:solid;border-bottom-color:#EEE;">
+                                                    <td  class="tableitem col-4"><p class="itemtext" style="color: #000000; line-height: 1.0em; font-size: 1.0em;">@p.ItemName</p></td>
+                                                    <td class="tableitem col-3"><p class="itemtext" style="color: #000000; line-height: 1.0em; font-size: 1.0em;">@p.Price</p></td>
+                                                    <td class="tableitem col-3"><p class="itemtext" style="color: #000000; line-height: 1.0em; font-size: 1.0em; ">@p.Quantity</p></td>
+                                                    <td class="tableitem col-3"><p class="itemtext" style="color: #000000; line-height: 1.0em; font-size: 1.0em;">@subTotal</p></td>
+                                                </tr>
+                                            </row>
+
+                                        }
+
+                                        <tr>
+                                            <td colspan="4"> <b style="color: #000000; line-height: 1.2em; font-size: 1.5em;">---- Void Items ----</b>  </td>
+                                        </tr>
+                                        foreach (var p in Model.OrderItems.Where(p => p.IsVoid == true).ToList())
+                                        {
+
+                                            var subTotalIsVoid = (p.Price * p.Quantity);
+                                            <tr class="service" style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#EEE;">
+                                                <td class="tableitem"><p class="itemtext" style="color: #000000; line-height: 1.20em; font-size: 1.20em;">@p.ItemName</p></td>
+                                                <td class="tableitem"><p class="itemtext" style="color: #000000; line-height: 1.20em; font-size: 1.20em;">@p.Price</p></td>
+                                                <td class="tableitem"><p class="itemtext" style="color: #000000; line-height: 1.30em; font-size: 1.30em;">@p.Quantity</p></td>
+                                                <td class="tableitem"><p class="itemtext" style="color: #000000; line-height: 1.30em; font-size: 1.30em;">@subTotalIsVoid</p></td>
+                                            </tr>
+                                        }
+
+                                        <tr>
+                                            <td colspan="4"> <b style="color: #000000; line-height: 1.5em; font-size: 0.70em;">---- Complimentary Items ----</b>  </td>
+                                        </tr>
+
+                                        foreach (var p in Model.OrderItems.Where(p => p.IsComplimentary == true).ToList())
+                                        {
+
+                                            var subTotalIsComplimentary = (p.Price * p.Quantity);
+                                            <tr class="service" style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#EEE;">
+                                                <td class="tableitem"><p class="itemtext" style="color: #000000; line-height: 1.20em; font-size: 1.20em;">@p.ItemName</p></td>
+                                                <td class="tableitem"><p class="itemtext" style="color: #000000; line-height: 1.30em; font-size: 1.30em;">@p.Price</p></td>
+                                                <td class="tableitem"><p class="itemtext" style="color: #000000; line-height: 1.20em; font-size: 1.20em;">@p.Quantity</p></td>
+                                                <td class="tableitem"><p class="itemtext" style="color: #000000; line-height: 1.30em; font-size: 1.30em;">@subTotalIsComplimentary</p></td>
+                                            </tr>
+                                        }
+
+                                    }
+                                }
+
+
+                            </tbody>
+
+                            <tfoot>
+                                <tr class="tabletitle" style="font-size:1.0em;background-color:#fff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;">
+                                    @*<td></td>*@
+                                    <td class="Rate" colspan="3"><h1 style="font-size:1.14em;">Ticket Total</h1></td>
+                                    <td class="payment"><h1 style="        font-size: 1.14em;">@Model.GrossAmount</h1></td>
+                                </tr>
+
+                                @if (Model.DiscountCharged > 0)
+                                {
+
+                                    <tr class="tabletitle" style="font-size:1.0em;background-color:#fff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;">
+                                        @*<td></td>*@
+                                        <td class="Rate" colspan="3"><h1 style="font-size:1.14em;">Discount Charges</h1></td>
+                                        <td class="payment"><h1 style="font-size:1.14em;">@Model.DiscountCharged</h1></td>
+                                    </tr>
+                                }
+                                    @if (Model.GstCharged > 0)
+                                    {
+
+                                        <tr class="tabletitle" style="font-size:1.0em;background-color:#fff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;">
+                                            @*<td></td>*@
+                                            <td class="Rate" colspan="3"><h1 style="font-size:1.14em;">GST Charges</h1></td>
+                                            <td class="payment"><h1 style="font-size:1.14em;">@Model.GstCharged</h1></td>
+                                        </tr>
+
+
+                                    }
+                                    @if (Model.ServiceCharged > 0)
+                                    {
+
+                                        <tr class="tabletitle" style="font-size:1.0em;background-color:#fff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;">
+                                            @*<td></td>*@
+                                            <td class="Rate" colspan="3"><h1 style="font-size:1.14em;">Service</h1></td>
+                                            <td class="payment"><h1 style="font-size:1.14em;">@Model.ServiceCharged</h1></td>
+                                        </tr>
+                                    }
+
+                                    @if (Model.AlignmentAmount > 0)
+                                    {
+
+                                        <tr class="tabletitle" style="font-size:1.0em;background-color:#fff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;">
+                                            @*<td></td>*@
+                                            <td class="Rate" colspan="3"><h1 style="font-size:1.14em;">Alignment Amount</h1></td>
+                                            <td class="payment"><h1 style="font-size:1.14em;">@Model.AlignmentAmount</h1></td>
+                                        </tr>
+                                    }
+
+                                    @if (Model.wheelBalanceAmount > 0)
+                                    {
+                                        <tr class="tabletitle" style="font-size:1.0em;background-color:#fff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;">
+                                            @*<td></td>*@
+                                            <td class="Rate" colspan="3"><h1 style="font-size:1.14em;">Wheel Balance Amount</h1></td>
+                                            <td class="payment"><h1 style="font-size:1.14em;">@Model.wheelBalanceAmount</h1></td>
+                                        </tr>
+
+                                    }
+                                    ///..........
+
+                                    @if (Model.NitrogenGas > 0)
+                                    {
+                                        <tr class="tabletitle" style="font-size:1.0em;background-color:#fff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;">
+                                            @*<td></td>*@
+                                            <td class="Rate" colspan="3"><h1 style="font-size:1.14em;">NitrogenGas Amount</h1></td>
+                                            <td class="payment"><h1 style="font-size:1.14em;">@Model.NitrogenGas</h1></td>
+                                        </tr>
+                                    }
+                                    @if (Model.TPMS > 0)
+                                    {
+
+                                        <tr class="tabletitle" style="font-size:1.0em;background-color:#fff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;">
+                                            @*<td></td>*@
+                                            <td class="Rate" colspan="3"><h1 style="font-size:1.14em;">TPMS Amount</h1></td>
+                                            <td class="payment"><h1 style="font-size:1.14em;">@Model.TPMS</h1></td>
+                                        </tr>
+
+                                    }
+
+                                    ///.........
+
+
+                                    <tr class="tabletitle" style="font-size:1.0em;background-color:#fff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;">
+                                        @*<td></td>*@
+                                        <td class="Rate" colspan="3"><h1 style="font-size:1.14em;">Total</h1></td>
+                                        <td class="payment"><h1 style="font-size:1.14em;">@Model.TotalNetAmount</h1></td>
+                                    </tr>
+                                </tfoot>
+                        </table>
+                    </div><!--End Table-->
+                    <center id="top" style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#EEE;">
+                        <div class="info" style="display:block;margin-left:0;" onClick="window.print();return false">
+                            <h2 style="font-size:1.0em;">THANK YOU FOR YOUR Visit</h2>
+                        </div><!--End Info-->
+                        <!--End Info-->
+                    </center><!--End InvoiceTop-->
+                    <center id="top" style="border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#EEE;">
+                        <div class="info" style="display:block;margin-left:0;" onClick="window.print();return false">
+                            <p class="legal" style="font-size: .90em; color: #000000; line-height: 1.0em;">
+                                Oil Change Service At Your Home
+                            </p>    
+                        <p class="legal" style="font-size: .90em; color: #000000; line-height: 1.0em;">
+                                developed by  <strong>IT Corner</strong> 0311-4343115
+                            </p>
+                        </div><!--End Info-->
+                    </center><!--End InvoiceTop-->
+                </div><!--End InvoiceBot-->
+            }
+        }
+
+    </div><!--End Invoice-->
+
+</body>
+
+</html>
+

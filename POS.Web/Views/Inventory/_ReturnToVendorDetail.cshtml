@@ -1,0 +1,74 @@
+﻿@using POS.Utilities.Services
+@using POS.Utilities.Utilities
+@using POS.Utilities.ViewModel
+@{
+    Layout = null;
+    List<ItemStockViewModel> items = Session[WebUtil.ReturnToVendor] as List<ItemStockViewModel>;
+}
+<style>
+    .form-control-sm {
+        border-radius: 5px !important;
+        border: 1px solid !important;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-height: 500px;">
+            <div class="card">
+                <!-- /.card-Detailer -->
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-sm table-striped table-hover text-wrap" id="tblSale">
+                        <thead>
+                            <tr>
+                                <th class="">Item Name</th>
+                                <th class="">Physical Quantity</th>
+                                <th class="">Return Price</th>
+                                <th class="">Return Quantity</th>
+                                <th class="">Remaining Quantity</th>
+                                <th class="">LineRemarks</th>
+                                <th class="">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{
+                                if (items?.Count > 0)
+                                {
+                                    foreach (var p in items)
+                                    {
+                                                        <tr>
+                                                            <td class=""> @Html.HiddenFor(m => p.ItemId, new { @class = "itemId" }) <span class="itemName">@p.ItemName </span></td>
+                                                            <td class=""> <input type="text" id="PhyQuantity_@p.ItemId" class="form-control-sm" value="@p.BalanceQuantity" readonly /></td>
+                                                            <td class=""><input type="text" id="Price_@p.ItemId"  class="form-control-sm itemPrice" value="@p.Rate" /></td>
+                                                            <td class=""> <input type="text" id="IssQuantity_@p.ItemId"  class="form-control-sm itemQuantity" value="@p.xQuantity" onchange="CalculateRVQty(@p.ItemId)" /></td>
+                                                            <td class=""> <span id="RemQuantity_@p.ItemId" class="remQuantity"></span> @p.xRemainingQuantity</td>
+                                                            <td class=""><input type="text" id="Remarks_@p.ItemId" class="form-control-sm itemRemarks" /></td>
+                                                            <td class=""><span class="fa fa-trash" style="cursor:pointer;" onclick="RemoveReturnToVendor(@p.ItemId)"></span></td>
+                                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+</script>
+
+
+

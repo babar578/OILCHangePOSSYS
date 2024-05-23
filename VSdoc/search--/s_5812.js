@@ -1,0 +1,1 @@
+search_result['5812']=["topic_0000000000001066.html","CompanyInformation.SchemaSerializationMode Property","Gets or sets a SchemaSerializationMode for a DataSet."];

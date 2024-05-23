@@ -1,0 +1,1 @@
+c['3864']=[['3865',"ReturnVenderSummaryRowChanged Event","topic_0000000000000EB8.html",0],['3866',"ReturnVenderSummaryRowChanging Event","topic_0000000000000EB7.html",0],['3867',"ReturnVenderSummaryRowDeleted Event","topic_0000000000000EBA.html",0],['3868',"ReturnVenderSummaryRowDeleting Event","topic_0000000000000EB9.html",0]];

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Closing Inventory Items Voucher Summary";
+}
+
+<div id="ClosingInventoryVoucher"></div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetClosingInventoryVoucherSummary();
+    });
+
+    function GetClosingInventoryVoucherSummary() {
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/GetClosingInventoryVoucherSummary/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#ClosingInventoryVoucher").html(result);
+            stopLoader();
+        });
+    }
+</script>
+
+

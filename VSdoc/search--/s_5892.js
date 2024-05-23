@@ -1,0 +1,1 @@
+search_result['5892']=["topic_00000000000010A8.html","CompanyInfoRow.IsDataColumn2Null Method",""];

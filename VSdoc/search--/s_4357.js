@@ -1,0 +1,1 @@
+search_result['4357']=["topic_0000000000000C7B.html","fn_InventoryBalDataTable.WastageQuantityColumn Property",""];

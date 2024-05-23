@@ -1,0 +1,1 @@
+c['3880']=[['3881',"ReturnVenderSummaryRowChangeEvent Constructor","topic_0000000000000ED2.html",0],['3882',"Properties","topic_0000000000000ED1_props--.html",1]];
