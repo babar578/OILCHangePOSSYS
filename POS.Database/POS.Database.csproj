@@ -104,6 +104,12 @@
     <Compile Include="DatabaseModel\fn_ItemsStockInHand_Result.cs">
       <DependentUpon>PosModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseModel\fn_ReportViewDailyandProfit_SimpleWH_Result.cs">
+      <DependentUpon>PosModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseModel\fn_ReportViewDailyProfit_WareHouse_Result.cs">
+      <DependentUpon>PosModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseModel\fn_ReportViewStockinhand_Department_Result.cs">
       <DependentUpon>PosModel.tt</DependentUpon>
     </Compile>
@@ -327,6 +333,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="DatabaseModel\PosModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

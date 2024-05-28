@@ -13,7 +13,6 @@ namespace POS.Database.DatabaseModel
     
     public partial class sp_DailyCashReport_Result
     {
-        public int Id { get; set; }
         public Nullable<double> AlignmentAmount { get; set; }
         public Nullable<double> wheelBalanceAmount { get; set; }
         public Nullable<double> TPMS { get; set; }

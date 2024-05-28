@@ -36,6 +36,7 @@ namespace POS.Utilities.ViewModel
         public bool IsRawMaterial { get; set; }
         public Nullable<int> ItemGroupId { get; set; }
         public string Remarks { get; set; }
+        public string Barcode { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
         public List<SubCategoryViewModel> SubCategories { get; set; }
         public List<UnitViewModel> Units { get; set; }
@@ -176,6 +177,7 @@ namespace POS.Utilities.ViewModel
                 IsRawMaterial = item.IsRawMaterial,
                 ItemGroupId = item.ItemGroupId,
                 Remarks = item.Remarks,
+                Barcode=item.Barcode,
             };
         }
 
@@ -203,6 +205,7 @@ namespace POS.Utilities.ViewModel
                 IsRawMaterial = item.IsRawMaterial,
                 ItemGroupId = item.ItemGroupId,
                 Remarks = item.Remarks,
+                Barcode= item.Barcode,
             };
         }
 

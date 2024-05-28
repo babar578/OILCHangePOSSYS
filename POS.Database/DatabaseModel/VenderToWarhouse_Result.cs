@@ -14,7 +14,6 @@ namespace POS.Database.DatabaseModel
     public partial class VenderToWarhouse_Result
     {
         public string VendorName { get; set; }
-        public double PRate { get; set; }
         public double Rate { get; set; }
         public double TotalRate { get; set; }
         public string Remarks { get; set; }

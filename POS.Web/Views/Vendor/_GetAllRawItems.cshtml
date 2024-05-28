@@ -37,11 +37,12 @@
                         <tr>
                             <th>Group</th>
                             <th>Category</th>
+                            <th>Bar Code</th>
                             <th>Name</th>
                             <th>Unit</th>
                             <th>Department</th>
                             <th>Price</th>
-                            <th>Creation Date</th>
+                            @*<th>Creation Date</th>*@
                             @*<th>Action</th>*@
                         </tr>
                     </thead>
@@ -54,17 +55,18 @@
                                 <tr class="dgrow" data-id="@e.Id">
                                     <td>@e.ItemGroupName</td>
                                     <td>@e.CategoryName</td>
+                                    <td></td>
                                     <td>@e.Name</td>
                                     <td>@e.UnitName</td>
                                     <td>@e.DepartmentName</td>
                                     <td>@e.Price</td>
                                     @*<td>@e.Tax</td>*@
                                     @*<td>
-                                        @{
-                                            DateTime date = (DateTime)e.CreationDate;
-                                            @date.ToString("dd-MMM-yyyy")
-                                        }
-                                    </td>*@
+            @{
+                DateTime date = (DateTime)e.CreationDate;
+                @date.ToString("dd-MMM-yyyy")
+            }
+        </td>*@
                                     <td>
                                         <a href="/Vendor/RawItem/" class="btn btn-xs btn-warning btn-edit" data-toggle="tooltip" data-placement="bottom" title="Edit Item" data-caption="Update @e.Name Raw Item Detail"><span class="fas fa-edit"></span></a>
                                     </td>

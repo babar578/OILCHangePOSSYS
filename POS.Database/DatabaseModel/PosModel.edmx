@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
@@ -208,6 +208,7 @@
           <Property Name="IsRawMaterial" Type="bit" Nullable="false" />
           <Property Name="ItemGroupId" Type="int" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="500" />
+          <Property Name="Barcode" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="JobCardDetail">
           <Key>
@@ -1367,6 +1368,61 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="fn_ReportViewDailyandProfit_SimpleWH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateFrom" Type="datetime" Mode="In" />
+          <Parameter Name="DateTo" Type="datetime" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ItemId" Type="int" />
+                <Property Name="ItemName" Type="nvarchar" MaxLength="50" />
+                <Property Name="UnitName" Type="nvarchar" MaxLength="50" />
+                <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+                <Property Name="OpeningQty" Type="float" Nullable="false" />
+                <Property Name="OpeningRate" Type="float" Nullable="false" />
+                <Property Name="OpeningAmount" Type="float" Nullable="false" />
+                <Property Name="PurchaseQty" Type="float" Nullable="false" />
+                <Property Name="PurchaseRate" Type="float" Nullable="false" />
+                <Property Name="PurchaseAmount" Type="float" Nullable="false" />
+                <Property Name="IssuanceQty" Type="float" Nullable="false" />
+                <Property Name="IssuanceRate" Type="float" Nullable="false" />
+                <Property Name="IssuanceAmount" Type="float" Nullable="false" />
+                <Property Name="IssuanceReturnQty" Type="float" Nullable="false" />
+                <Property Name="IssuanceReturnRate" Type="float" Nullable="false" />
+                <Property Name="IssuanceReturnAmount" Type="float" Nullable="false" />
+                <Property Name="PurchaseReturnQty" Type="float" Nullable="false" />
+                <Property Name="PurchaseReturnRate" Type="float" Nullable="false" />
+                <Property Name="PurchaseReturnAmount" Type="float" Nullable="false" />
+                <Property Name="WastageQty" Type="float" Nullable="false" />
+                <Property Name="WastageRate" Type="float" Nullable="false" />
+                <Property Name="WastageAmount" Type="float" Nullable="false" />
+                <Property Name="BalanceQty" Type="float" Nullable="false" />
+                <Property Name="BalanceAmount" Type="float" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fn_ReportViewDailyProfit_WareHouse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DateFrom" Type="date" Mode="In" />
+          <Parameter Name="DateTo" Type="date" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ItemID" Type="int" />
+                <Property Name="ItemName" Type="nvarchar" MaxLength="50" />
+                <Property Name="UnitName" Type="nvarchar" MaxLength="50" />
+                <Property Name="PurchaseQty" Type="float" />
+                <Property Name="PurchaseAmount" Type="float" />
+                <Property Name="PurchaseAvgRate" Type="float" Nullable="false" />
+                <Property Name="PurchasRate" Type="float" />
+                <Property Name="OrderQty" Type="float" />
+                <Property Name="OrderAmount" Type="float" />
+                <Property Name="OrderAvgRate" Type="float" Nullable="false" />
+                <Property Name="Profit" Type="float" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="fn_ReportViewStockinhand_Department" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DateFrom" Type="datetime" Mode="In" />
           <Parameter Name="DateTo" Type="datetime" Mode="In" />
@@ -1789,7 +1845,8 @@
             <End Role="WastageHead" EntitySet="WastageHead" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1855,6 +1912,45 @@
           <Property Name="ClosingInventoryQuantity" Type="Double" />
           <Property Name="BalanceQuantity" Type="Double" Nullable="false" />
           <Property Name="AverageRate" Type="Double" />
+        </ComplexType>
+        <ComplexType Name="fn_ReportViewDailyandProfit_SimpleWH_Result">
+          <Property Name="ItemId" Type="Int32" />
+          <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UnitName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OpeningQty" Type="Double" Nullable="false" />
+          <Property Name="OpeningRate" Type="Double" Nullable="false" />
+          <Property Name="OpeningAmount" Type="Double" Nullable="false" />
+          <Property Name="PurchaseQty" Type="Double" Nullable="false" />
+          <Property Name="PurchaseRate" Type="Double" Nullable="false" />
+          <Property Name="PurchaseAmount" Type="Double" Nullable="false" />
+          <Property Name="IssuanceQty" Type="Double" Nullable="false" />
+          <Property Name="IssuanceRate" Type="Double" Nullable="false" />
+          <Property Name="IssuanceAmount" Type="Double" Nullable="false" />
+          <Property Name="IssuanceReturnQty" Type="Double" Nullable="false" />
+          <Property Name="IssuanceReturnRate" Type="Double" Nullable="false" />
+          <Property Name="IssuanceReturnAmount" Type="Double" Nullable="false" />
+          <Property Name="PurchaseReturnQty" Type="Double" Nullable="false" />
+          <Property Name="PurchaseReturnRate" Type="Double" Nullable="false" />
+          <Property Name="PurchaseReturnAmount" Type="Double" Nullable="false" />
+          <Property Name="WastageQty" Type="Double" Nullable="false" />
+          <Property Name="WastageRate" Type="Double" Nullable="false" />
+          <Property Name="WastageAmount" Type="Double" Nullable="false" />
+          <Property Name="BalanceQty" Type="Double" Nullable="false" />
+          <Property Name="BalanceAmount" Type="Double" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="fn_ReportViewDailyProfit_WareHouse_Result">
+          <Property Name="ItemID" Type="Int32" />
+          <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UnitName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PurchaseQty" Type="Double" />
+          <Property Name="PurchaseAmount" Type="Double" />
+          <Property Name="PurchaseAvgRate" Type="Double" Nullable="false" />
+          <Property Name="PurchasRate" Type="Double" />
+          <Property Name="OrderQty" Type="Double" />
+          <Property Name="OrderAmount" Type="Double" />
+          <Property Name="OrderAvgRate" Type="Double" Nullable="false" />
+          <Property Name="Profit" Type="Double" />
         </ComplexType>
         <ComplexType Name="fn_ReportViewStockinhand_Department_Result">
           <Property Name="DepartmentID" Type="Int32" Nullable="false" />
@@ -2187,6 +2283,7 @@
           <Property Name="IsRawMaterial" Type="Boolean" Nullable="false" />
           <Property Name="ItemGroupId" Type="Int32" />
           <Property Name="Remarks" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Barcode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Items_Categories" FromRole="Items" ToRole="Categories" />
           <NavigationProperty Name="Department" Relationship="Self.FK_Items_Departments" FromRole="Items" ToRole="Departments" />
           <NavigationProperty Name="ItemGroup" Relationship="Self.FK_Items_ItemGroups" FromRole="Items" ToRole="ItemGroups" />
@@ -2397,10 +2494,10 @@
           <Property Name="IsVoid" Type="Boolean" Nullable="false" />
           <Property Name="IsComplimentary" Type="Boolean" Nullable="false" />
           <Property Name="Reason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="AlignmentAmount" Type="Double" />
-          <Property Name="wheelBalanceAmount" Type="Double" />
           <Property Name="NitrogenGas" Type="Double" />
           <Property Name="TPMS" Type="Double" />
+          <Property Name="AlignmentAmount" Type="Double" />
+          <Property Name="wheelBalanceAmount" Type="Double" />
           <NavigationProperty Name="OrderFeedbacks" Relationship="Self.FK_OrderFeedbacks_Orders" FromRole="Orders" ToRole="OrderFeedbacks" />
           <NavigationProperty Name="OrderItems" Relationship="Self.FK_OrderItems_Orders" FromRole="Orders" ToRole="OrderItems" />
           <NavigationProperty Name="OrderType" Relationship="Self.FK_Orders_OrderTypes" FromRole="Orders" ToRole="OrderTypes" />
@@ -3516,6 +3613,14 @@
             <Parameter Name="DateFrom" Mode="In" Type="DateTime" />
             <Parameter Name="DateTo" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="fn_ReportViewDailyandProfit_SimpleWH" IsComposable="true" ReturnType="Collection(PosModel.fn_ReportViewDailyandProfit_SimpleWH_Result)">
+            <Parameter Name="DateFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="DateTo" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="fn_ReportViewDailyProfit_WareHouse" IsComposable="true" ReturnType="Collection(PosModel.fn_ReportViewDailyProfit_WareHouse_Result)">
+            <Parameter Name="DateFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="DateTo" Mode="In" Type="DateTime" />
+          </FunctionImport>
           <FunctionImport Name="fn_ReportViewStockinhand_Department" IsComposable="true" ReturnType="Collection(PosModel.fn_ReportViewStockinhand_Department_Result)">
             <Parameter Name="DateFrom" Mode="In" Type="DateTime" />
             <Parameter Name="DateTo" Mode="In" Type="DateTime" />
@@ -3542,7 +3647,7 @@
           </FunctionImport>
           <FunctionImport Name="DailySell" />
           <FunctionImport Name="GetHistoryCarVoucher" ReturnType="Collection(PosModel.GetHistoryCarVoucher_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="IssueToDeptment" ReturnType="Collection(PosModel.IssueToDeptment_Result)">
             <Parameter Name="Todate" Mode="In" Type="DateTime" />
@@ -3551,20 +3656,20 @@
             <Parameter Name="CategoriesID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="IussToWareHouseVoucher" ReturnType="Collection(PosModel.IussToWareHouseVoucher_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="JobCard" ReturnType="Collection(PosModel.JobCard_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="oderVoucher">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="POSOderSaleReport" ReturnType="Collection(PosModel.POSOderSaleReport_Result)">
             <Parameter Name="Todate" Mode="In" Type="DateTime" />
             <Parameter Name="fromdate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="QuotationVoucher" ReturnType="Collection(PosModel.QuotationVoucher_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ReturnToVendor" ReturnType="Collection(PosModel.ReturnToVendor_Result)">
             <Parameter Name="Todate" Mode="In" Type="DateTime" />
@@ -3584,10 +3689,14 @@
             <Parameter Name="Todate" Mode="In" Type="DateTime" />
             <Parameter Name="fromdate" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="sp_DailyCashReport" ReturnType="Collection(PosModel.sp_DailyCashReport_Result)">
+            <Parameter Name="DateFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="DateTo" Mode="In" Type="DateTime" />
+          </FunctionImport>
           <FunctionImport Name="sp_DailyP" ReturnType="Collection(Double)" />
           <FunctionImport Name="sp_GeDailyP" ReturnType="Collection(Double)" />
           <FunctionImport Name="sp_GetDasbroadDaily" ReturnType="Collection(PosModel.sp_GetDasbroadDaily_Result)">
-          <Parameter Name="Todate" Mode="In" Type="DateTime" />
+            <Parameter Name="Todate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="VenderPaymentLedgerSummary" ReturnType="Collection(PosModel.VenderPaymentLedgerSummary_Result)">
             <Parameter Name="Todate" Mode="In" Type="DateTime" />
@@ -3601,16 +3710,12 @@
             <Parameter Name="VenderID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="VendorToWareHouseVoucher" ReturnType="Collection(PosModel.VendorToWareHouseVoucher_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WastageRepot" ReturnType="Collection(PosModel.WastageRepot_Result)">
             <Parameter Name="Todate" Mode="In" Type="DateTime" />
             <Parameter Name="fromdate" Mode="In" Type="DateTime" />
             <Parameter Name="itemid" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_DailyCashReport" ReturnType="Collection(PosModel.sp_DailyCashReport_Result)">
-            <Parameter Name="DateFrom" Mode="In" Type="DateTime" />
-            <Parameter Name="DateTo" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="Comsumption_Result">
@@ -3757,6 +3862,21 @@
           <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
           <Property Type="Double" Name="TotalQunity" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="sp_DailyCashReport_Result">
+          <Property Type="Double" Name="AlignmentAmount" Nullable="true" />
+          <Property Type="Double" Name="wheelBalanceAmount" Nullable="true" />
+          <Property Type="Double" Name="TPMS" Nullable="true" />
+          <Property Type="Double" Name="DiscountPercentage" Nullable="true" />
+          <Property Type="Double" Name="NitrogenGas" Nullable="true" />
+          <Property Type="Double" Name="withoutserviceChager" Nullable="true" />
+          <Property Type="Double" Name="WithServiceCarger" Nullable="true" />
+          <Property Type="Double" Name="ReceiptTotalCash" Nullable="true" />
+          <Property Type="Double" Name="ReceiptTotalCredit" Nullable="true" />
+          <Property Type="Double" Name="TotalNetAmount" Nullable="true" />
+          <Property Type="Int32" Name="ExpanceAmount" Nullable="true" />
+          <Property Type="Int32" Name="ExtraSaleAmount" Nullable="true" />
+          <Property Type="Double" Name="VendorPaymentsAmount" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="sp_GetDasbroadDaily_Result">
           <Property Type="Int32" Name="TOTALBILL" Nullable="true" />
           <Property Type="Double" Name="GstCharged" Nullable="false" />
@@ -3776,7 +3896,6 @@
         </ComplexType>
         <ComplexType Name="VenderToWarhouse_Result">
           <Property Type="String" Name="VendorName" Nullable="true" MaxLength="50" />
-          <Property Type="Double" Name="PRate" Nullable="false" />
           <Property Type="Double" Name="Rate" Nullable="false" />
           <Property Type="Double" Name="TotalRate" Nullable="false" />
           <Property Type="String" Name="Remarks" Nullable="false" MaxLength="500" />
@@ -3822,22 +3941,6 @@
           <Property Type="Double" Name="Rate" Nullable="false" />
           <Property Type="Double" Name="TotalRate" Nullable="false" />
           <Property Type="DateTime" Name="TransactionDate" Nullable="false" Precision="23" />
-        </ComplexType>
-        <ComplexType Name="sp_DailyCashReport_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="Double" Name="AlignmentAmount" Nullable="true" />
-          <Property Type="Double" Name="wheelBalanceAmount" Nullable="true" />
-          <Property Type="Double" Name="TPMS" Nullable="true" />
-          <Property Type="Double" Name="DiscountPercentage" Nullable="true" />
-          <Property Type="Double" Name="NitrogenGas" Nullable="true" />
-          <Property Type="Double" Name="withoutserviceChager" Nullable="true" />
-          <Property Type="Double" Name="WithServiceCarger" Nullable="true" />
-          <Property Type="Double" Name="ReceiptTotalCash" Nullable="true" />
-          <Property Type="Double" Name="ReceiptTotalCredit" Nullable="true" />
-          <Property Type="Double" Name="TotalNetAmount" Nullable="true" />
-          <Property Type="Int32" Name="ExpanceAmount" Nullable="true" />
-          <Property Type="Int32" Name="ExtraSaleAmount" Nullable="true" />
-          <Property Type="Double" Name="VendorPaymentsAmount" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4060,6 +4163,7 @@
                 <ScalarProperty Name="IsRawMaterial" ColumnName="IsRawMaterial" />
                 <ScalarProperty Name="ItemGroupId" ColumnName="ItemGroupId" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4265,10 +4369,10 @@
                 <ScalarProperty Name="IsVoid" ColumnName="IsVoid" />
                 <ScalarProperty Name="IsComplimentary" ColumnName="IsComplimentary" />
                 <ScalarProperty Name="Reason" ColumnName="Reason" />
-                <ScalarProperty Name="AlignmentAmount" ColumnName="AlignmentAmount" />
-                <ScalarProperty Name="wheelBalanceAmount" ColumnName="wheelBalanceAmount" />
                 <ScalarProperty Name="NitrogenGas" ColumnName="NitrogenGas" />
                 <ScalarProperty Name="TPMS" ColumnName="TPMS" />
+                <ScalarProperty Name="AlignmentAmount" ColumnName="AlignmentAmount" />
+                <ScalarProperty Name="wheelBalanceAmount" ColumnName="wheelBalanceAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4799,6 +4903,53 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="PosModel.Store.fn_ReportViewDailyandProfit_SimpleWH" FunctionImportName="fn_ReportViewDailyandProfit_SimpleWH">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PosModel.fn_ReportViewDailyandProfit_SimpleWH_Result">
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="OpeningQty" ColumnName="OpeningQty" />
+                <ScalarProperty Name="OpeningRate" ColumnName="OpeningRate" />
+                <ScalarProperty Name="OpeningAmount" ColumnName="OpeningAmount" />
+                <ScalarProperty Name="PurchaseQty" ColumnName="PurchaseQty" />
+                <ScalarProperty Name="PurchaseRate" ColumnName="PurchaseRate" />
+                <ScalarProperty Name="PurchaseAmount" ColumnName="PurchaseAmount" />
+                <ScalarProperty Name="IssuanceQty" ColumnName="IssuanceQty" />
+                <ScalarProperty Name="IssuanceRate" ColumnName="IssuanceRate" />
+                <ScalarProperty Name="IssuanceAmount" ColumnName="IssuanceAmount" />
+                <ScalarProperty Name="IssuanceReturnQty" ColumnName="IssuanceReturnQty" />
+                <ScalarProperty Name="IssuanceReturnRate" ColumnName="IssuanceReturnRate" />
+                <ScalarProperty Name="IssuanceReturnAmount" ColumnName="IssuanceReturnAmount" />
+                <ScalarProperty Name="PurchaseReturnQty" ColumnName="PurchaseReturnQty" />
+                <ScalarProperty Name="PurchaseReturnRate" ColumnName="PurchaseReturnRate" />
+                <ScalarProperty Name="PurchaseReturnAmount" ColumnName="PurchaseReturnAmount" />
+                <ScalarProperty Name="WastageQty" ColumnName="WastageQty" />
+                <ScalarProperty Name="WastageRate" ColumnName="WastageRate" />
+                <ScalarProperty Name="WastageAmount" ColumnName="WastageAmount" />
+                <ScalarProperty Name="BalanceQty" ColumnName="BalanceQty" />
+                <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="PosModel.Store.fn_ReportViewDailyProfit_WareHouse" FunctionImportName="fn_ReportViewDailyProfit_WareHouse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PosModel.fn_ReportViewDailyProfit_WareHouse_Result">
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="PurchaseQty" ColumnName="PurchaseQty" />
+                <ScalarProperty Name="PurchaseAmount" ColumnName="PurchaseAmount" />
+                <ScalarProperty Name="PurchaseAvgRate" ColumnName="PurchaseAvgRate" />
+                <ScalarProperty Name="PurchasRate" ColumnName="PurchasRate" />
+                <ScalarProperty Name="OrderQty" ColumnName="OrderQty" />
+                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
+                <ScalarProperty Name="OrderAvgRate" ColumnName="OrderAvgRate" />
+                <ScalarProperty Name="Profit" ColumnName="Profit" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionName="PosModel.Store.fn_ReportViewStockinhand_Department" FunctionImportName="fn_ReportViewStockinhand_Department">
             <ResultMapping>
               <ComplexTypeMapping TypeName="PosModel.fn_ReportViewStockinhand_Department_Result">
@@ -5119,6 +5270,25 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DailyCashReport" FunctionName="PosModel.Store.sp_DailyCashReport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="PosModel.sp_DailyCashReport_Result">
+                <ScalarProperty Name="AlignmentAmount" ColumnName="AlignmentAmount" />
+                <ScalarProperty Name="wheelBalanceAmount" ColumnName="wheelBalanceAmount" />
+                <ScalarProperty Name="TPMS" ColumnName="TPMS" />
+                <ScalarProperty Name="DiscountPercentage" ColumnName="DiscountPercentage" />
+                <ScalarProperty Name="NitrogenGas" ColumnName="NitrogenGas" />
+                <ScalarProperty Name="withoutserviceChager" ColumnName="withoutserviceChager" />
+                <ScalarProperty Name="WithServiceCarger" ColumnName="WithServiceCarger" />
+                <ScalarProperty Name="ReceiptTotalCash" ColumnName="ReceiptTotalCash" />
+                <ScalarProperty Name="ReceiptTotalCredit" ColumnName="ReceiptTotalCredit" />
+                <ScalarProperty Name="TotalNetAmount" ColumnName="TotalNetAmount" />
+                <ScalarProperty Name="ExpanceAmount" ColumnName="ExpanceAmount" />
+                <ScalarProperty Name="ExtraSaleAmount" ColumnName="ExtraSaleAmount" />
+                <ScalarProperty Name="VendorPaymentsAmount" ColumnName="VendorPaymentsAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_DailyP" FunctionName="PosModel.Store.sp_DailyP" />
           <FunctionImportMapping FunctionImportName="sp_GeDailyP" FunctionName="PosModel.Store.sp_GeDailyP" />
           <FunctionImportMapping FunctionImportName="sp_GetDasbroadDaily" FunctionName="PosModel.Store.sp_GetDasbroadDaily">
@@ -5150,7 +5320,6 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="PosModel.VenderToWarhouse_Result">
                 <ScalarProperty Name="VendorName" ColumnName="VendorName" />
-                <ScalarProperty Name="PRate" ColumnName="PRate" />
                 <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="TotalRate" ColumnName="TotalRate" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
@@ -5204,26 +5373,6 @@
                 <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="TotalRate" ColumnName="TotalRate" />
                 <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_DailyCashReport" FunctionName="PosModel.Store.sp_DailyCashReport">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="PosModel.sp_DailyCashReport_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AlignmentAmount" ColumnName="AlignmentAmount" />
-                <ScalarProperty Name="wheelBalanceAmount" ColumnName="wheelBalanceAmount" />
-                <ScalarProperty Name="TPMS" ColumnName="TPMS" />
-                <ScalarProperty Name="DiscountPercentage" ColumnName="DiscountPercentage" />
-                <ScalarProperty Name="NitrogenGas" ColumnName="NitrogenGas" />
-                <ScalarProperty Name="withoutserviceChager" ColumnName="withoutserviceChager" />
-                <ScalarProperty Name="WithServiceCarger" ColumnName="WithServiceCarger" />
-                <ScalarProperty Name="ReceiptTotalCash" ColumnName="ReceiptTotalCash" />
-                <ScalarProperty Name="ReceiptTotalCredit" ColumnName="ReceiptTotalCredit" />
-                <ScalarProperty Name="TotalNetAmount" ColumnName="TotalNetAmount" />
-                <ScalarProperty Name="ExpanceAmount" ColumnName="ExpanceAmount" />
-                <ScalarProperty Name="ExtraSaleAmount" ColumnName="ExtraSaleAmount" />
-                <ScalarProperty Name="VendorPaymentsAmount" ColumnName="VendorPaymentsAmount" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

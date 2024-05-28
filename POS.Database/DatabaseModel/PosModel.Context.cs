@@ -139,6 +139,34 @@ namespace POS.Database.DatabaseModel
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_ItemsStockInHandWareHouse_Result>("[POSEntities].[fn_ItemsStockInHandWareHouse](@DateFrom, @DateTo)", dateFromParameter, dateToParameter);
         }
     
+        [DbFunction("POSEntities", "fn_ReportViewDailyandProfit_SimpleWH")]
+        public virtual IQueryable<fn_ReportViewDailyandProfit_SimpleWH_Result> fn_ReportViewDailyandProfit_SimpleWH(Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTo)
+        {
+            var dateFromParameter = dateFrom.HasValue ?
+                new ObjectParameter("DateFrom", dateFrom) :
+                new ObjectParameter("DateFrom", typeof(System.DateTime));
+    
+            var dateToParameter = dateTo.HasValue ?
+                new ObjectParameter("DateTo", dateTo) :
+                new ObjectParameter("DateTo", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_ReportViewDailyandProfit_SimpleWH_Result>("[POSEntities].[fn_ReportViewDailyandProfit_SimpleWH](@DateFrom, @DateTo)", dateFromParameter, dateToParameter);
+        }
+    
+        [DbFunction("POSEntities", "fn_ReportViewDailyProfit_WareHouse")]
+        public virtual IQueryable<fn_ReportViewDailyProfit_WareHouse_Result> fn_ReportViewDailyProfit_WareHouse(Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTo)
+        {
+            var dateFromParameter = dateFrom.HasValue ?
+                new ObjectParameter("DateFrom", dateFrom) :
+                new ObjectParameter("DateFrom", typeof(System.DateTime));
+    
+            var dateToParameter = dateTo.HasValue ?
+                new ObjectParameter("DateTo", dateTo) :
+                new ObjectParameter("DateTo", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_ReportViewDailyProfit_WareHouse_Result>("[POSEntities].[fn_ReportViewDailyProfit_WareHouse](@DateFrom, @DateTo)", dateFromParameter, dateToParameter);
+        }
+    
         [DbFunction("POSEntities", "fn_ReportViewStockinhand_Department")]
         public virtual IQueryable<fn_ReportViewStockinhand_Department_Result> fn_ReportViewStockinhand_Department(Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTo)
         {
@@ -366,6 +394,19 @@ namespace POS.Database.DatabaseModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReturnVenderTowareHouseSummary_Result>("ReturnVenderTowareHouseSummary", todateParameter, fromdateParameter);
         }
     
+        public virtual ObjectResult<sp_DailyCashReport_Result> sp_DailyCashReport(Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTo)
+        {
+            var dateFromParameter = dateFrom.HasValue ?
+                new ObjectParameter("DateFrom", dateFrom) :
+                new ObjectParameter("DateFrom", typeof(System.DateTime));
+    
+            var dateToParameter = dateTo.HasValue ?
+                new ObjectParameter("DateTo", dateTo) :
+                new ObjectParameter("DateTo", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DailyCashReport_Result>("sp_DailyCashReport", dateFromParameter, dateToParameter);
+        }
+    
         public virtual ObjectResult<Nullable<double>> sp_DailyP()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("sp_DailyP");
@@ -447,19 +488,6 @@ namespace POS.Database.DatabaseModel
                 new ObjectParameter("itemid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WastageRepot_Result>("WastageRepot", todateParameter, fromdateParameter, itemidParameter);
-        }
-    
-        public virtual ObjectResult<sp_DailyCashReport_Result> sp_DailyCashReport(Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTo)
-        {
-            var dateFromParameter = dateFrom.HasValue ?
-                new ObjectParameter("DateFrom", dateFrom) :
-                new ObjectParameter("DateFrom", typeof(System.DateTime));
-    
-            var dateToParameter = dateTo.HasValue ?
-                new ObjectParameter("DateTo", dateTo) :
-                new ObjectParameter("DateTo", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_DailyCashReport_Result>("sp_DailyCashReport", dateFromParameter, dateToParameter);
         }
     }
 }

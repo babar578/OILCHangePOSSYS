@@ -15,29 +15,29 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group ">
-                <label class="col-form-label">Name <b class="text-danger">*</b></label>
-                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Name ", @required = "true" })
-            </div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group ">
+            <label class="col-form-label">Name <b class="text-danger">*</b></label>
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Name ", @required = "true" })
         </div>
+    </div>
 
-        <div class="col-md-6">
-            <div class="form-group ">
-                <label class="col-form-label">Category <b class="text-danger">*</b></label>
-                @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categories, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "-- Select Category --", @required = "true" })
-            </div>
+    <div class="col-md-6">
+        <div class="form-group ">
+            <label class="col-form-label">Category <b class="text-danger">*</b></label>
+            @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categories, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "-- Select Category --", @required = "true" })
         </div>
+    </div>
 
-        <div class="col-md-6">
-            <div class="form-group ">
-                <label class="col-form-label">Department <b class="text-danger">*</b></label>
-                @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "-- Select Department --", @required = "true" })
-            </div>
+    <div class="col-md-6">
+        <div class="form-group ">
+            <label class="col-form-label">Department <b class="text-danger">*</b></label>
+            @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "-- Select Department --", @required = "true" })
         </div>
+    </div>
 
-        @*<div class="col-md-6">
+    @*<div class="col-md-6">
             <div class="form-group ">
                 <div id="subCategories">
                     <label class="col-form-label">Sub Category</label>
@@ -51,13 +51,19 @@
                 @Html.DropDownListFor(m => m.UnitId, new SelectList(Model.Units, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "-- Select Category --", @required = "true" })
             </div>
         </div>*@
-        <div class="col-md-6">
-            <div class="form-group ">
-                <label class="col-form-label">Price <b class="text-danger">*</b></label>
-                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "Price", @required = "true" })
-            </div>
+    <div class="col-md-6">
+        <div class="form-group ">
+            <label class="col-form-label">Bar code <b class="text-danger">*</b></label>
+            @Html.TextBoxFor(m => m.Barcode, new { @class = "form-control", placeholder = "Bar Code ", @required = "true" })
         </div>
-        @*<div class="col-md-6">
+    </div>
+    <div class="col-md-6">
+        <div class="form-group ">
+            <label class="col-form-label">Price <b class="text-danger">*</b></label>
+            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "Price", @required = "true" })
+        </div>
+    </div>
+    @*<div class="col-md-6">
             <div class="form-group ">
                 <label class="col-form-label">Tax </label>
                 @Html.TextBoxFor(m => m.Tax, new { type = "number", @class = "form-control", placeholder = "Tax", @required = "true" })
@@ -81,7 +87,7 @@
                 @Html.TextBoxFor(m => m.PromotionEndDate, new { type = "date", @class = "form-control ", placeholder = "Enter End Date" })
             </div>
         </div>*@
-    </div>
+</div>
 
     <div class="modal-footer col-md-12">
         <div class="form-group">
@@ -122,6 +128,7 @@
         var departmentId = $("#DepartmentId").val();
         var price = $("#Price").val();
         var tax = $("#Tax").val();
+        var barcode = $("#Barcode");
         var discount = $("#Discount").val();
         var promotionStartDate = $("#PromotionStartDate").val();
         var promotionEndDate = $("#PromotionEndDate").val();
@@ -148,6 +155,7 @@
                 Discount: discount,
                 PromotionStartDate: promotionStartDate,
                 PromotionEndDate: promotionEndDate,
+                Barcode=barcode,
             };
             startLoader();
             $.ajax({

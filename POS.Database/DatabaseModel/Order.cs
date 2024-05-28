@@ -53,10 +53,10 @@ namespace POS.Database.DatabaseModel
         public bool IsVoid { get; set; }
         public bool IsComplimentary { get; set; }
         public string Reason { get; set; }
-        public Nullable<double> AlignmentAmount { get; set; }
-        public Nullable<double> wheelBalanceAmount { get; set; }
         public Nullable<double> NitrogenGas { get; set; }
         public Nullable<double> TPMS { get; set; }
+        public Nullable<double> AlignmentAmount { get; set; }
+        public Nullable<double> wheelBalanceAmount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderFeedback> OrderFeedbacks { get; set; }

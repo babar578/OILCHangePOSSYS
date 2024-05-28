@@ -31,6 +31,7 @@ namespace POS.Database.DatabaseModel
         public bool IsRawMaterial { get; set; }
         public Nullable<int> ItemGroupId { get; set; }
         public string Remarks { get; set; }
+        public string Barcode { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual Department Department { get; set; }

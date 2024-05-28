@@ -74,7 +74,7 @@
                             <th>Department</th>
                             <th>Price</th>
                             <th>Tax</th>
-                            @*<th>Creation Date</th>*@
+                            <th>Bar code/th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -93,12 +93,13 @@
                                     <td>@e.DepartmentName</td>
                                     <td>@e.Price</td>
                                     <td>@e.Tax</td>
+                                    <td>@e.Barcode</td>
                                     @*<td>
-                                            @{
-                                                DateTime date = (DateTime)e.CreationDate;
-                                                @date.ToString("dddd, dd-MMMM-yyyy")
-                                            }
-                                        </td>*@
+            @{
+                DateTime date = (DateTime)e.CreationDate;
+                @date.ToString("dddd, dd-MMMM-yyyy")
+            }
+        </td>*@
                                     <td>
                                         <a href="/Menu/Item/" class="btn btn-xs btn-warning btn-edit" data-toggle="tooltip" data-placement="bottom" title="Edit Item" data-caption="Update Item Detail"><span class="fas fa-edit"></span></a>
                                         <a href="/Menu/DeleteItem/" class="btn btn-xs btn-danger btn-delete" data-toggle="tooltip" data-placement="bottom" title="Delete Item"><span class="fas fa-trash"></span></a>
