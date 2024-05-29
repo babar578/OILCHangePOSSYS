@@ -28,6 +28,24 @@ namespace POS.Utilities.Services
             }
             return returnValue;
         }
+
+        public static ItemViewModel GetItemcurrentbarcodeById(string  id)
+        {
+            ItemViewModel returnValue = null;
+            try
+            {
+                using (POSEntities context = new POSEntities())
+                {
+                    string SQL = $"select Items.Id, items.Id AS ItemId, isnull(itm.BalanceQuantity, 0) AS BalanceQuantity, Items.Name, Items.CategoryId, Items.UnitId, Items.Price, Items.Tax,Items.Discount, Items.PromotionStartDate, Items.PromotionEndDate, Items.IsActive, Items.CreationDate,Items.ModifyDate, Items.DepartmentId, Items.IsRawMaterial, Items.ItemGroupId, Items.Remarks from Items left outer join[dbo].[fn_ItemsStockInHand] ('02-02-1990', GETDATE())  itm on Items.Id = itm.ItemId  Where Items.Barcode='{id}'";
+                    returnValue = context.Database.SqlQuery<ItemViewModel>(SQL).SingleOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return returnValue;
+        }
         #region Item Functions
         public static bool AddItem(ItemViewModel model)
         {
@@ -97,7 +115,7 @@ namespace POS.Utilities.Services
                     }
                     else
                     {
-                        string SQL = $"select * from Items where IsRawMaterial = 0";
+                        string SQL = $"select * from Items where IsRawMaterial = 1";
                         items = context.Database.SqlQuery<Item>(SQL).ToList();
                     }
                     returnValue = items.Select(p => (ItemViewModel)p).ToList();

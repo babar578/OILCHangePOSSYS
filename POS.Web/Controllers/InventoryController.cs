@@ -64,6 +64,27 @@ namespace POS.Web.Controllers
                 Session[WebUtil.SearchItems] = items;
             }
         }
+
+        public void SearchBarcodeItem(string Barcode)
+        {
+            if (Barcode!="")
+            {
+                var item = ItemServices.GetItemcurrentbarcodeById(Barcode);
+
+                List<ItemViewModel> items = new List<ItemViewModel>();
+                List<ItemViewModel> sessionItems = Session[WebUtil.SearchItems] as List<ItemViewModel>;
+                if (sessionItems?.Count > 0)
+                {
+                    sessionItems.Add(item);
+                }
+                else
+                {
+                    items.Add(item);
+                    Session[WebUtil.SearchItems] = items;
+                }
+            }
+           
+        }
         public void UpdateVendorToWarehouse(int ItemId, float PPrice, float Price, float Quantity)
         {
             List<ItemViewModel> sessionItems = Session[WebUtil.SearchItems] as List<ItemViewModel>;

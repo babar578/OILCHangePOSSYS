@@ -1,29 +1,61 @@
 ﻿@using POS.Utilities.ViewModel
+@*@using PagedList.Mvc
+    @model PagedList.IPagedList<ItemViewModel>*@
 @model IEnumerable<ItemViewModel>
 @{
-    Layout = null;
+    ViewBag.Title = "Items";
+    var searchKeyword = ViewBag.search;
 }
 
-<script src="~/Scripts/Site.js"></script>
+
+
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">List of Available Raw Items</h3>
+                <h3 class="card-title">List of Available Items</h3>
 
                 <div class="card-tools">
                     @{
+                        //if (user != null && (user.UserTypeId == 1 || user.UserTypeId == 2))
+                        //{
                         <div class="btn-group float-left" role="group">
                             <div class="">
                                 <a href="/Vendor/RawItem" id="btn-add"
                                    class="btn btn-primary waves-effect"
-                                   data-toggle="tooltip" data-placement="bottom" title="New Raw Item"
-                                   data-caption="Add Raw New Item">
-                                    <span class="fas fa-plus"></span> Add Raw New Item
+                                   data-toggle="tooltip" data-placement="bottom" title="New Item"
+                                   data-caption="Add New Item">
+                                    <span class="fas fa-plus"></span> Add New Item
                                 </a>
                             </div>
+                            @*<div class="">
+                                    <a href="/Menu/SampleDownload" target="_blank" class="btn btn-success waves-effect btn-align"
+                                       data-toggle="tooltip" data-placement="bottom" title="Download">
+                                        <span class="fas fa-download"></span> Sample
+                                    </a>
+                                </div>
+                                <div class="">
+                                    <a href="/Menu/UploadSample" id="btn-addSecond"
+                                       class="btn btn-dark waves-effect btn-align"
+                                       data-toggle="tooltip" data-placement="bottom" title="Sample"
+                                       data-caption="Upload Excel File">
+                                        <span class="fas fa-file"></span> Upload
+                                    </a>
+                                </div>
 
+                                <div class="">
+                                    @using (Html.BeginForm("Items", "Item", FormMethod.Post))
+                                    {
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="Search" name="Search" placeholder="Search" required>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" type="submit" id="btn-search"><span class="fa fa-search"></span></button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>*@
                         </div>
+                        // }
                     }
 
 
@@ -35,15 +67,15 @@
                 <table id="bootstrap-data-table-export" class="table table-hover table-striped text-nowrap">
                     <thead>
                         <tr>
-                            <th>Group</th>
+                            @*<th>Code</th>*@
+                            <th>Item Name</th>
+                            @*<th>Sub-Category</th>*@
                             <th>Category</th>
-                            <th>Bar Code</th>
-                            <th>Name</th>
-                            <th>Unit</th>
                             <th>Department</th>
                             <th>Price</th>
-                            @*<th>Creation Date</th>*@
-                            @*<th>Action</th>*@
+                            <th>Tax</th>
+                            <th>Bar code</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,22 +85,24 @@
                             foreach (var e in Model)
                             {
                                 <tr class="dgrow" data-id="@e.Id">
-                                    <td>@e.ItemGroupName</td>
-                                    <td>@e.CategoryName</td>
-                                    <td></td>
+
+                                    @*<td>@e.Id</td>*@
                                     <td>@e.Name</td>
-                                    <td>@e.UnitName</td>
+                                    @*<td>@e.SubCategoryName</td>*@
+                                    <td>@e.CategoryName</td>
                                     <td>@e.DepartmentName</td>
                                     <td>@e.Price</td>
-                                    @*<td>@e.Tax</td>*@
+                                    <td>@e.Tax</td>
+                                    <td>@e.Barcode</td>
                                     @*<td>
-            @{
-                DateTime date = (DateTime)e.CreationDate;
-                @date.ToString("dd-MMM-yyyy")
-            }
-        </td>*@
+                                            @{
+                                                DateTime date = (DateTime)e.CreationDate;
+                                                @date.ToString("dddd, dd-MMMM-yyyy")
+                                            }
+                                        </td>*@
                                     <td>
-                                        <a href="/Vendor/RawItem/" class="btn btn-xs btn-warning btn-edit" data-toggle="tooltip" data-placement="bottom" title="Edit Item" data-caption="Update @e.Name Raw Item Detail"><span class="fas fa-edit"></span></a>
+                                        <a href="/Menu/Item/" class="btn btn-xs btn-warning btn-edit" data-toggle="tooltip" data-placement="bottom" title="Edit Item" data-caption="Update Item Detail"><span class="fas fa-edit"></span></a>
+                                        <a href="/Menu/DeleteItem/" class="btn btn-xs btn-danger btn-delete" data-toggle="tooltip" data-placement="bottom" title="Delete Item"><span class="fas fa-trash"></span></a>
                                     </td>
                                 </tr>
                             }
@@ -78,10 +112,20 @@
             </div>
             <!-- /.card-body -->
             <!-- /.card-body -->
+            @*<div class="card-footer clearfix">
+                    <div class="row justify-content-center">
+
+                        <div class="pagination pagination-sm m-0 float-right">
+                            @Html.PagedListPager(Model, page => Url.Action("ManageItems", "Item", new { page, search = searchKeyword, }))
+                            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                        </div>
+
+                    </div>
+                </div>*@
 
         </div>
         <!-- /.card -->
     </div>
 </div>
-
 

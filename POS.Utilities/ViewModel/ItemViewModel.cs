@@ -36,6 +36,7 @@ namespace POS.Utilities.ViewModel
         public bool IsRawMaterial { get; set; }
         public Nullable<int> ItemGroupId { get; set; }
         public string Remarks { get; set; }
+        //public string Barcode { get; set; }
         public string Barcode { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
         public List<SubCategoryViewModel> SubCategories { get; set; }

@@ -100,12 +100,12 @@
 
 
     $("#Item").click(function () {
-
+        debugger
         var id = $("#Id").val();
         var itemGroupId = $("#ItemGroupId").val();
         var categoryId = $("#CategoryId").val();
         var name = $("#Name").val();
-        var subCategoryId = $("#SubCategoryId").val();
+        /*var subCategoryId = $("#SubCategoryId").val();*/
         var unitId = $("#UnitId").val();
         var departmentId = $("#DepartmentId").val();
         var price = $("#Price").val();
@@ -124,7 +124,7 @@
                 ItemGroupId: itemGroupId,
                 CategoryId: categoryId,
                 Name: name,
-                SubCategoryId: subCategoryId,
+                //SubCategoryId: subCategoryId,
                 UnitId: unitId,
                 DepartmentId: departmentId,
                 Price: price,
@@ -132,7 +132,24 @@
                 Remarks: remarks,
                 Barcode: barcode,
             };
-            SaveRawItem(modelData);
+            startLoader();
+  $.ajax({
+      url: '@Url.Action("AddItem", "Menu")',
+      contentType: 'application/json; charset=utf-8',
+      type: "POST",
+      data: JSON.stringify(modelData),
+      datatype: "Json",
+  }).done(function (res) {
+      console.log(res);
+      if (res == "Error" || res == "") {
+          alertify.error("Something went wrong");
+      }
+      else if (res == "Success") {
+          alertify.success("Update successfully");
+          location.reload();
+      }
+      stopLoader();
+  });
         }
     });
 </script>
