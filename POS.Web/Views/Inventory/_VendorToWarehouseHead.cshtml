@@ -52,7 +52,7 @@
         </div>
         <div class="col-md-8">
             <div class="form-group">
-               
+
                 @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control", placeholder = "Remarks", @required = "true" })
             </div>
         </div>
@@ -63,7 +63,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                
+
                 <div class="input-group">
                     @Html.DropDownListFor(m => m.ItemId, new SelectList(Model.RawItems, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Import Raw Items", @required = "true" })
                     <span class="input-group-append">
@@ -79,7 +79,9 @@
         </div>
     </div>
 }
-
+<script language="JavaScript" type="text/javascript" src="/js/jquery-1.2.6.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/jquery-ui-personalized-1.5.2.packed.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/sprinkle.js"></script>
 <script>
     $(document).ready(function () {
         $('select').selectpicker();
@@ -102,7 +104,7 @@
         today = yyyy + '-' + mm + '-' + dd;
         document.getElementById("TransactionDate").setAttribute("max", today);
     });
-  
+
     $("#btnImport").click(function () {
         debugger
         var itemId = $("#ItemId").val();

@@ -119,7 +119,7 @@ $(function () {
 });
 
 function AddItem(itemId, qty, price, itemName, taxAmount, taxPercentage, currentTableId, departmentId) {
-
+    debugger
     var modelData = {
         ItemId: itemId,
         ItemName: itemName,

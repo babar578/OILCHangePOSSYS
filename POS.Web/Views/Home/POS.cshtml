@@ -17,7 +17,11 @@
         display: none;
     }
 </style>
-
+<div class="col-md-12">
+    <div class="form-group">
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Bar Code", @required = "true", @id = "btnImportbarcode" })
+    </div>
+</div>
 
 <div class="row" style=" padding-top: 10px;">
     @*<div class="col-lg-2 col-md-4 col-sm-4">
@@ -115,6 +119,21 @@
 
 <script>
 
+    $("#btnImportbarcode").click(function () {
+        debugger
+        var Barcode = $("#btnImportbarcode").val();
+        startLoader();
+        $.ajax(
+            {
+                url: "/Inventory/SearchBarcodeItem?Barcode=" + Barcode,
+                type: "POST"
+            }
+        ).done(function (result) {
+            VendorToWarehouseDetail();
+            $("#btnImportbarcode").val('');
+            stopLoader();
+        });
+    });
 
     function callHistoryReport() {
 
