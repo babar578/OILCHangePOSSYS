@@ -85,8 +85,20 @@
 <script>
     $(document).ready(function () {
         $('select').selectpicker();
-    });
 
+    });
+    $(document).ready(function () {
+        // Auto-focus the barcode input field when the page loads
+        $('#btnImportbarcode').focus();
+
+        // Handle the Enter key press event
+        $('#btnImportbarcode').on('keypress', function (e) {
+            if (e.which == 13) { // Enter key pressed
+                e.preventDefault(); // Prevent the default form submission
+                // Trigger the AJAX call
+                handleBarcodeScan();
+            }
+        });
 
     $(function () {
         debugger
@@ -119,21 +131,43 @@
             stopLoader();
         });
     });
-    $("#btnImportbarcode").click(function () {
-        debugger
-        var Barcode = $("#btnImportbarcode").val();
-        startLoader();
-        $.ajax(
-            {
+
+        function handleBarcodeScan() {
+            debugger
+            var Barcode = $("#btnImportbarcode").val();
+            startLoader();
+            $.ajax({
                 url: "/Inventory/SearchBarcodeItem?Barcode=" + Barcode,
                 type: "POST"
-            }
-        ).done(function (result) {
-            VendorToWarehouseDetail();
-            $("#btnImportbarcode").val('');
-            stopLoader();
-        });
+            }).done(function (result) {
+                debugger
+                VendorToWarehouseDetail();
+                $("#btnImportbarcode").val('');
+                stopLoader();
+            });
+        }
+
+        // Function to start the loader (you should define this)
+    
+
+        // Function to handle additional details (you should define this)
+  
     });
+    //$("#btnImportbarcode").click(function () {
+    //    debugger
+    //    var Barcode = $("#btnImportbarcode").val();
+    //    startLoader();
+    //    $.ajax(
+    //        {
+    //            url: "/Inventory/SearchBarcodeItem?Barcode=" + Barcode,
+    //            type: "POST"
+    //        }
+    //    ).done(function (result) {
+    //        VendorToWarehouseDetail();
+    //        $("#btnImportbarcode").val('');
+    //        stopLoader();
+    //    });
+    //});
 
 </script>
 

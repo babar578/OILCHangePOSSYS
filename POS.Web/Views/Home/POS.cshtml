@@ -4,7 +4,7 @@
 @using POS.Utilities.ViewModel
 @model UserViewModel
 @{
- 
+
     Model.Customers = VendorServices.GetAllCustomers();
 }
 
@@ -20,6 +20,7 @@
 <div class="col-md-12">
     <div class="form-group">
         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Bar Code", @required = "true", @id = "btnImportbarcode" })
+
     </div>
 </div>
 
@@ -53,7 +54,7 @@
             <div class="modal-body">
                 @Html.DropDownListFor(m => m.Id, new SelectList(Model.Customers, "Id", "CarNumber"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = " Select Customer ", @required = "true", @id = "Guests" })
 
- 
+
                 </a>
                 @*<input type="number" class="form-control" min="0" max="100" id="Guests" placeholder="0000">*@
 
@@ -116,25 +117,107 @@
 </div>
 
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
-    $("#btnImportbarcode").click(function () {
-        debugger
-        var Barcode = $("#btnImportbarcode").val();
-        startLoader();
-        $.ajax(
-            {
-                url: "/Inventory/SearchBarcodeItem?Barcode=" + Barcode,
-                type: "POST"
+    $(document).ready(function () {
+        // Auto-focus the barcode input field when the page loads
+        $('#btnImportbarcode').focus();
+
+        // Handle the Enter key press event
+        $('#btnImportbarcode').on('keypress', function (e) {
+            if (e.which == 13) { // Enter key pressed
+                e.preventDefault(); // Prevent the default form submission
+                // Trigger the AJAX call
+                handleBarcodeScan();
             }
-        ).done(function (result) {
-            VendorToWarehouseDetail();
-            $("#btnImportbarcode").val('');
-            stopLoader();
         });
+
+        $(function () {
+            debugger
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+
+            today = yyyy + '-' + mm + '-' + dd;
+            document.getElementById("TransactionDate").setAttribute("max", today);
+        });
+
+        $("#btnImport").click(function () {
+            debugger
+            var itemId = $("#ItemId").val();
+            startLoader();
+            $.ajax(
+                {
+                    url: "/Inventory/SearchItem?ItemId=" + itemId,
+                    type: "POST"
+                }
+            ).done(function (result) {
+                VendorToWarehouseDetail();
+                stopLoader();
+            });
+        });
+
+        function handleBarcodeScan() {
+            debugger
+            var Barcode = $("#btnImportbarcode").val();
+            startLoader();
+            $.ajax({
+                url: "/Home/SearchBarcodeItem?Barcode=" + Barcode,
+                type: "POST"
+            }).done(function (result) {
+                debugger
+                RefreshCart()
+                $("#btnImportbarcode").val('');
+                stopLoader();
+            });
+        }
+
+        // Function to start the loader (you should define this)
+
+
+        // Function to handle additional details (you should define this)
+
     });
 
+
+
+
+    //$("#btnImportbarcode").click(function () {
+    //    debugger
+    //    var Barcode = $("#btnImportbarcode").val();
+        
+    //    $.ajax(
+    //        {
+    //            url: "/Home/SearchBarcodeItem?Barcode=" + Barcode,
+    //            type: "POST"
+    //        }
+    //    ).done(function (result) {
+    //        debugger
+    //        console.log(result)
+    //        RefreshCart()
+           
+    //        $("#btnImportbarcode").val('');
+           
+    //    });
+    //});
+    function RefreshCart() {
+        $.ajax(
+            {
+                url: "/Home/CartItems/",
+                type: "Get"
+            }
+        ).done(function (result) {
+            $("#LoadCartItems").html(result);
+        });
+    }
     function callHistoryReport() {
 
         if ($("#Guests").val() != "") {

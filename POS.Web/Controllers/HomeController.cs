@@ -20,6 +20,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Diagnostics;
 
 namespace POS.Web.Controllers
 {
@@ -222,6 +223,41 @@ namespace POS.Web.Controllers
         {
             return PartialView("_CartItems");
         }
+
+
+
+        public void SearchBarcodeItem(string Barcode)
+        {
+            if (Barcode != "")
+            {
+                var item = ItemServices.GetItemcurrentbarcodeById(Barcode);
+
+                List<ItemViewModel> items = new List<ItemViewModel>();
+                List<ItemViewModel> sessionItems = Session[WebUtil.SearchItems] as List<ItemViewModel>;
+                if (sessionItems?.Count > 0)
+                {
+                    sessionItems.Add(item);
+                   // itemId, qty, price, itemName, taxAmount, taxPercentage, currentTableId, departmentId
+                    CartItemViewModel model =new CartItemViewModel();
+                    model.ItemId = item.Id;
+                    model.Quantity = 1;
+                    model.Price = item.Price;
+                    model.ItemName=item.Name;
+                    model.DepartmentId= item.DepartmentId;
+
+
+                    AddItemIntoCart(model);
+                }
+                else
+                {
+                    items.Add(item);
+                    Session[WebUtil.SearchItems] = items;
+                }
+            }
+
+        }
+
+
         [HttpPost]
         public JsonResult AddItemIntoCart(CartItemViewModel model)
         {
