@@ -66,6 +66,23 @@ namespace POS.Utilities.Services
             }
             return returnValue;
         }
+        public static ItemViewModel GetItemBarcodeById(string id)
+        {
+            ItemViewModel returnValue = null;
+            try
+            {
+                using (POSEntities context = new POSEntities())
+                {
+                    string SQL = $"select * from Items where Barcode='{id}'";
+                    returnValue = context.Database.SqlQuery<Item>(SQL).SingleOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return returnValue;
+        }
         public static ItemViewModel GetItemById(int id)
         {
             ItemViewModel returnValue = null;
@@ -198,6 +215,8 @@ namespace POS.Utilities.Services
                             find.PromotionEndDate = model.PromotionEndDate;
                         if (!string.IsNullOrWhiteSpace(model.Remarks))
                             find.Remarks = model.Remarks;
+                        if (!string.IsNullOrWhiteSpace(model.Barcode))
+                            find.Barcode = model.Barcode;
                         find.ModifyDate = DateTime.Now;
                         context.SaveChanges();
                         returnValue = true;

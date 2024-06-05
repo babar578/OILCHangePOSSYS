@@ -16,40 +16,35 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
 
-<div class="row">
+    <div class="row">
 
-    <div class="col-md-6">
-        <div class="form-group ">
-            @Html.DropDownListFor(m => m.ItemGroupId, new SelectList(Model.ItemGroups, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Item Group *", @required = "true" })
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.DropDownListFor(m => m.ItemGroupId, new SelectList(Model.ItemGroups, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Item Group *", @required = "true" })
+            </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group ">
-            @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categories, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Category *", @required = "true" })
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categories, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Category *", @required = "true" })
+            </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group ">
-            @Html.TextBoxFor(m => m.Barcode, new { @class = "form-control", placeholder = "Bar code ", @required = "true" })
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Item Name ", @required = "true" })
+            </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group ">
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Item Name ", @required = "true" })
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.DropDownListFor(m => m.UnitId, new SelectList(Model.Units, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Unit *", @required = "true" })
+            </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group ">
-            @Html.DropDownListFor(m => m.UnitId, new SelectList(Model.Units, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Unit *", @required = "true" })
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Department", @required = "true" })
+            </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group ">
-            @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Department", @required = "true" })
-        </div>
-    </div>
 
-    @*<div class="col-md-6">
+        @*<div class="col-md-6">
             <div class="form-group ">
                 <div id="subCategories">
                     <label class="col-form-label">Sub Category</label>
@@ -57,18 +52,24 @@
                 </div>
             </div>
         </div>*@
+            <div class="col-md-6">
+        <div class="form-group ">
+            <label class="col-form-label">Bar code <b class="text-danger">*</b></label>
+            @Html.TextBoxFor(m => m.Barcode, new { @class = "form-control", placeholder = "Bar Code ", @required = "true" })
+        </div>
+    </div>
 
-    <div class="col-md-6">
-        <div class="form-group ">
-            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "Price", @required = "true" })
+        <div class="col-md-6">
+            <div class="form-group ">
+                @Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "Price", @required = "true" })
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group ">
+                @Html.TextAreaFor(m => m.Remarks, new { @rows="3" ,@class = "form-control", placeholder = "Remarks", @required = "true" })
+            </div>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="form-group ">
-            @Html.TextAreaFor(m => m.Remarks, new { @rows = "3", @class = "form-control", placeholder = "Remarks", @required = "true" })
-        </div>
-    </div>
-</div>
 
     <div class="modal-footer col-md-12">
         <div class="form-group">
@@ -100,12 +101,12 @@
 
 
     $("#Item").click(function () {
-        debugger
+
         var id = $("#Id").val();
         var itemGroupId = $("#ItemGroupId").val();
         var categoryId = $("#CategoryId").val();
         var name = $("#Name").val();
-        /*var subCategoryId = $("#SubCategoryId").val();*/
+        var subCategoryId = $("#SubCategoryId").val();
         var unitId = $("#UnitId").val();
         var departmentId = $("#DepartmentId").val();
         var price = $("#Price").val();
@@ -113,18 +114,18 @@
         var barcode = $("#Barcode").val();
 
 
-        if (name == "" || itemGroupId == ""  ||  categoryId == "" || price == "") {
+
+        if (name == "" || itemGroupId == "" || categoryId == "" || price == "") {
             alertify.error("Fill required fields.");
             return;
         }
-        else
-        {
+        else {
             var modelData = {
                 Id: id,
                 ItemGroupId: itemGroupId,
                 CategoryId: categoryId,
                 Name: name,
-                //SubCategoryId: subCategoryId,
+                SubCategoryId: subCategoryId,
                 UnitId: unitId,
                 DepartmentId: departmentId,
                 Price: price,
@@ -132,26 +133,12 @@
                 Remarks: remarks,
                 Barcode: barcode,
             };
-            startLoader();
-  $.ajax({
-      url: '@Url.Action("AddItem", "Menu")',
-      contentType: 'application/json; charset=utf-8',
-      type: "POST",
-      data: JSON.stringify(modelData),
-      datatype: "Json",
-  }).done(function (res) {
-      console.log(res);
-      if (res == "Error" || res == "") {
-          alertify.error("Something went wrong");
-      }
-      else if (res == "Success") {
-          alertify.success("Update successfully");
-          location.reload();
-      }
-      stopLoader();
-  });
+            SaveRawItem(modelData);
         }
     });
+
+
+
 </script>
 
 

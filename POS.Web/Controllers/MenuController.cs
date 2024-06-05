@@ -4,7 +4,9 @@ using POS.Utilities.Utilities;
 using POS.Utilities.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -37,6 +39,37 @@ namespace POS.Web.Controllers
 
             return View("_Item", model);
         }
+        //[HttpGet]
+        //public ActionResult ItemBarcode(string barcode)
+        //{
+        //    var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+        //    if (user == null)
+        //        return RedirectToAction("Login", new { Controller = "Account" });
+
+        //    ItemViewModel model = new ItemViewModel();
+        //    if (!string.IsNullOrEmpty(barcode))
+        //    {
+        //        model = ItemServices.GetItemBarcodeById(barcode);
+        //    }
+
+        //    return View(model);
+        //}
+        [HttpGet]
+        public ActionResult ItemBarcode(string barcode)
+        {
+            Debug.WriteLine("Barcode received: " + barcode);
+            var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+            if (user == null)
+                return RedirectToAction("Login", "Account");
+
+            ItemViewModel model = new ItemViewModel();
+            if (!string.IsNullOrEmpty(barcode))
+            {
+                model = ItemServices.GetItemBarcodeById(barcode);
+            }
+
+            return View(model);
+        }
 
 
         [HttpGet]
@@ -52,7 +85,12 @@ namespace POS.Web.Controllers
             };
             return PartialView("_GetSubCategoryByCategory", model);
         }
+        public ActionResult GetAllRawItems()
+        {
+            var items = ItemServices.GetAllItems(true);
 
+            return PartialView("Items", items);
+        }
         [HttpPost]
         public JsonResult AddItem(ItemViewModel model)
         {
@@ -60,18 +98,22 @@ namespace POS.Web.Controllers
             try
             {
                 bool add;
-                if (model.Id == 0)
+                ItemViewModel model1 = new ItemViewModel();
+                model1 = ItemServices.GetItemBarcodeById(model.Barcode);
+                if (model1 == null)
                 {
-                    model.CreationDate = DateTime.Now;
-                    model.ModifyDate = DateTime.Now;
-                    model.IsActive = true;
-                    add = ItemServices.AddItem(model);
-                }
-                else
-                {
-                    add = ItemServices.UpdateItem(model);
-                }
-
+                    if (model.Id == 0)
+                    {
+                        model.CreationDate = DateTime.Now;
+                        model.ModifyDate = DateTime.Now;
+                        model.IsActive = true;
+                        add = ItemServices.AddItem(model);
+                    }
+                    else
+                    {
+                        add = ItemServices.UpdateItem(model);
+                    }
+             
                 if (add)
                 {
                     message = "Success";
@@ -80,7 +122,11 @@ namespace POS.Web.Controllers
                 {
                     message = "Error";
                 }
-
+                }
+                else
+                {
+                    message = "barcode";
+                }
             }
             catch (Exception ex)
             {

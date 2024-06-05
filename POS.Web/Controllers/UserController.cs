@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace POS.Web.Controllers
 {
@@ -50,6 +51,7 @@ namespace POS.Web.Controllers
                 {
                     model.CreationDate = DateTime.Now;
                     model.IsActive = true;
+                    model.Password = Utility.Encrypt(model.Password);
                     add = UserServices.AddUser(model);
                 }
                 else
