@@ -1035,7 +1035,7 @@ namespace POS.Web.Controllers
                     if (sessionId != null)
                     {
                         //Un Coment After Use Metro Only Use For Moshin Oil 
-                       // String messageIds = obj.sendQuickMessage(sessionId, messageText, to, mask);
+                        String messageIds = obj.sendQuickMessage(sessionId, messageText, to, mask);
                       
                     }
                 }

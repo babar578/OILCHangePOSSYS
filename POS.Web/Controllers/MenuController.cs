@@ -95,14 +95,15 @@ namespace POS.Web.Controllers
         public JsonResult AddItem(ItemViewModel model)
         {
             string message = string.Empty;
+            bool add = false; // Initialize 'add' here
+
             try
             {
-                bool add;
-                ItemViewModel model1 = new ItemViewModel();
-                model1 = ItemServices.GetItemBarcodeById(model.Barcode);
-                if (model1 == null)
+                ItemViewModel model1 = ItemServices.GetItemBarcodeById(model.Barcode);
+
+                if (model.Id == 0)
                 {
-                    if (model.Id == 0)
+                    if (model1 == null)
                     {
                         model.CreationDate = DateTime.Now;
                         model.ModifyDate = DateTime.Now;
@@ -111,30 +112,79 @@ namespace POS.Web.Controllers
                     }
                     else
                     {
-                        add = ItemServices.UpdateItem(model);
+                        message = "barcode";
                     }
-             
+                }
+                else
+                {
+                    add = ItemServices.UpdateItem(model);
+                }
+
                 if (add)
                 {
                     message = "Success";
                 }
-                else
+                else if (message != "barcode") // To avoid overriding the 'barcode' message
                 {
                     message = "Error";
-                }
-                }
-                else
-                {
-                    message = "barcode";
                 }
             }
             catch (Exception ex)
             {
-                ex.Message.ToString();
+                message = "Exception: " + ex.Message; // Better error handling
             }
 
             return Json(message);
         }
+
+        //public JsonResult AddItem(ItemViewModel model)
+        //{
+        //    bool add;
+        //    string message = string.Empty;
+        //    try
+        //    {
+
+        //        ItemViewModel model1 = new ItemViewModel();
+        //        model1 = ItemServices.GetItemBarcodeById(model.Barcode);
+
+        //            if (model.Id == 0)
+        //            {
+        //            if (model1 ==null)
+        //            {
+        //                model.CreationDate = DateTime.Now;
+        //                model.ModifyDate = DateTime.Now;
+        //                model.IsActive = true;
+        //                add = ItemServices.AddItem(model);
+        //            }
+        //            else
+        //            {
+        //                message = "barcode";
+        //            }
+
+        //            }
+        //            else
+        //            {
+        //                add = ItemServices.UpdateItem(model);
+        //            }
+
+        //        if (add)
+        //        {
+        //            message = "Success";
+        //        }
+        //        else
+        //        {
+        //            message = "Error";
+        //        }
+
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ex.Message.ToString();
+        //    }
+
+        //    return Json(message);
+        //}
 
         [HttpGet]
         public ActionResult ShowItem(int id)

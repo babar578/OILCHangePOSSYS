@@ -74,7 +74,7 @@ namespace POS.Utilities.Services
                 using (POSEntities context = new POSEntities())
                 {
                     string SQL = $"select * from Items where Barcode='{id}'";
-                    returnValue = context.Database.SqlQuery<Item>(SQL).SingleOrDefault();
+                    returnValue = context.Database.SqlQuery<Item>(SQL).FirstOrDefault();
                 }
             }
             catch (Exception)

@@ -775,6 +775,7 @@
     <Content Include="assets\js\pages\widgets.min.js" />
     <Content Include="assets\js\scripts.bundle.js" />
     <Content Include="assets\js\scripts.bundle.min.js" />
+    <Content Include="assets\media\bg\bgpic.jpg" />
     <Content Include="assets\media\bg\bg-1.jpg" />
     <Content Include="assets\media\bg\bg-10.jpg" />
     <Content Include="assets\media\bg\bg-11.jpg" />
@@ -783,7 +784,7 @@
     <Content Include="assets\media\bg\bg-4.jpg" />
     <Content Include="assets\media\bg\bg-5.jpg" />
     <Content Include="assets\media\bg\bg-6.jpg" />
-    <Content Include="assets\media\bg\bg-8.jpg" />
+    <Content Include="assets\media\bg\xbg-8.jpg" />
     <Content Include="assets\media\bg\bg-9.jpg" />
     <Content Include="assets\media\bg\demo-7.jpg" />
     <Content Include="assets\media\bg\home-2-bg.svg" />

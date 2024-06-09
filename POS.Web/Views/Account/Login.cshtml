@@ -69,7 +69,7 @@
     <div class="d-flex flex-column flex-root">
         <!--begin::Login-->
         <div class="login login-1 login-signin-on d-flex flex-row-fluid" id="kt_login">
-            <div class="d-flex flex-center bgi-size-cover bgi-no-repeat flex-row-fluid" style="height: 937px; background-image: url(../../Content/assets/media/bg/bg-8.jpg);">
+            <div class="d-flex flex-center bgi-size-cover bgi-no-repeat flex-row-fluid" style="height: 937px; background-image: url(../../assets/media/bg/bgpic.jpg);">
                 <div class="login-form text-center text-white p-7 position-relative overflow-hidden">
                     <!--begin::Login Header-->
                     <div class="d-flex flex-center mb-15">
@@ -83,34 +83,34 @@
                         <div class="mb-20">
                             @if (sdfg != null)
                             {
-                                <h1>@sdfg.CompanyNameUrdu</h1>
+                                <h1 class="text-dark">@sdfg.CompanyNameUrdu</h1>
                             }
 
-                            <p class="opacity-60 font-weight-bold">Enter your details to login to your account:</p>
+                            <p class="opacity-60 font-weight-bold text-dark">Enter your details to login to your account:</p>
                         </div>
 
                         @using (Html.BeginForm("", "", FormMethod.Post))
                         {
                     <div class="form-group">
                       
-                        <input class="bg-light text-dark   form-control h-auto  placeholder-dark-75 opacity-70  rounded-pill border-0 py-4 px-8 mb-5" type="text" placeholder="Enter Username" Id="UserName" required>
+                        <input class="bg-dark text-dark   form-control h-auto  placeholder-light-75 opacity-70  rounded-pill border-0 py-4 px-8 mb-5" type="text" placeholder="Enter Username" Id="UserName" required>
                         @*@Html.TextBoxFor(m => m.UserName, new { @class = "bg-light text-dark   form-control h-auto  placeholder-dark-75 opacity-70  rounded-pill border-0 py-4 px-8 mb-5", type = "text", placeholder = "UserName", name = "fullname", @required = "true" })*@
                         @*<input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8 mb-5" type="text" placeholder="Email" name="username" autocomplete="off" />*@
                     </div>
                             <div class="form-group">
-                                @Html.PasswordFor(m => m.Password, new { @class = "bg-light text-dark   form-control h-auto  placeholder-dark-75 opacity-70  rounded-pill border-0 py-4 px-8 mb-5", placeholder = "Password", name = "password", @required = "true" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "bg-dark text-dark   form-control h-auto  placeholder-light-75   opacity-70  rounded-pill border-0 py-4 px-8 mb-5", placeholder = "Password", name = "password", @required = "true" })
 
                             </div>
                             <div class="form-group d-flex flex-wrap justify-content-between align-items-center px-8">
-                                <label class="checkbox checkbox-outline checkbox-white text-white m-0">
+                                <label class="checkbox checkbox-outline checkbox-white text-dark m-0">
                                     <input type="checkbox" name="remember" />Remember me
                                     <span></span>
                                 </label>
-                                <a href="javascript:;" id="kt_login_forgot" class="text-white font-weight-bold">Forget Password ?</a>
+                                <a href="javascript:;" id="kt_login_forgot" class="text-dark font-weight-bold">Forget Password ?</a>
                             </div>
                             <div class="form-group text-center mt-10">
 
-                                <button id="btn-login" class="bg-light btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3" type="button">Sign In</button>
+                                <button id="btn-login" class="bg-dark text-dark btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3" type="button">Sign In</button>
                                 @*<button type="button" id="btn-login" class="btn btn-primary btn-block">Sign In</button>*@
                             </div>
                         }
