@@ -2,198 +2,233 @@
 @model UserViewModel
 @using POS.Utilities.Services
 @using POS.Utilities.Utilities
-
 @{
     ViewBag.Title = "Login";
     Layout = null;
-
-
     var sdfg = ItemServices.GetCompanyById();
-
 }
-
 <!DOCTYPE html>
-
 <html lang="en">
-<!--begin::Head-->
 <head>
-    <base href="../../../../">
     <meta charset="utf-8" />
-    @if (sdfg != null)
-    {
-        <title>@sdfg.CompanyName</title>
-    }
+    <title>@(sdfg != null ? sdfg.CompanyName : "Login")</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta name="description" content="Login page example" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!--begin::Fonts-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-    <!--end::Fonts-->
-    <!--begin::Page Custom Styles(used by this page)-->
-    <link href="~/Content/assets/css/pages/login/classic/login-1.css" rel="stylesheet" type="text/css" />
-    <!--end::Page Custom Styles-->
-    <!--begin::Global Theme Styles(used by all pages)-->
-    <link href="~/Content/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-    <!--end::Global Theme Styles-->
-    <!--begin::Layout Themes(used by all pages)-->
-    <!--end::Layout Themes-->
-    <link rel="shortcut icon" href="~/Content/images/download.jpg" />
-    <title>oil shop | Login</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" />
 
-    @*<link rel="icon" type="image/png" href="~/Images/d&b logo.png" sizes="16x16">*@
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="~/Content/plugins/fontawesome-free/css/all.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="~/Content/dist01/css/adminlte.min.css">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
+    <!-- External CSS -->
+    <link href="~/Content/assets/css/style.bundle.css" rel="stylesheet" />
+    <link href="~/Content/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/dist01/css/adminlte.min.css" rel="stylesheet" />
     <link href="~/Content/JqueryLoadingModal/jquery.loadingModal.min.css" rel="stylesheet" />
 
-    <link href="~/Content/alertify/alertify.core.css" rel="stylesheet" />
-    <link href="~/Content/alertify/alertify.default.css" rel="stylesheet" />
+    <!-- Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            background: #f0f0f5;
+        }
+
+        .login-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-form {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            animation: fadeSlideIn 1s ease-out forwards;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        @@keyframes fadeSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-form h1 {
+            margin-bottom: 20px;
+            font-size: 26px;
+            font-weight: 700;
+            color: #663259;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 8px #8950FC;
+            border-color: #8950FC;
+        }
+
+        .btn-login {
+            background-color: #663259;
+            color: white;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-weight: 600;
+            width: 100%;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+            .btn-login:hover {
+                background-color: #8950FC;
+                transform: scale(1.05);
+            }
+    </style>
 </head>
-<!--end::Head-->
-<!--begin::Body-->
-<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled sidebar-enabled page-loading">
-    <!--begin::Main-->
-    <div class="d-flex flex-column flex-root">
-        <!--begin::Login-->
-        <div class="login login-1 login-signin-on d-flex flex-row-fluid" id="kt_login">
-            <div class="d-flex flex-center bgi-size-cover bgi-no-repeat flex-row-fluid" style="height: 937px; background-image: url(../../assets/media/bg/bgpic.jpg);">
-                <div class="login-form text-center text-white p-7 position-relative overflow-hidden">
-                    <!--begin::Login Header-->
-                    <div class="d-flex flex-center mb-15">
-                        <a href="#">
-                            @*<img src="~/Content/assets/media/logos/logo-letter-9.png" class="max-h-100px" alt="" />*@
-                        </a>
-                    </div>
-                    <!--end::Login Header-->
-                    <!--begin::Login Sign in form-->
-                    <div class="login-signin">
-                        <div class="mb-20">
-                            @if (sdfg != null)
-                            {
-                                <h1 class="text-dark">@sdfg.CompanyNameUrdu</h1>
-                            }
+<body>
+    <div id="particles-js"></div>
 
-                            <p class="opacity-60 font-weight-bold text-dark">Enter your details to login to your account:</p>
-                        </div>
+    <div class="login-container">
+        <div class="login-form text-center">
+            @if (sdfg != null)
+            {
+                <h1>@sdfg.CompanyNameUrdu</h1>
+            }
+            else
+            {
+                <h1>POS & Inventory Login</h1>
+            }
 
-                        @using (Html.BeginForm("", "", FormMethod.Post))
-                        {
-                    <div class="form-group">
-                      
-                        <input class="bg-dark text-dark   form-control h-auto  placeholder-light-75 opacity-70  rounded-pill border-0 py-4 px-8 mb-5" type="text" placeholder="Enter Username" Id="UserName" required>
-                        @*@Html.TextBoxFor(m => m.UserName, new { @class = "bg-light text-dark   form-control h-auto  placeholder-dark-75 opacity-70  rounded-pill border-0 py-4 px-8 mb-5", type = "text", placeholder = "UserName", name = "fullname", @required = "true" })*@
-                        @*<input class="form-control h-auto text-white placeholder-white opacity-70 bg-dark-o-70 rounded-pill border-0 py-4 px-8 mb-5" type="text" placeholder="Email" name="username" autocomplete="off" />*@
-                    </div>
-                            <div class="form-group">
-                                @Html.PasswordFor(m => m.Password, new { @class = "bg-dark text-dark   form-control h-auto  placeholder-light-75   opacity-70  rounded-pill border-0 py-4 px-8 mb-5", placeholder = "Password", name = "password", @required = "true" })
+            <p class="text-muted">Please enter your credentials</p>
 
-                            </div>
-                            <div class="form-group d-flex flex-wrap justify-content-between align-items-center px-8">
-                                <label class="checkbox checkbox-outline checkbox-white text-dark m-0">
-                                    <input type="checkbox" name="remember" />Remember me
-                                    <span></span>
-                                </label>
-                                <a href="javascript:;" id="kt_login_forgot" class="text-dark font-weight-bold">Forget Password ?</a>
-                            </div>
-                            <div class="form-group text-center mt-10">
-
-                                <button id="btn-login" class="bg-dark text-dark btn btn-pill btn-outline-white font-weight-bold opacity-90 px-15 py-3" type="button">Sign In</button>
-                                @*<button type="button" id="btn-login" class="btn btn-primary btn-block">Sign In</button>*@
-                            </div>
-                        }
-
-                    </div>
-                    <!--end::Login Sign in form-->
-                </div>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Username" id="UserName" required />
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" placeholder="Password" id="Password" required />
+            </div>
+            <div class="form-group d-flex justify-content-between align-items-center">
+                <label><input type="checkbox" /> Remember me</label>
+                <a href="#" class="text-secondary">Forgot Password?</a>
+            </div>
+            <div class="form-group">
+                <button id="btn-login" class="btn btn-login">Sign In</button>
             </div>
         </div>
-        <!--end::Login-->
     </div>
-    <!--end::Main-->
-    <script>var HOST_URL = "https://keenthemes.com/metronic/tools/preview";</script>
-    <!--begin::Global Config(global config for global JS scripts)-->
-    <script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#663259", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#F4E1F0", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
-    <!--end::Global Config-->
-    <!--begin::Global Theme Bundle(used by all pages)-->
-    <script src="~/Content/assets/plugins/global/plugins.bundle.js"></script>
-    <script src="~/Content/assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
-    <script src="~/Content/assets/js/scripts.bundle.js"></script>
-    <!--end::Global Theme Bundle-->
-    <!--begin::Page Scripts(used by this page)-->
-    <script src="~/Content/assets/js/pages/custom/login/login.js"></script>
-    <!--end::Page Scripts-->
-    <script src="~/Content/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/Content/dist01/js/adminlte.min.js"></script>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="~/Content/plugins/jquery/jquery.min.js"></script>
+    <script src="~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/dist01/js/adminlte.min.js"></script>
     <script src="~/Content/JqueryLoadingModal/jquery.loadingModal.min.js"></script>
-    <script src="~/Content/alertify/alertify.min.js"></script>
-    <script src="~/Scripts/Site.js"></script>
+
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
-        $("#btn-login").click(function () {
-            debugger
-        var userName = $("#UserName").val();
-        var password = $("#Password").val();
+        // Particle Background
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 60 },
+                "color": { "value": "#663259" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5 },
+                "size": { "value": 3 },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 120,
+                    "color": "#663259",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 1.5
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" }
+                }
+            },
+            "retina_detect": true
+        });
 
-        if (userName == "" || password == "" ) {
-            alertify.error("Invalid User Name and Password.");
-            return;
+        // Loader handlers
+        function startLoader() {
+            $("body").loadingModal({ text: 'Logging in...', animation: 'wave' });
         }
-        else
-        {
+
+        function stopLoader() {
+            $("body").loadingModal('destroy');
+        }
+
+        // Toastr config
+        toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            positionClass: "toast-top-center",
+            showMethod: "slideDown",
+            hideMethod: "fadeOut",
+            timeOut: 4000
+        };
+
+        // Login logic
+        $("#btn-login").click(function () {
+            var userName = $("#UserName").val().trim();
+            var password = $("#Password").val().trim();
+
+            if (userName === "" || password === "") {
+                toastr.error("❌ Username and Password are required.");
+                return;
+            }
+
             var modelData = {
                 UserName: userName,
-                Password: password,
+                Password: password
             };
 
             startLoader();
 
             $.ajax({
-                url: '@Url.Action("Login","Account")',
-                contentType: 'application/json; charset=utf-8',
+                url: '@Url.Action("Login", "Account")',
                 type: "POST",
+                contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(modelData),
-                datatype: "Json",
-            }).done(function (res) {
-                console.log(res);
-                debugger
-                if (res == "Error" || res == "") {
-                    alertify.error("Something went wrong");
+                success: function (res) {
+                    if (res === "Success") {
+                        toastr.success("✅ Login successful!");
+                        window.location.href = "/Home/Index";
+                    } else {
+                        toastr.error("❌ Invalid credentials.");
+                    }
+                    stopLoader();
+                },
+                error: function () {
+                    toastr.error("❌ Server error.");
+                    stopLoader();
                 }
-                else if (res == "Success") {
-                    document.location.href = "/Home/Index";
-                    alertify.success("Successfully Login");
-                }
-                stopLoader();
             });
-        }
-    });
-
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            window.history.pushState(null, "", window.location.href);
-            window.onpopstate = function () {
-                window.history.pushState(null, "", window.location.href);
-            };
         });
     </script>
 </body>
 </html>
-

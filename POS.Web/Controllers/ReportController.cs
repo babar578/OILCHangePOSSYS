@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using Microsoft.Reporting.WebForms;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
+
 using POS.Utilities.ReportsModel;
 
 namespace POS.Web.Controllers
@@ -242,7 +243,7 @@ namespace POS.Web.Controllers
                 //mRptDoc = new ReportDocument();
                 //mRptDoc.Load(path, OpenReportMethod.OpenReportByDefault);
 
-                mRptDoc = new POS.Reporting.CrystalReports.Invoice();
+             //   mRptDoc = new POS.Reporting.CrystalReports.Invoice();
 
                 mRptDoc.SetDataSource(order);
 

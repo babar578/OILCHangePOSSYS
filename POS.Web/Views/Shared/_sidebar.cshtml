@@ -2,250 +2,138 @@
 @using POS.Utilities.Utilities
 @using POS.Utilities.Services
 @{
-
     Layout = null;
-
     var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
     var userRights = Session[WebUtil.CurrentUserRights] as List<UserRightViewModel>;
     var checkShopStatus = UserServices.CheckShopOpenStatus();
-
 }
-
 
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="/Home/Index" class="brand-link">
-        <img src="~/Content/dist01/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-             style="opacity: .8">
-        <span class="brand-text font-weight-light">Dashboard Panel</span>
+    <a href="/Home/Index" class="brand-link d-flex align-items-center">
+        <img src="~/Content/dist01/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3 me-2" style="opacity: .9">
+        <span class="brand-text fw-semibold fs-5">Dashboard Panel</span>
     </a>
+
     <!-- Sidebar -->
     <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <!-- User Panel -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center">
             <div class="image">
                 <img src="~/Content/dist01/img/user1-128x128.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="/Home/Index" class="d-block">@user.UserName</a>
+                <a href="/Home/Index" class="d-block fs-6 fw-medium">@user.UserName</a>
             </div>
         </div>
+
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
-                @{
-                    if (user.UserTypeId == 1 || user.UserTypeId == 2 || (user.UserTypeId == 3 && checkShopStatus))
+            <ul class="nav nav-pills nav-sidebar flex-column fs-6" data-widget="treeview" role="menu" data-accordion="false">
+                @if (user.UserTypeId == 1 || user.UserTypeId == 2 || (user.UserTypeId == 3 && checkShopStatus))
+                {
+                    if (userRights?.Count > 0)
                     {
-                        if (userRights?.Count > 0)
+                        foreach (var m in userRights)
                         {
-                            foreach (var m in userRights)
+                            var menu = UserServices.GetMainMenuById(m.MenuId);
+
+                            if (menu.ParentId == null && menu.Name.Trim() != "Reports")
                             {
-                                {
-                                    var menu = UserServices.GetMainMenuById(m.MenuId);
-
-                                    if (menu.ParentId == null && menu.Name.Trim() != "Reports")
-                                    {
-                                        <li class="nav-item has-treeview">
-                                            <a href="@menu.URL" class="nav-link">
-                                                <i class="nav-icon @menu.Icon"></i>
-                                                <p>
-                                                    @menu.Name
-                                                    <i class="fas fa-angle-left right"></i>
-                                                </p>
-                                            </a>
-                                            @{
-                                                var subMenus = UserServices.GetAllUserRights_SubMenu_ByParentId(menu.Id, user.Id);
-
-                                                if (subMenus?.Count > 0)
+                                <li class="nav-item">
+                                    <a href="@menu.URL" class="nav-link">
+                                        <i class="nav-icon @menu.Icon"></i>
+                                        <p>
+                                            @menu.Name
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    @{
+                                        var subMenus = UserServices.GetAllUserRights_SubMenu_ByParentId(menu.Id, user.Id);
+                                        if (subMenus?.Count > 0)
+                                        {
+                                            <ul class="nav nav-treeview ps-3">
+                                                @foreach (var sub in subMenus)
                                                 {
-                                                    foreach (var sub in subMenus)
-                                                    {
-                                                        var submenu = UserServices.GetMainMenuById(sub.MenuId);
-                                                        <ul class="nav nav-treeview">
-                                                            <li class="nav-item">
-                                                                <a href="@submenu.URL" class="nav-link">
-                                                                    <i class="@submenu.Icon nav-icon"></i>
-                                                                    <p>@submenu.Name</p>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    }
+                                                    var submenu = UserServices.GetMainMenuById(sub.MenuId);
+                                                    <li class="nav-item">
+                                                        <a href="@submenu.URL" class="nav-link">
+                                                            <i class="@submenu.Icon nav-icon"></i>
+                                                            <p>@submenu.Name</p>
+                                                        </a>
+                                                    </li>
                                                 }
+                                            </ul>
+                                        }
 
-                                                if (menu.Name == "Tables")
+                                        if (menu.Name == "Tables")
+                                        {
+                                            <ul class="nav nav-treeview ps-3">
+                                                @foreach (var p in ItemServices.GetAllFloors() ?? new List<POS.Utilities.ViewModel.FloorViewModel>())
                                                 {
-                                                    if (ItemServices.GetAllFloors()?.Count > 0)
-                                                    {
-                                                        foreach (var p in ItemServices.GetAllFloors())
-                                                        {
-                                                            <ul class="nav nav-treeview">
-                                                                <li class="nav-item">
-                                                                    <a href="/Menu/Tables/@p.Id" class="nav-link">
-                                                                        <i class="far fa-circle nav-icon"></i>
-                                                                        <p>@p.Name</p>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        }
-                                                    }
+                                                    <li class="nav-item">
+                                                        <a href="/Menu/Tables/@p.Id" class="nav-link">
+                                                            <i class="far fa-circle nav-icon"></i>
+                                                            <p>@p.Name</p>
+                                                        </a>
+                                                    </li>
                                                 }
-                                            }
-                                        </li>
+                                            </ul>
+                                        }
                                     }
-                                    if (menu.Name.Trim() == "Reports")
-                                    {
-            <li class="nav-item has-treeview">
-                <a href="javascript:void(0)" class="nav-link">
-                    <i class="nav-icon fas fa-pencil-ruler"></i>
-                    <p>
-                        Reports
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Inventory/CurrentStockReport" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Inventory Stock In Hand</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Report/VenderToWarHouseReport" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Vendor To WareHouse</p>
-                        </a>
-                    </li>
-                </ul>
-
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Report/POSSaleReport" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>POS Sale Report </p>
-                        </a>
-                    </li>
-                </ul>
-
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Report/IssueToDeptmentReport" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Issue To DeptmentReport</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Report/WastageReport" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Wastage Report</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Vendor/VendorsPayments" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Vendor Payments Report Detail</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Vendor/VendorsPaymentsSummary" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Vendor Payments Report Summary</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Report/ComsumptionReport" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Comsumption Report</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Report/ReturnToVendorReport" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Return To Vendor</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Report/ReturnToVendorSummaryReport" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Return To Vendor Summary</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Report/ReturnToWasaHousesReport" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Return To Store</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Report/ReturnToVendorSumamryReport" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Return To Store Summary</p>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="/Report/StockCashReport" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Total Cash Report</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-                                    }
-                                }
+                                </li>
+                            }
+                            else if (menu.Name.Trim() == "Reports")
+                            {
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-pencil-ruler"></i>
+                                        <p>
+                                            Reports
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview ps-3">
+                                        <li class="nav-item"><a href="/Inventory/CurrentStockReport" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Inventory Stock In Hand</p></a></li>
+                                        <li class="nav-item"><a href="/Report/VenderToWarHouseReport" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Vendor To WareHouse</p></a></li>
+                                        <li class="nav-item"><a href="/Report/POSSaleReport" class="nav-link"><i class="far fa-circle nav-icon"></i><p>POS Sale Report</p></a></li>
+                                        <li class="nav-item"><a href="/Report/IssueToDeptmentReport" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Issue To Department</p></a></li>
+                                        <li class="nav-item"><a href="/Report/WastageReport" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Wastage Report</p></a></li>
+                                        <li class="nav-item"><a href="/Vendor/VendorsPayments" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Vendor Payments Detail</p></a></li>
+                                        <li class="nav-item"><a href="/Vendor/VendorsPaymentsSummary" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Vendor Payments Summary</p></a></li>
+                                        <li class="nav-item"><a href="/Report/ComsumptionReport" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Consumption Report</p></a></li>
+                                        <li class="nav-item"><a href="/Report/ReturnToVendorReport" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Return To Vendor</p></a></li>
+                                        <li class="nav-item"><a href="/Report/ReturnToVendorSummaryReport" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Return To Vendor Summary</p></a></li>
+                                        <li class="nav-item"><a href="/Report/ReturnToWasaHousesReport" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Return To Store</p></a></li>
+                                        <li class="nav-item"><a href="/Report/ReturnToVendorSumamryReport" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Return To Store Summary</p></a></li>
+                                        <li class="nav-item"><a href="/Report/StockCashReport" class="nav-link"><i class="far fa-circle nav-icon"></i><p>Total Cash Report</p></a></li>
+                                    </ul>
+                                </li>
                             }
                         }
-
-                        if (user.UserTypeId == 3)
-                        {
-                            <li class="nav-item">
-                                <a href="javascript: void(0)" onclick="ShopClose()" class="nav-link">
-                                    <i class="nav-icon fas fa-store-slash"></i>
-                                    <p>
-                                        Close Shop
-                                    </p>
-                                </a>
-                            </li>
-                        }
                     }
-                    else
+
+                    if (user.UserTypeId == 3)
                     {
                         <li class="nav-item">
-                            <a href="javascript: void(0)" onclick="ShopOpen()" class="nav-link">
-                                <i class="nav-icon fas fa-desktop"></i>
-                                <p>
-                                    Open Shop
-                                </p>
+                            <a href="javascript:void(0)" onclick="ShopClose()" class="nav-link">
+                                <i class="nav-icon fas fa-store-slash"></i>
+                                <p>Close Shop</p>
                             </a>
                         </li>
                     }
                 }
-
-
-
+                else
+                {
+                    <li class="nav-item">
+                        <a href="javascript:void(0)" onclick="ShopOpen()" class="nav-link">
+                            <i class="nav-icon fas fa-desktop"></i>
+                            <p>Open Shop</p>
+                        </a>
+                    </li>
+                }
             </ul>
         </nav>
-        <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
 </aside>

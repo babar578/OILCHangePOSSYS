@@ -10,213 +10,285 @@
     var dashboard = DashboardServices.GetDashboard(dateto);
 }
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
-    <meta http-equiv="refresh" content="60;" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content="60" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-size: 16px; /* Base readable font size */
+        }
 
+        .small-box {
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+            .small-box:hover {
+                transform: translateY(-5px);
+            }
+
+            .small-box .inner h3 {
+                font-size: 2rem;
+                font-weight: 600;
+                color: #fff;
+            }
+
+            .small-box .inner p {
+                font-size: 1.1rem;
+                color: #fff;
+            }
+
+            .small-box .icon i {
+                font-size: 2.5rem;
+                color: rgba(255, 255, 255, 0.85);
+            }
+
+        .card-header h5 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .bg-gradient-info {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+        }
+
+        .bg-gradient-success {
+            background: linear-gradient(135deg, #28a745, #218838);
+        }
+
+        .bg-gradient-danger {
+            background: linear-gradient(135deg, #dc3545, #bd2130);
+        }
+
+        .bg-gradient-warning {
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+            color: #000;
+        }
+
+        .bg-gradient-dark {
+            background: linear-gradient(135deg, #343a40, #1d2124);
+        }
+
+        .bg-gradient-gray {
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+        }
+    </style>
 </head>
 <body>
-
-    @{
-        if (user.UserTypeId == 1 || user.UserTypeId == 2 || (user.UserTypeId == 3 && checkShopStatus))
+    @if (user.UserTypeId == 1 || user.UserTypeId == 2 || (user.UserTypeId == 3 && checkShopStatus))
+    {
+        if (dashboard != null)
         {
-            if (dashboard != null)
-            {
-                <!-- Main content -->
-                <section class="content">
-                    <div class="container-fluid">
-                        <!-- Small boxes (Stat box) -->
-                        <div class="row">
-                            <div class="col-lg-3 col-6">
-                                <a href="/Home/AllOrders">
-                                    <!-- small box -->
-                                    <div class="small-box bg-gradient-info">
-                                        <div class="inner">
-                                            <h3>@dashboard.TotalCloseOrders</h3>
-
-                                            <p>Customer Orders History</p>
-                                        </div>
-                                        <div class="icon">
-                                            <i class="fas fa-shopping-cart"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <!-- ./col -->
-                            <div class="col-lg-3 col-6">
-                                <a href="/Home/OpenOrders">
-                                    <!-- small box -->
-                                    <div class="small-box bg-gradient-success">
-                                        <div class="inner">
-                                            <h3>@dashboard.TotalOpenOrders</h3>
-
-                                            <p>Total Open Orders</p>
-                                        </div>
-                                        <div class="icon">
-                                            <i class="fas fa-cart-plus"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <!-- ./col -->
-                            <!-- ./col -->
-                            <div class="col-lg-3 col-6">
-                                <a href="/Home/DraftOrders">
-                                    <!-- small box -->
-                                    <div class="small-box bg-gradient-danger">
-                                        <div class="inner">
-                                            <h3>@dashboard.TotalDraftOrders</h3>
-
-                                            <p>Total Draft Orders</p>
-                                        </div>
-                                        <div class="icon">
-                                            <i class="fas fa-shopping-bag"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <!-- ./col -->
-                            <div class="col-lg-3 col-6">
-                                <a href="/Home/POS">
-                                    <!-- small box -->
-                                    <div class="small-box bg-gradient-warning">
-                                        <div class="inner">
-                                            <h3>-</h3>
-
-                                            <p>POS Panel</p>
-                                        </div>
-                                        <div class="icon">
-                                            <i class="fas fa-desktop"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <!-- ./col -->
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-3 col-6">
-
-                                <!-- small box -->
-                                <div class="small-box bg-gradient-info">
+            <section class="content mt-4 animate__animated animate__fadeIn">
+                <div class="container-fluid">
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <a href="/Home/AllOrders">
+                                <div class="small-box bg-gradient-info text-white p-3">
                                     <div class="inner">
-                                        <h3>@dashboard.TOTALBILL</h3>
-
-                                        <p>Today Bill</p>
+                                        <h3>@dashboard.TotalCloseOrders</h3>
+                                        <p>Customer Orders History</p>
                                     </div>
                                     <div class="icon">
                                         <i class="fas fa-shopping-cart"></i>
                                     </div>
                                 </div>
-
-                            </div>
-                            <!-- ./col -->
-                            <div class="col-lg-3 col-6">
-
-                                <!-- small box -->
-                                <div class="small-box bg-gradient-success">
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/Home/OpenOrders">
+                                <div class="small-box bg-gradient-success text-white p-3">
                                     <div class="inner">
-                                        <h3>@dashboard.TotalNetAmount</h3>
-
-                                        <p>Today Sales</p>
+                                        <h3>@dashboard.TotalOpenOrders</h3>
+                                        <p>Total Open Orders</p>
                                     </div>
                                     <div class="icon">
                                         <i class="fas fa-cart-plus"></i>
                                     </div>
                                 </div>
-
-                            </div>
-                            <!-- ./col -->
-                            <!-- ./col -->
-                            <div class="col-lg-3 col-6">
-
-                                <!-- small box -->
-                                <div class="small-box bg-gradient-danger">
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/Home/DraftOrders">
+                                <div class="small-box bg-gradient-danger text-white p-3">
                                     <div class="inner">
-                                        <h3>@dashboard.DiscountCharged</h3>
-
-                                        <p>Today Discount </p>
+                                        <h3>@dashboard.TotalDraftOrders</h3>
+                                        <p>Total Draft Orders</p>
                                     </div>
                                     <div class="icon">
                                         <i class="fas fa-shopping-bag"></i>
                                     </div>
                                 </div>
-
-                            </div>
-                            <!-- ./col -->
-                            <div class="col-lg-3 col-6">
-
-                                <!-- small box -->
-                                <div class="small-box bg-gradient-warning">
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/Home/POS">
+                                <div class="small-box bg-gradient-warning text-dark p-3">
                                     <div class="inner">
-
-                                        <h3>@dashboard.ServiceCharged</h3>
-                                        <p> Today Service Charged</p>
+                                        <h3>-</h3>
+                                        <p>POS Panel</p>
                                     </div>
                                     <div class="icon">
                                         <i class="fas fa-desktop"></i>
                                     </div>
                                 </div>
-
-                            </div>
-                            <!-- ./col -->
+                            </a>
                         </div>
+                    </div>
 
-                        <!-- /.row -->
-                        <!-- Small boxes (Stat box) -->
-                        <!-- /.row -->
+                    <div class="row g-4 mt-2">
+                        <div class="col-md-3">
+                            <div class="small-box bg-gradient-info text-white p-3">
+                                <div class="inner">
+                                    <h3>@dashboard.TOTALBILL</h3>
+                                    <p>Today Bill</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-file-invoice-dollar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="small-box bg-gradient-success text-white p-3">
+                                <div class="inner">
+                                    <h3>@dashboard.TotalNetAmount</h3>
+                                    <p>Today Sales</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-cash-register"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="small-box bg-gradient-danger text-white p-3">
+                                <div class="inner">
+                                    <h3>@dashboard.DiscountCharged</h3>
+                                    <p>Today Discount</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-percent"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="small-box bg-gradient-warning text-dark p-3">
+                                <div class="inner">
+                                    <h3>@dashboard.ServiceCharged</h3>
+                                    <p>Today Service Charged</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    </div><!-- /.container-fluid -->
-                    <div class="row">
-                        @{
-
-                            if (ItemServices.GetAllFloors()?.Count > 0)
-                            {
-                                foreach (var p in ItemServices.GetAllFloors())
-                                {
-                                    <div class="col-lg-3 col-6">
-                                        <a href="/Menu/Tables/@p.Id">
-                                            <!-- small box -->
-                                            <div class="small-box bg-gradient-gray">
-                                                <div class="inner">
-                                                    <h3>@DashboardServices.GetTotalTablesByFloor(p.Id)</h3>
-
-                                                    <p>@p.Name Floor Tables</p>
-                                                </div>
-                                                <div class="icon">
-                                                    <i class="fas fa-table"></i>
-                                                </div>
-                                            </div>
-                                        </a>
+                    <div class="row g-4 mt-2">
+                        @foreach (var p in ItemServices.GetAllFloors() ?? new List<POS.Utilities.ViewModel.FloorViewModel>())
+                        {
+                            <div class="col-md-3">
+                                <a href="/Menu/Tables/@p.Id">
+                                    <div class="small-box bg-gradient-gray text-white p-3">
+                                        <div class="inner">
+                                            <h3>@DashboardServices.GetTotalTablesByFloor(p.Id)</h3>
+                                            <p>@p.Name Floor Tables</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="fas fa-table"></i>
+                                        </div>
                                     </div>
-                                    <!-- ./col -->
-                                }
-                            }
+                                </a>
+                            </div>
                         }
-
-                        <div class="col-lg-3 col-6">
+                        <div class="col-md-3">
                             <a href="#">
-                                <!-- small box -->
-                                <div class="small-box bg-gradient-dark">
+                                <div class="small-box bg-gradient-dark text-white p-3">
                                     <div class="inner">
                                         <h3>@dashboard.TotalItems</h3>
-
                                         <p>Total Items</p>
                                     </div>
                                     <div class="icon">
-                                        <i class="fas fa-file-alt"></i>
+                                        <i class="fas fa-boxes"></i>
                                     </div>
                                 </div>
                             </a>
                         </div>
-                        <!-- ./col -->
                     </div>
-                </section>
-                <!-- /.content -->
-            }
 
+                    <!-- Charts Section -->
+                    <div class="row g-4 mt-4">
+                        <div class="col-md-6">
+                            <div class="card shadow">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Sales Overview</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="barChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card shadow">
+                                <div class="card-header bg-danger text-white">
+                                    <h5 class="mb-0">Order Distribution</h5>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="pieChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <script>
+                const barCtx = document.getElementById('barChart');
+                new Chart(barCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Closed', 'Open', 'Draft'],
+                        datasets: [{
+                            label: 'Orders',
+                            data: [@dashboard.TotalCloseOrders, @dashboard.TotalOpenOrders, @dashboard.TotalDraftOrders],
+                            backgroundColor: ['#17a2b8', '#28a745', '#dc3545']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                const pieCtx = document.getElementById('pieChart');
+                new Chart(pieCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Discount', 'Service Charged', 'Net Amount'],
+                        datasets: [{
+                            data: [@dashboard.DiscountCharged, @dashboard.ServiceCharged, @dashboard.TotalNetAmount],
+                            backgroundColor: ['#dc3545', '#ffc107', '#28a745']
+                        }]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                });
+            </script>
         }
     }
-
 </body>
 </html>
