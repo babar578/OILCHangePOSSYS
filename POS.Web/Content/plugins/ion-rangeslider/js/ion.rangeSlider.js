@@ -1770,10 +1770,10 @@
         convertToValue: function (percent) {
             var min = this.options.min,
                 max = this.options.max,
-                min_decimals = min.toString().split(".")[1],
-                max_decimals = max.toString().split(".")[1],
+                min_doubles = min.toString().split(".")[1],
+                max_doubles = max.toString().split(".")[1],
                 min_length, max_length,
-                avg_decimals = 0,
+                avg_doubles = 0,
                 abs = 0;
 
             if (percent === 0) {
@@ -1784,22 +1784,22 @@
             }
 
 
-            if (min_decimals) {
-                min_length = min_decimals.length;
-                avg_decimals = min_length;
+            if (min_doubles) {
+                min_length = min_doubles.length;
+                avg_doubles = min_length;
             }
-            if (max_decimals) {
-                max_length = max_decimals.length;
-                avg_decimals = max_length;
+            if (max_doubles) {
+                max_length = max_doubles.length;
+                avg_doubles = max_length;
             }
             if (min_length && max_length) {
-                avg_decimals = (min_length >= max_length) ? min_length : max_length;
+                avg_doubles = (min_length >= max_length) ? min_length : max_length;
             }
 
             if (min < 0) {
                 abs = Math.abs(min);
-                min = +(min + abs).toFixed(avg_decimals);
-                max = +(max + abs).toFixed(avg_decimals);
+                min = +(min + abs).toFixed(avg_doubles);
+                max = +(max + abs).toFixed(avg_doubles);
             }
 
             var number = ((max - min) / 100 * percent) + min,

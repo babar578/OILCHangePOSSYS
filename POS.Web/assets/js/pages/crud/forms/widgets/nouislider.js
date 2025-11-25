@@ -16,7 +16,7 @@ var KTnoUiSliderDemos = function() {
                 'max': [ 10 ]
             },
             format: wNumb({
-                decimals: 0 
+                doubles: 0 
             })
         });
 
@@ -45,7 +45,7 @@ var KTnoUiSliderDemos = function() {
                 'max': [ 80000 ]
             },
             format: wNumb({
-                decimals: 3,
+                doubles: 3,
                 thousand: '.',
                 postfix: ' (US $)',
             })
@@ -71,7 +71,7 @@ var KTnoUiSliderDemos = function() {
             start: [20, 80],
             connect: true,
             direction: 'rtl',
-            tooltips: [true, wNumb({ decimals: 1 })],
+            tooltips: [true, wNumb({ doubles: 1 })],
             range: {
                 'min': [0],
                 '10%': [10, 10],
@@ -216,7 +216,7 @@ var KTnoUiSliderDemos = function() {
                 'max': [ 10 ]
             },
             format: wNumb({
-                decimals: 0 
+                doubles: 0 
             })
         });
 
@@ -244,7 +244,7 @@ var KTnoUiSliderDemos = function() {
                 'max': [ 80000 ]
             },
             format: wNumb({
-                decimals: 3,
+                doubles: 3,
                 thousand: '.',
                 postfix: ' (US $)',
             })
@@ -269,7 +269,7 @@ var KTnoUiSliderDemos = function() {
             start: [20, 80],
             connect: true,
             direction: 'rtl',
-            tooltips: [true, wNumb({ decimals: 1 })],
+            tooltips: [true, wNumb({ doubles: 1 })],
             range: {
                 'min': [0],
                 '10%': [10, 10],

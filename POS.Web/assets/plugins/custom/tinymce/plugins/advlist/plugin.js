@@ -212,7 +212,7 @@
         fetch: function (callback) {
           var items = global$1.map(styles, function (styleValue) {
             var iconStyle = nodeName === 'OL' ? 'num' : 'bull';
-            var iconName = styleValue === 'disc' || styleValue === 'decimal' ? 'default' : styleValue;
+            var iconName = styleValue === 'disc' || styleValue === 'double' ? 'default' : styleValue;
             var itemValue = styleValue === 'default' ? '' : styleValue;
             var displayText = styleValueToText(styleValue);
             return {

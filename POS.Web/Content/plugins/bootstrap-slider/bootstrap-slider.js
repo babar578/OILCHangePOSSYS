@@ -1721,7 +1721,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 			},
 			_adjustPercentageForRangeSliders: function _adjustPercentageForRangeSliders(percentage) {
 				if (this.options.range) {
-					var precision = this._getNumDigitsAfterDecimalPlace(percentage);
+					var precision = this._getNumDigitsAfterdoublePlace(percentage);
 					precision = precision ? precision - 1 : 0;
 					var percentageWithAdjustedPrecision = this._applyToFixedAndParseFloat(percentage, precision);
 					if (this._state.dragged === 0 && this._applyToFixedAndParseFloat(this._state.percentage[1], precision) < percentageWithAdjustedPrecision) {
@@ -1816,10 +1816,10 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 			},
 
 			_applyPrecision: function _applyPrecision(val) {
-				var precision = this.options.precision || this._getNumDigitsAfterDecimalPlace(this.options.step);
+				var precision = this.options.precision || this._getNumDigitsAfterdoublePlace(this.options.step);
 				return this._applyToFixedAndParseFloat(val, precision);
 			},
-			_getNumDigitsAfterDecimalPlace: function _getNumDigitsAfterDecimalPlace(num) {
+			_getNumDigitsAfterdoublePlace: function _getNumDigitsAfterdoublePlace(num) {
 				var match = ('' + num).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
 				if (!match) {
 					return 0;
@@ -1832,7 +1832,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 			},
 			/*
    	Credits to Mike Samuel for the following method!
-   	Source: http://stackoverflow.com/questions/10454518/javascript-how-to-retrieve-the-number-of-decimals-of-a-string-number
+   	Source: http://stackoverflow.com/questions/10454518/javascript-how-to-retrieve-the-number-of-doubles-of-a-string-number
    */
 			_getPercentage: function _getPercentage(ev) {
 				if (this.touchCapable && (ev.type === 'touchstart' || ev.type === 'touchmove' || ev.type === 'touchend')) {

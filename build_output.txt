@@ -1,0 +1,18 @@
+﻿  Determining projects to restore...
+  Nothing to do. None of the projects specified contain packages to restore.
+d:\shahazadoil+Software\Software\POS.Web\POS.Web.csproj(6966,3): error MSB4019: The imported project "C:\Program Files\dotnet\sdk\9.0.300\Microsoft\VisualStudio\v17.0\WebApplications\Microsoft.WebApplication.targets" was not found. Confirm that the expression in the Import declaration "$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets", which evaluated to "C:\Program Files\dotnet\sdk\9.0.300\Microsoft\VisualStudio\v17.0\WebApplications\Microsoft.WebApplication.targets", is correct, and that the file exists on disk.
+  POS.Reporting -> d:\shahazadoil+Software\Software\POS.Reporting\bin\Debug\POS.Reporting.dll
+  POS.Database -> d:\shahazadoil+Software\Software\POS.Database\bin\Debug\POS.Database.dll
+C:\Program Files\dotnet\sdk\9.0.300\Microsoft.Common.CurrentVersion.targets(2434,5): warning MSB3245: Could not resolve this reference. Could not locate the assembly "CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL". Check to make sure the assembly exists on disk. If this reference is required by your code, you may get compilation errors. [d:\shahazadoil+Software\Software\POS.Utilities\POS.Utilities.csproj]
+  POS.Utilities -> d:\shahazadoil+Software\Software\POS.Utilities\bin\Debug\POS.Utilities.dll
+
+Build FAILED.
+
+C:\Program Files\dotnet\sdk\9.0.300\Microsoft.Common.CurrentVersion.targets(2434,5): warning MSB3245: Could not resolve this reference. Could not locate the assembly "CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL". Check to make sure the assembly exists on disk. If this reference is required by your code, you may get compilation errors. [d:\shahazadoil+Software\Software\POS.Utilities\POS.Utilities.csproj]
+d:\shahazadoil+Software\Software\POS.Web\POS.Web.csproj(6966,3): error MSB4019: The imported project "C:\Program Files\dotnet\sdk\9.0.300\Microsoft\VisualStudio\v17.0\WebApplications\Microsoft.WebApplication.targets" was not found. Confirm that the expression in the Import declaration "$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets", which evaluated to "C:\Program Files\dotnet\sdk\9.0.300\Microsoft\VisualStudio\v17.0\WebApplications\Microsoft.WebApplication.targets", is correct, and that the file exists on disk.
+    1 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:05.94
+
+Workload updates are available. Run `dotnet workload list` for more information.

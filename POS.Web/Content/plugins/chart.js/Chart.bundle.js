@@ -5240,7 +5240,7 @@ var controller_bubble = core_datasetController.extend({
 		var data = me.getDataset().data[index];
 		var dsIndex = me.index;
 
-		var x = reset ? xScale.getPixelForDecimal(0.5) : xScale.getPixelForValue(typeof data === 'object' ? data : NaN, index, dsIndex);
+		var x = reset ? xScale.getPixelFordouble(0.5) : xScale.getPixelForValue(typeof data === 'object' ? data : NaN, index, dsIndex);
 		var y = reset ? yScale.getBasePixel() : yScale.getPixelForValue(data, index, dsIndex);
 
 		point._xScale = xScale;
@@ -9781,9 +9781,9 @@ helpers$1.extend(Chart.prototype, /** @lends Chart */ {
 				render: function(chart, animationObject) {
 					var easingFunction = helpers$1.easing.effects[animationObject.easing];
 					var currentStep = animationObject.currentStep;
-					var stepDecimal = currentStep / animationObject.numSteps;
+					var stepdouble = currentStep / animationObject.numSteps;
 
-					chart.draw(easingFunction(stepDecimal), stepDecimal, currentStep);
+					chart.draw(easingFunction(stepdouble), stepdouble, currentStep);
 				},
 
 				onAnimationProgress: animationOptions.onProgress,
@@ -10386,13 +10386,13 @@ var core_helpers = function() {
 	};
 
 	/**
-	 * Returns the number of decimal places
-	 * i.e. the number of digits after the decimal point, of the value of this Number.
+	 * Returns the number of double places
+	 * i.e. the number of digits after the double point, of the value of this Number.
 	 * @param {number} x - A number.
-	 * @returns {number} The number of decimal places.
+	 * @returns {number} The number of double places.
 	 * @private
 	 */
-	helpers$1._decimalPlaces = function(x) {
+	helpers$1._doublePlaces = function(x) {
 		if (!helpers$1.isFinite(x)) {
 			return;
 		}
@@ -11045,7 +11045,7 @@ var core_ticks = {
 			// If we have lots of ticks, don't use the ones
 			var delta = ticks.length > 3 ? ticks[2] - ticks[1] : ticks[1] - ticks[0];
 
-			// If we have a number like 2.5 as the delta, figure out how many decimal places we need
+			// If we have a number like 2.5 as the delta, figure out how many double places we need
 			if (Math.abs(delta) > 1) {
 				if (tickValue !== Math.floor(tickValue)) {
 					// not an integer
@@ -11064,12 +11064,12 @@ var core_ticks = {
 					numExponential = Math.max(Math.min(numExponential, 20), 0);
 					tickString = tickValue.toExponential(numExponential);
 				} else {
-					var numDecimal = -1 * Math.floor(logDelta);
-					numDecimal = Math.max(Math.min(numDecimal, 20), 0); // toFixed has a max of 20 decimal places
-					tickString = tickValue.toFixed(numDecimal);
+					var numdouble = -1 * Math.floor(logDelta);
+					numdouble = Math.max(Math.min(numdouble, 20), 0); // toFixed has a max of 20 double places
+					tickString = tickValue.toFixed(numdouble);
 				}
 			} else {
-				tickString = '0'; // never show decimal places for 0
+				tickString = '0'; // never show double places for 0
 			}
 
 			return tickString;
@@ -11993,26 +11993,26 @@ var Scale = core_element.extend({
 
 		return index < 0 || index > numTicks - 1
 			? null
-			: me.getPixelForDecimal(index * tickWidth + (offset ? tickWidth / 2 : 0));
+			: me.getPixelFordouble(index * tickWidth + (offset ? tickWidth / 2 : 0));
 	},
 
 	/**
 	 * Utility for getting the pixel location of a percentage of scale
 	 * The coordinate (0, 0) is at the upper-left corner of the canvas
 	 */
-	getPixelForDecimal: function(decimal) {
+	getPixelFordouble: function(double) {
 		var me = this;
 
 		if (me._reversePixels) {
-			decimal = 1 - decimal;
+			double = 1 - double;
 		}
 
-		return me._startPixel + decimal * me._length;
+		return me._startPixel + double * me._length;
 	},
 
-	getDecimalForPixel: function(pixel) {
-		var decimal = (pixel - this._startPixel) / this._length;
-		return this._reversePixels ? 1 - decimal : decimal;
+	getdoubleForPixel: function(pixel) {
+		var double = (pixel - this._startPixel) / this._length;
+		return this._reversePixels ? 1 - double : double;
 	},
 
 	/**
@@ -12628,7 +12628,7 @@ var scale_category = core_scale.extend({
 				index = value;
 			}
 		}
-		return me.getPixelForDecimal((index - me._startValue) / me._valueRange);
+		return me.getPixelFordouble((index - me._startValue) / me._valueRange);
 	},
 
 	getPixelForTick: function(index) {
@@ -12640,7 +12640,7 @@ var scale_category = core_scale.extend({
 
 	getValueForPixel: function(pixel) {
 		var me = this;
-		var value = Math.round(me._startValue + me.getDecimalForPixel(pixel) * me._valueRange);
+		var value = Math.round(me._startValue + me.getdoubleForPixel(pixel) * me._valueRange);
 		return Math.min(Math.max(value, 0), me.ticks.length - 1);
 	},
 
@@ -12694,9 +12694,9 @@ function generateTicks(generationOptions, dataRange) {
 
 	if (stepSize || isNullOrUndef$2(precision)) {
 		// If a precision is not specified, calculate factor based on spacing
-		factor = Math.pow(10, helpers$1._decimalPlaces(spacing));
+		factor = Math.pow(10, helpers$1._doublePlaces(spacing));
 	} else {
-		// If the user specified a precision, round to that number of decimal places
+		// If the user specified a precision, round to that number of double places
 		factor = Math.pow(10, precision);
 		spacing = Math.ceil(spacing * factor) / factor;
 	}
@@ -13046,11 +13046,11 @@ var scale_linear = scale_linearbase.extend({
 	// Utils
 	getPixelForValue: function(value) {
 		var me = this;
-		return me.getPixelForDecimal((+me.getRightValue(value) - me._startValue) / me._valueRange);
+		return me.getPixelFordouble((+me.getRightValue(value) - me._startValue) / me._valueRange);
 	},
 
 	getValueForPixel: function(pixel) {
-		return this._startValue + this.getDecimalForPixel(pixel) * this._valueRange;
+		return this._startValue + this.getdoubleForPixel(pixel) * this._valueRange;
 	},
 
 	getPixelForTick: function(index) {
@@ -13346,22 +13346,22 @@ var scale_logarithmic = core_scale.extend({
 
 	getPixelForValue: function(value) {
 		var me = this;
-		var decimal = 0;
+		var double = 0;
 
 		value = +me.getRightValue(value);
 
 		if (value > me.min && value > 0) {
-			decimal = (log10(value) - me._startValue) / me._valueRange + me._valueOffset;
+			double = (log10(value) - me._startValue) / me._valueRange + me._valueOffset;
 		}
-		return me.getPixelForDecimal(decimal);
+		return me.getPixelFordouble(double);
 	},
 
 	getValueForPixel: function(pixel) {
 		var me = this;
-		var decimal = me.getDecimalForPixel(pixel);
-		return decimal === 0 && me.min === 0
+		var double = me.getdoubleForPixel(pixel);
+		return double === 0 && me.min === 0
 			? 0
-			: Math.pow(10, me._startValue + (decimal - me._valueOffset) * me._valueRange);
+			: Math.pow(10, me._startValue + (double - me._valueOffset) * me._valueRange);
 	}
 });
 
@@ -14010,7 +14010,7 @@ function getMax(options) {
 /**
  * Returns an array of {time, pos} objects used to interpolate a specific `time` or position
  * (`pos`) on the scale, by searching entries before and after the requested value. `pos` is
- * a decimal between 0 and 1: 0 being the start of the scale (left or top) and 1 the other
+ * a double between 0 and 1: 0 being the start of the scale (left or top) and 1 the other
  * extremity (left + width or top + height). Note that it would be more optimized to directly
  * store pre-computed pixels, but the scale dimensions are not guaranteed at the time we need
  * to create the lookup table. The table ALWAYS contains at least two items: min and max.
@@ -14592,7 +14592,7 @@ var scale_time = core_scale.extend({
 		var me = this;
 		var offsets = me._offsets;
 		var pos = interpolate$1(me._table, 'time', time, 'pos');
-		return me.getPixelForDecimal((offsets.start + pos) * offsets.factor);
+		return me.getPixelFordouble((offsets.start + pos) * offsets.factor);
 	},
 
 	getPixelForValue: function(value, index, datasetIndex) {
@@ -14622,7 +14622,7 @@ var scale_time = core_scale.extend({
 	getValueForPixel: function(pixel) {
 		var me = this;
 		var offsets = me._offsets;
-		var pos = me.getDecimalForPixel(pixel) / offsets.factor - offsets.end;
+		var pos = me.getdoubleForPixel(pixel) / offsets.factor - offsets.end;
 		var time = interpolate$1(me._table, 'pos', pos, 'time');
 
 		// DEPRECATION, we should return time directly
@@ -17411,14 +17411,14 @@ var moment = createCommonjsModule(function (module, exports) {
             }
         }
 
-        var unitHasDecimal = false;
+        var unitHasdouble = false;
         for (var i = 0; i < ordering.length; ++i) {
             if (m[ordering[i]]) {
-                if (unitHasDecimal) {
+                if (unitHasdouble) {
                     return false; // only allow non-integers for smallest unit
                 }
                 if (parseFloat(m[ordering[i]]) !== toInt(m[ordering[i]])) {
-                    unitHasDecimal = true;
+                    unitHasdouble = true;
                 }
             }
         }
@@ -17707,7 +17707,7 @@ var moment = createCommonjsModule(function (module, exports) {
     var aspNetRegex = /^(\-|\+)?(?:(\d*)[. ])?(\d+)\:(\d+)(?:\:(\d+)(\.\d*)?)?$/;
 
     // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
-    // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
+    // somewhat more in line with 4.4.3.2 2004 spec, but allows double anywhere
     // and further modified to allow for strings containing both week and day
     var isoRegex = /^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/;
 
@@ -17740,7 +17740,7 @@ var moment = createCommonjsModule(function (module, exports) {
                 h  : toInt(match[HOUR])                         * sign,
                 m  : toInt(match[MINUTE])                       * sign,
                 s  : toInt(match[SECOND])                       * sign,
-                ms : toInt(absRound(match[MILLISECOND] * 1000)) * sign // the millisecond decimal point is included in the match
+                ms : toInt(absRound(match[MILLISECOND] * 1000)) * sign // the millisecond double point is included in the match
             };
         } else if (!!(match = isoRegex.exec(input))) {
             sign = (match[1] === '-') ? -1 : 1;

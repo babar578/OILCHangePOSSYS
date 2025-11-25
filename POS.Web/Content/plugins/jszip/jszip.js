@@ -421,7 +421,7 @@ var crc32 = require('../crc32');
 var signature = require('../signature');
 
 /**
- * Transform an integer into a string in hexadecimal.
+ * Transform an integer into a string in hexadouble.
  * @private
  * @param {number} dec the number to convert.
  * @param {number} bytes the number of bytes to generate.

@@ -583,7 +583,7 @@ var ColorItem = function () {
     }
 
     /**
-     * Sets the alpha value. It will be rounded to 2 decimals.
+     * Sets the alpha value. It will be rounded to 2 doubles.
      *
      * @param {int} value Float from 0.0 to 1.0
      */
@@ -808,7 +808,7 @@ var ColorItem = function () {
     }
 
     /**
-     * Converts the color to a Hexadecimal string
+     * Converts the color to a Hexadouble string
      *
      * @returns {String}
      */
@@ -959,7 +959,7 @@ var ColorItem = function () {
      */
     ,
     set: function set(value) {
-      // 2 decimals max
+      // 2 doubles max
       this._color = this._color.alpha(Math.round(value * 100) / 100);
     }
   }, {
@@ -1005,7 +1005,7 @@ var ColorItem = function () {
     }
 
     /**
-     * Sanitizes a color string, adding missing hash to hexadecimal colors
+     * Sanitizes a color string, adding missing hash to hexadouble colors
      * and converting 'transparent' to a color code.
      *
      * @param {String|*} str Color string
@@ -1033,7 +1033,7 @@ var ColorItem = function () {
     }
 
     /**
-     * Detects if a value is a string and a color in hexadecimal format (in any variant).
+     * Detects if a value is a string and a color in hexadouble format (in any variant).
      *
      * @param {String} str
      * @example ColorItem.isHex('rgba(0,0,0)'); // false
@@ -1249,9 +1249,9 @@ exports.default = {
    */
   autoInputFallback: true,
   /**
-   * If true a hash will be prepended to hexadecimal colors.
+   * If true a hash will be prepended to hexadouble colors.
    * If false, the hash will be removed.
-   * This only affects the input values in hexadecimal format.
+   * This only affects the input values in hexadouble format.
    *
    * @type {boolean}
    * @default true

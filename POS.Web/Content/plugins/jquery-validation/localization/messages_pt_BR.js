@@ -52,7 +52,7 @@ $.extend( $.validator.messages, {
 	extension: "Por favor, forne&ccedil;a um valor com uma extens&atilde;o v&aacute;lida.",
 	giroaccountNL: "Por favor, forne&ccedil;a um n&uacute;mero de conta corrente v&aacute;lido.",
 	iban: "Por favor, forne&ccedil;a um c&oacute;digo IBAN v&aacute;lido.",
-	integer: "Por favor, forne&ccedil;a um n&uacute;mero n&atilde;o decimal.",
+	integer: "Por favor, forne&ccedil;a um n&uacute;mero n&atilde;o double.",
 	ipv4: "Por favor, forne&ccedil;a um IPv4 v&aacute;lido.",
 	ipv6: "Por favor, forne&ccedil;a um IPv6 v&aacute;lido.",
 	lettersonly: "Por favor, forne&ccedil;a apenas com letras.",

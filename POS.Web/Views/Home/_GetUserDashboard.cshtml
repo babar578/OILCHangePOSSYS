@@ -4,291 +4,861 @@
 @{
     Layout = null;
     var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
-    var checkShopStatus = UserServices.CheckShopOpenStatus();
     var date = DateTime.Now;
-    var dateto = date.Date;
-    var dashboard = DashboardServices.GetDashboard(dateto);
+    var fromDate = date.Date;
+    var toDate = date.Date;
+    
+    var dashboard01 = DashboardServices.GetDashboard01(fromDate, toDate);
+    var dashboard02 = DashboardServices.GetDashboard02(fromDate, toDate);
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="60" />
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            background-color: #f4f6f9;
-            font-size: 16px; /* Base readable font size */
-        }
+<style>
+    /* Dashboard Specific Styles */
+    .dashboard-view-content {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        padding-bottom: 80px; /* Space for bottom nav */
+    }
 
-        .small-box {
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
+    /* Main Content */
+    .dashboard-main-content {
+        flex: 1;
+        padding: 20px;
+    }
 
-            .small-box:hover {
-                transform: translateY(-5px);
-            }
+    /* Dashboard Stats */
+    .dashboard-stats {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
 
-            .small-box .inner h3 {
-                font-size: 2rem;
-                font-weight: 600;
-                color: #fff;
-            }
+    .stats-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
 
-            .small-box .inner p {
-                font-size: 1.1rem;
-                color: #fff;
-            }
+    .stats-header h2 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+    }
 
-            .small-box .icon i {
-                font-size: 2.5rem;
-                color: rgba(255, 255, 255, 0.85);
-            }
+    .date-selector {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-        .card-header h5 {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 20px;
+    }
 
-        .bg-gradient-info {
-            background: linear-gradient(135deg, #17a2b8, #138496);
-        }
+    .stat-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+    }
 
-        .bg-gradient-success {
-            background: linear-gradient(135deg, #28a745, #218838);
-        }
+    .stat-box.blue {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    }
 
-        .bg-gradient-danger {
-            background: linear-gradient(135deg, #dc3545, #bd2130);
-        }
+    .stat-box.green {
+        background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    }
 
-        .bg-gradient-warning {
-            background: linear-gradient(135deg, #ffc107, #e0a800);
-            color: #000;
-        }
+    .stat-box.orange {
+        background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    }
 
-        .bg-gradient-dark {
-            background: linear-gradient(135deg, #343a40, #1d2124);
-        }
+    .stat-box.red {
+        background: linear-gradient(135deg, #dc3545 0%, #bd2130 100%);
+    }
 
-        .bg-gradient-gray {
-            background: linear-gradient(135deg, #6c757d, #5a6268);
-        }
-    </style>
-</head>
-<body>
-    @if (user.UserTypeId == 1 || user.UserTypeId == 2 || (user.UserTypeId == 3 && checkShopStatus))
-    {
-        if (dashboard != null)
-        {
-            <section class="content mt-4 animate__animated animate__fadeIn">
-                <div class="container-fluid">
-                    <div class="row g-4">
-                        <div class="col-md-3">
-                            <a href="/Home/AllOrders">
-                                <div class="small-box bg-gradient-info text-white p-3">
-                                    <div class="inner">
-                                        <h3>@dashboard.TotalCloseOrders</h3>
-                                        <p>Customer Orders History</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="/Home/OpenOrders">
-                                <div class="small-box bg-gradient-success text-white p-3">
-                                    <div class="inner">
-                                        <h3>@dashboard.TotalOpenOrders</h3>
-                                        <p>Total Open Orders</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fas fa-cart-plus"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="/Home/DraftOrders">
-                                <div class="small-box bg-gradient-danger text-white p-3">
-                                    <div class="inner">
-                                        <h3>@dashboard.TotalDraftOrders</h3>
-                                        <p>Total Draft Orders</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fas fa-shopping-bag"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-3">
-                            <a href="/Home/POS">
-                                <div class="small-box bg-gradient-warning text-dark p-3">
-                                    <div class="inner">
-                                        <h3>-</h3>
-                                        <p>POS Panel</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fas fa-desktop"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+    .stat-box h3 {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+
+    .stat-box p {
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .action-btn {
+        background: #4a90e2;
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .action-btn:hover {
+        background: #357abd;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .action-btn i {
+        font-size: 24px;
+    }
+
+    /* Vital Stats */
+    .vital-stats {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .vital-stats h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .vital-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+
+    .vital-item {
+        padding: 15px;
+        border-left: 4px solid #4a90e2;
+        background: #f8f9fa;
+        border-radius: 5px;
+    }
+
+    .vital-item.orange {
+        border-left-color: #ff9800;
+    }
+
+    .vital-item.green {
+        border-left-color: #28a745;
+    }
+
+    .vital-item h4 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin: 5px 0;
+    }
+
+    .vital-item p {
+        font-size: 14px;
+        color: #666;
+    }
+
+    /* Business Insights & Activity */
+    .insights-activity {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .insights-box,
+    .activity-box {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .insights-box h3,
+    .activity-box h3 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .chart-container {
+        height: 300px;
+        position: relative;
+    }
+
+    /* Analysis Sections */
+    .analysis-section {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .analysis-section h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #4a90e2;
+    }
+
+    .analysis-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+    }
+
+    .analysis-chart {
+        height: 250px;
+    }
+
+    .analysis-metrics {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .metric-item {
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 5px;
+    }
+
+    .metric-item h4 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .metric-item p {
+        font-size: 14px;
+        color: #666;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #1e3a5f;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 999;
+    }
+
+    .bottom-nav-item {
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: all 0.3s;
+    }
+
+    .bottom-nav-item:hover,
+    .bottom-nav-item.active {
+        background: rgba(255,255,255,0.1);
+    }
+
+    .bottom-nav-item i {
+        display: block;
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+
+    /* Modal Styles */
+    .modal-header {
+        background: #1e3a5f;
+        color: white;
+    }
+    .modal-title {
+        font-weight: 600;
+    }
+    .close {
+        color: white;
+        opacity: 0.8;
+    }
+    .close:hover {
+        opacity: 1;
+    }
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+    .summary-row:last-child {
+        border-bottom: none;
+    }
+    .summary-label {
+        font-weight: 500;
+        color: #555;
+    }
+    .summary-value {
+        font-weight: bold;
+        color: #333;
+    }
+    .profit-positive {
+        color: #28a745;
+    }
+    .profit-negative {
+        color: #dc3545;
+    }
+</style>
+
+<div class="dashboard-view-content">
+    <!-- Main Content -->
+    <div class="dashboard-main-content">
+        
+        <!-- Dashboard Stats -->
+        <div class="dashboard-stats">
+            <div class="stats-header">
+                <h2><i class="fas fa-chart-pie"></i> Dashboard Overview</h2>
+                <div class="date-selector">
+                    <select id="dateFilter" style="padding: 8px 15px; border: 1px solid #ddd; border-radius: 5px;">
+                        <option>Today</option>
+                        <option>Yesterday</option>
+                        <option>Last 7 Days</option>
+                        <option>Last 30 Days</option>
+                    </select>
+                    <button style="background: #4a90e2; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box blue">
+                    <p>GROSS SALE</p>
+                    <h3>@(dashboard01?.TotalNetSales.ToString("N2") ?? "0.00")</h3>
+                </div>
+                <div class="stat-box green">
+                    <p>NO. OF INVOICES</p>
+                    <h3>@(dashboard01?.NoOfInvoices ?? 0)</h3>
+                </div>
+                <div class="stat-box orange">
+                    <p>AMOUNT RECEIVED</p>
+                    <h3>@(dashboard01?.AmountReceived.ToString("N2") ?? "0.00")</h3>
+                </div>
+                <div class="stat-box red">
+                    <p>TOTAL EXPENSES</p>
+                    <h3>@(dashboard01?.TotalExpenses.ToString("N2") ?? "0.00")</h3>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button class="action-btn" onclick="location.href='/Home/POS'">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>New Invoice</span>
+                </button>
+                <button class="action-btn" onclick="location.href='/Quotations/Quotations'">
+                    <i class="fas fa-file-alt"></i>
+                    <span>New Quotation</span>
+                </button>
+                <button class="action-btn" onclick="location.href='/Inventory/VendorToWarehouse'">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Add Purchase</span>
+                </button>
+                <button class="action-btn" onclick="location.href='/Expense/Expenses'">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Add Expense</span>
+                </button>
+                <button class="action-btn" onclick="location.href='/Vendor/Customers'">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Add Customer</span>
+                </button>
+                <button class="action-btn" onclick="openDailyReminder()">
+                    <i class="fas fa-bell"></i>
+                    <span>Daily Reminder</span>
+                </button>
+                <button class="action-btn" onclick="openDailySummary()">
+                    <i class="fas fa-calendar-day"></i>
+                    <span>Daily Summary</span>
+                </button>
+                <button class="action-btn" onclick="openProfitReport()">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Profit Report</span>
+                </button>
+                <button class="action-btn" style="background: #28a745;" onclick="location.href='/Home/POS'">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Payment In</span>
+                </button>
+                <button class="action-btn" style="background: #dc3545;" onclick="location.href='/Vendor/VendorPayments'">
+                    <i class="fas fa-minus-circle"></i>
+                    <span>Payment Out</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Vital Stats & Insights -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+            <div class="vital-stats">
+                <h3>VITAL STATS</h3>
+                <div class="vital-grid">
+                    <div class="vital-item orange">
+                        <p>Amount Outstanding</p>
+                        <h4>0.00</h4>
                     </div>
-
-                    <div class="row g-4 mt-2">
-                        <div class="col-md-3">
-                            <div class="small-box bg-gradient-info text-white p-3">
-                                <div class="inner">
-                                    <h3>@dashboard.TOTALBILL</h3>
-                                    <p>Today Bill</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-file-invoice-dollar"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="small-box bg-gradient-success text-white p-3">
-                                <div class="inner">
-                                    <h3>@dashboard.TotalNetAmount</h3>
-                                    <p>Today Sales</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-cash-register"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="small-box bg-gradient-danger text-white p-3">
-                                <div class="inner">
-                                    <h3>@dashboard.DiscountCharged</h3>
-                                    <p>Today Discount</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-percent"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="small-box bg-gradient-warning text-dark p-3">
-                                <div class="inner">
-                                    <h3>@dashboard.ServiceCharged</h3>
-                                    <p>Today Service Charged</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-tools"></i>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="vital-item green">
+                        <p>Unpaid Invoices</p>
+                        <h4>@(dashboard01?.NoOfUnpaidInvoices ?? 0)</h4>
                     </div>
-
-                    <div class="row g-4 mt-2">
-                        @foreach (var p in ItemServices.GetAllFloors() ?? new List<POS.Utilities.ViewModel.FloorViewModel>())
-                        {
-                            <div class="col-md-3">
-                                <a href="/Menu/Tables/@p.Id">
-                                    <div class="small-box bg-gradient-gray text-white p-3">
-                                        <div class="inner">
-                                            <h3>@DashboardServices.GetTotalTablesByFloor(p.Id)</h3>
-                                            <p>@p.Name Floor Tables</p>
-                                        </div>
-                                        <div class="icon">
-                                            <i class="fas fa-table"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        }
-                        <div class="col-md-3">
-                            <a href="#">
-                                <div class="small-box bg-gradient-dark text-white p-3">
-                                    <div class="inner">
-                                        <h3>@dashboard.TotalItems</h3>
-                                        <p>Total Items</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="fas fa-boxes"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                    <div class="vital-item green">
+                        <p>Unpaid Purchases</p>
+                        <h4>0</h4>
                     </div>
-
-                    <!-- Charts Section -->
-                    <div class="row g-4 mt-4">
-                        <div class="col-md-6">
-                            <div class="card shadow">
-                                <div class="card-header bg-primary text-white">
-                                    <h5 class="mb-0">Sales Overview</h5>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="barChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card shadow">
-                                <div class="card-header bg-danger text-white">
-                                    <h5 class="mb-0">Order Distribution</h5>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="pieChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="vital-item orange">
+                        <p>Overdue Invoices</p>
+                        <h4>0</h4>
+                    </div>
+                    <div class="vital-item orange">
+                        <p>Open Quotation</p>
+                        <h4>0</h4>
+                    </div>
+                    <div class="vital-item green">
+                        <p>Staff Present Today</p>
+                        <h4>0</h4>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <script>
-                const barCtx = document.getElementById('barChart');
-                new Chart(barCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Closed', 'Open', 'Draft'],
-                        datasets: [{
-                            label: 'Orders',
-                            data: [@dashboard.TotalCloseOrders, @dashboard.TotalOpenOrders, @dashboard.TotalDraftOrders],
-                            backgroundColor: ['#17a2b8', '#28a745', '#dc3545']
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
+            <div class="insights-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3>BUSINESS INSIGHTS</h3>
+                    <div style="display: flex; gap: 10px;">
+                        <select style="padding: 5px; border: 1px solid #ddd; border-radius: 5px;">
+                            <option>Paid, Overdue, Due Invoices Distribu</option>
+                        </select>
+                        <select style="padding: 5px; border: 1px solid #ddd; border-radius: 5px;">
+                            <option>Last 30 days</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="businessInsightsChart"></canvas>
+                </div>
+            </div>
+        </div>
 
-                const pieCtx = document.getElementById('pieChart');
-                new Chart(pieCtx, {
-                    type: 'pie',
-                    data: {
-                        labels: ['Discount', 'Service Charged', 'Net Amount'],
-                        datasets: [{
-                            data: [@dashboard.DiscountCharged, @dashboard.ServiceCharged, @dashboard.TotalNetAmount],
-                            backgroundColor: ['#dc3545', '#ffc107', '#28a745']
-                        }]
-                    },
-                    options: {
-                        responsive: true
-                    }
-                });
-            </script>
-        }
+        <!-- Activity Graph -->
+        <div class="activity-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <div style="display: flex; gap: 10px;">
+                    <button style="padding: 8px 15px; background: #4a90e2; color: white; border: none; border-radius: 5px;">Recent Activity</button>
+                    <button style="padding: 8px 15px; background: #f8f9fa; color: #333; border: none; border-radius: 5px;">Customer Due</button>
+                    <button style="padding: 8px 15px; background: #f8f9fa; color: #333; border: none; border-radius: 5px;">Supplier Due</button>
+                    <button style="padding: 8px 15px; background: #f8f9fa; color: #333; border: none; border-radius: 5px;">Amount Received</button>
+                    <button style="padding: 8px 15px; background: #f8f9fa; color: #333; border: none; border-radius: 5px;">Amount Paid</button>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <select style="padding: 5px; border: 1px solid #ddd; border-radius: 5px;">
+                        <option>All</option>
+                    </select>
+                    <select style="padding: 5px; border: 1px solid #ddd; border-radius: 5px;">
+                        <option>Last 30 days</option>
+                    </select>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="activityChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Analysis Sections -->
+        <div class="analysis-section">
+            <h3 style="border-bottom-color: #28a745;">SALE ANALYSIS</h3>
+            <div class="analysis-content">
+                <div class="analysis-chart">
+                    <canvas id="saleAnalysisChart"></canvas>
+                </div>
+                <div class="analysis-metrics">
+                    <div class="metric-item">
+                        <h4>No. of Invoices</h4>
+                        <p>@(dashboard02?.NoOfInvoices ?? 0) (@(dashboard02?.AvgInvoicesPerDay.ToString("N2") ?? "0.00")%)</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Avg. Invoices Per Day</h4>
+                        <p>@(dashboard02?.AvgInvoicesPerDay.ToString("N2") ?? "0.00") (@(dashboard02?.AvgInvoicesPerDay.ToString("N2") ?? "0.00")%)</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Total Invoice Value</h4>
+                        <p>@(dashboard02?.TotalInvoicesVal.ToString("N2") ?? "0.00") (@(dashboard02?.AvgInvoiceValePerDay.ToString("N2") ?? "0.00")%)</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Avg. Invoice Value Per Day</h4>
+                        <p>@(dashboard02?.AvgInvoiceValePerDay.ToString("N2") ?? "0.00") (@(dashboard02?.AvgInvoiceValePerDay.ToString("N2") ?? "0.00")%)</p>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size: 12px; color: #666; margin-top: 10px;">*based on last 90 days data and compared with previous 90 days data</p>
+        </div>
+
+        <div class="analysis-section">
+            <h3 style="border-bottom-color: #4a90e2;">PURCHASE ANALYSIS</h3>
+            <div class="analysis-content">
+                <div class="analysis-chart">
+                    <canvas id="purchaseAnalysisChart"></canvas>
+                </div>
+                <div class="analysis-metrics">
+                    <div class="metric-item">
+                        <h4>No. of Purchases</h4>
+                        <p>@(dashboard02?.NoOfPurchase ?? 0) (@(dashboard02?.AvgPurchasePerDay.ToString("N2") ?? "0.00")%)</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Avg. Purchases Per Day</h4>
+                        <p>@(dashboard02?.AvgPurchasePerDay.ToString("N2") ?? "0.00") (@(dashboard02?.AvgPurchasePerDay.ToString("N2") ?? "0.00")%)</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Total Purchase Value</h4>
+                        <p>@(dashboard02?.TotalPurchaseVal.ToString("N2") ?? "0.00") (@(dashboard02?.AvgPurchaseValePerDay.ToString("N2") ?? "0.00")%)</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Avg. Purchase Value Per Day</h4>
+                        <p>@(dashboard02?.AvgPurchaseValePerDay.ToString("N2") ?? "0.00") (@(dashboard02?.AvgPurchaseValePerDay.ToString("N2") ?? "0.00")%)</p>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size: 12px; color: #666; margin-top: 10px;">*based on last 90 days data and compared with previous 90 days data</p>
+        </div>
+
+        <div class="analysis-section">
+            <h3 style="border-bottom-color: #dc3545;">EXPENSE ANALYSIS</h3>
+            <div class="analysis-content">
+                <div class="analysis-chart">
+                    <canvas id="expenseAnalysisChart"></canvas>
+                </div>
+                <div class="analysis-metrics">
+                    <div class="metric-item">
+                        <h4>No. of Expenses</h4>
+                        <p>@(dashboard02?.NoOfExpenses ?? 0) (@(dashboard02?.AvgExpensePerDay.ToString("N2") ?? "0.00")%)</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Avg. Expenses Per Day</h4>
+                        <p>@(dashboard02?.AvgExpensePerDay.ToString("N2") ?? "0.00") (@(dashboard02?.AvgExpensePerDay.ToString("N2") ?? "0.00")%)</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Total Expense Value</h4>
+                        <p>@(dashboard02?.TotalExpenseVal.ToString("N2") ?? "0.00") (@(dashboard02?.AvgExpensValePerDay.ToString("N2") ?? "0.00")%)</p>
+                    </div>
+                    <div class="metric-item">
+                        <h4>Avg. Expense Value Per Day</h4>
+                        <p>@(dashboard02?.AvgExpensValePerDay.ToString("N2") ?? "0.00") (@(dashboard02?.AvgExpensValePerDay.ToString("N2") ?? "0.00")%)</p>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size: 12px; color: #666; margin-top: 10px;">*based on last 90 days data and compared with previous 90 days data</p>
+        </div>
+    </div>
+</div>
+
+<!-- Bottom Navigation (Hidden) -->
+<div class="bottom-nav" style="display: none;">
+    <div class="bottom-nav-item" onclick="openDailySummary()">
+        <i class="fas fa-calendar-day"></i>
+        <span>Daily Summary</span>
+    </div>
+    <div class="bottom-nav-item" onclick="openProfitReport()">
+        <i class="fas fa-chart-line"></i>
+        <span>Profit Report</span>
+    </div>
+    <div class="bottom-nav-item" onclick="openDailyReminder()">
+        <i class="fas fa-bell"></i>
+        <span>Daily Reminder</span>
+    </div>
+    <div class="bottom-nav-item">
+        <i class="fas fa-box"></i>
+        <span>Stock Summary</span>
+    </div>
+</div>
+
+<!-- Daily Summary Modal -->
+<div class="modal fade" id="dailySummaryModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Daily Summary (@DateTime.Now.ToString("dd MMM yyyy"))</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="dailySummaryContent">
+                    <div class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Profit Report Modal -->
+<div class="modal fade" id="profitReportModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Profit Report (Cash Flow)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="profitReportContent">
+                    <div class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Daily Reminder Modal -->
+<div class="modal fade" id="dailyReminderModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Daily Reminders</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>No new reminders for today.</p>
+                <!-- Add dynamic content here later -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Modal Functions
+    function openDailySummary() {
+        $('#dailySummaryModal').modal('show');
+        fetchDailySummary();
     }
-</body>
-</html>
+
+    function openProfitReport() {
+        $('#profitReportModal').modal('show');
+        fetchProfitReport();
+    }
+
+    function openDailyReminder() {
+        $('#dailyReminderModal').modal('show');
+    }
+
+    // Fetch Data
+    function fetchDailySummary() {
+        $.ajax({
+            url: '/Home/GetDailySummary',
+            type: 'GET',
+            success: function (data) {
+                if (data.error) {
+                    $('#dailySummaryContent').html('<div class="text-danger">' + data.error + '</div>');
+                    return;
+                }
+                var html = `
+                    <div class="summary-row">
+                        <span class="summary-label">Total Sales:</span>
+                        <span class="summary-value">${data.TotalSales.toFixed(2)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Cash Sales:</span>
+                        <span class="summary-value text-success">${data.CashSales.toFixed(2)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Credit Sales:</span>
+                        <span class="summary-value text-warning">${data.CreditSales.toFixed(2)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Total Expenses:</span>
+                        <span class="summary-value text-danger">${data.TotalExpenses.toFixed(2)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Total Purchases:</span>
+                        <span class="summary-value text-info">${data.TotalPurchases.toFixed(2)}</span>
+                    </div>
+                    <hr>
+                    <div class="summary-row">
+                        <span class="summary-label" style="font-size: 1.1em;">Net Cash In Hand:</span>
+                        <span class="summary-value ${data.NetCashInHand >= 0 ? 'text-success' : 'text-danger'}" style="font-size: 1.1em;">${data.NetCashInHand.toFixed(2)}</span>
+                    </div>
+                `;
+                $('#dailySummaryContent').html(html);
+            },
+            error: function () {
+                $('#dailySummaryContent').html('<div class="text-danger">Failed to load data.</div>');
+            }
+        });
+    }
+
+    function fetchProfitReport() {
+        $.ajax({
+            url: '/Home/GetProfitReport',
+            type: 'GET',
+            success: function (data) {
+                if (data.error) {
+                    $('#profitReportContent').html('<div class="text-danger">' + data.error + '</div>');
+                    return;
+                }
+                var html = `
+                    <div class="summary-row">
+                        <span class="summary-label">Total Revenue:</span>
+                        <span class="summary-value">${data.TotalRevenue.toFixed(2)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Total Cost of Goods (Purchases):</span>
+                        <span class="summary-value text-danger">- ${data.TotalCostOfGoods.toFixed(2)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Gross Profit:</span>
+                        <span class="summary-value">${data.GrossProfit.toFixed(2)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Total Expenses:</span>
+                        <span class="summary-value text-danger">- ${data.TotalExpenses.toFixed(2)}</span>
+                    </div>
+                    <hr>
+                    <div class="summary-row">
+                        <span class="summary-label" style="font-size: 1.2em;">Net Profit:</span>
+                        <span class="summary-value ${data.NetProfit >= 0 ? 'text-success' : 'text-danger'}" style="font-size: 1.2em;">${data.NetProfit.toFixed(2)}</span>
+                    </div>
+                `;
+                $('#profitReportContent').html(html);
+            },
+            error: function () {
+                $('#profitReportContent').html('<div class="text-danger">Failed to load data.</div>');
+            }
+        });
+    }
+
+    // Chart configurations
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    };
+
+    // Initialize Charts (Keep existing logic or update as needed)
+    // ... (Charts initialization code remains similar but ensure IDs match)
+    const businessInsightsCtx = document.getElementById('businessInsightsChart');
+    if (businessInsightsCtx) {
+        new Chart(businessInsightsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Paid', 'Overdue', 'Due'],
+                datasets: [{
+                    data: [0, 0, 0],
+                    backgroundColor: ['#28a745', '#dc3545', '#ffc107']
+                }]
+            },
+            options: chartOptions
+        });
+    }
+
+    const activityCtx = document.getElementById('activityChart');
+    if (activityCtx) {
+        new Chart(activityCtx, {
+            type: 'line',
+            data: {
+                labels: ['19 Oct', '20 Oct', '21 Oct', '22 Oct', '23 Oct', '24 Oct', '25 Oct'],
+                datasets: [{
+                    label: 'Activity',
+                    data: [0, 0, 0, 0, 0, 0, 0],
+                    borderColor: '#4a90e2',
+                    backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: chartOptions
+        });
+    }
+
+    const saleAnalysisCtx = document.getElementById('saleAnalysisChart');
+    if (saleAnalysisCtx) {
+        new Chart(saleAnalysisCtx, {
+            type: 'line',
+            data: {
+                labels: ['15', '30', '45', '60', '75', '90'],
+                datasets: [{
+                    label: 'Amount',
+                    data: [0, 0, 0, 0, 0, 0],
+                    borderColor: '#28a745',
+                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                    pointRadius: 5,
+                    pointBackgroundColor: '#28a745',
+                    tension: 0.4
+                }]
+            },
+            options: chartOptions
+        });
+    }
+
+    const purchaseAnalysisCtx = document.getElementById('purchaseAnalysisChart');
+    if (purchaseAnalysisCtx) {
+        new Chart(purchaseAnalysisCtx, {
+            type: 'line',
+            data: {
+                labels: ['15', '30', '45', '60', '75', '90'],
+                datasets: [{
+                    label: 'Amount',
+                    data: [0, 0, 0, 0, 0, 0],
+                    borderColor: '#4a90e2',
+                    backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                    pointRadius: 5,
+                    pointBackgroundColor: '#4a90e2',
+                    tension: 0.4
+                }]
+            },
+            options: chartOptions
+        });
+    }
+
+    const expenseAnalysisCtx = document.getElementById('expenseAnalysisChart');
+    if (expenseAnalysisCtx) {
+        new Chart(expenseAnalysisCtx, {
+            type: 'line',
+            data: {
+                labels: ['15', '30', '45', '60', '75', '90'],
+                datasets: [{
+                    label: 'Amount',
+                    data: [0, 0, 0, 0, 0, 0],
+                    borderColor: '#dc3545',
+                    backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                    pointRadius: 5,
+                    pointBackgroundColor: '#dc3545',
+                    tension: 0.4
+                }]
+            },
+            options: chartOptions
+        });
+    }
+</script>

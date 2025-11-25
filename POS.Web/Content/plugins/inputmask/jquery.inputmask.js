@@ -2149,8 +2149,8 @@
             opts.repeat = 0, opts.groupSeparator === opts.radixPoint && opts.digits && "0" !== opts.digits && ("." === opts.radixPoint ? opts.groupSeparator = "," : "," === opts.radixPoint ? opts.groupSeparator = "." : opts.groupSeparator = ""), 
             " " === opts.groupSeparator && (opts.skipOptionalPartCharacter = void 0), 1 < opts.placeholder.length && (opts.placeholder = opts.placeholder.charAt(0)), 
             "radixFocus" === opts.positionCaretOnClick && "" === opts.placeholder && (opts.positionCaretOnClick = "lvp");
-            var decimalDef = "0", radixPointDef = opts.radixPoint;
-            !0 === opts.numericInput && void 0 === opts.__financeInput ? (decimalDef = "1", 
+            var doubleDef = "0", radixPointDef = opts.radixPoint;
+            !0 === opts.numericInput && void 0 === opts.__financeInput ? (doubleDef = "1", 
             opts.positionCaretOnClick = "radixFocus" === opts.positionCaretOnClick ? "lvp" : opts.positionCaretOnClick, 
             opts.digitsOptional = !1, isNaN(opts.digits) && (opts.digits = 2), opts._radixDance = !1, 
             radixPointDef = "," === opts.radixPoint ? "?" : "!", "" !== opts.radixPoint && void 0 === opts.definitions[radixPointDef] && (opts.definitions[radixPointDef] = {}, 
@@ -2164,8 +2164,8 @@
             opts.definitions[opts.groupSeparator].generated = !0), mask += opts._mask(opts)) : mask += "9{+}", 
             void 0 !== opts.digits && 0 !== opts.digits) {
                 var dq = opts.digits.toString().split(",");
-                isFinite(dq[0]) && dq[1] && isFinite(dq[1]) ? mask += radixPointDef + decimalDef + "{" + opts.digits + "}" : (isNaN(opts.digits) || 0 < parseInt(opts.digits)) && (opts.digitsOptional ? (altMask = mask + radixPointDef + decimalDef + "{0," + opts.digits + "}", 
-                opts.keepStatic = !0) : mask += radixPointDef + decimalDef + "{" + opts.digits + "}");
+                isFinite(dq[0]) && dq[1] && isFinite(dq[1]) ? mask += radixPointDef + doubleDef + "{" + opts.digits + "}" : (isNaN(opts.digits) || 0 < parseInt(opts.digits)) && (opts.digitsOptional ? (altMask = mask + radixPointDef + doubleDef + "{0," + opts.digits + "}", 
+                opts.keepStatic = !0) : mask += radixPointDef + doubleDef + "{" + opts.digits + "}");
             }
             return mask += autoEscape(opts.suffix, opts), mask += "[-]", altMask && (mask = [ altMask + autoEscape(opts.suffix, opts) + "[-]", mask ]), 
             opts.greedy = !1, parseMinMaxOptions(opts), mask;
@@ -2174,7 +2174,7 @@
             return opts._radixDance && opts.numericInput && c !== opts.negationSymbol.back && pos <= radixPos && (0 < radixPos || c == opts.radixPoint) && (void 0 === maskset.validPositions[pos - 1] || maskset.validPositions[pos - 1].input !== opts.negationSymbol.back) && (pos -= 1), 
             pos;
         }
-        function decimalValidator(chrs, maskset, pos, strict, opts) {
+        function doubleValidator(chrs, maskset, pos, strict, opts) {
             var radixPos = maskset.buffer ? maskset.buffer.indexOf(opts.radixPoint) : -1, result = -1 !== radixPos && new RegExp("[0-9\uff11-\uff19]").test(chrs);
             return opts._radixDance && result && null == maskset.validPositions[radixPos] ? {
                 insert: {
@@ -2227,10 +2227,10 @@
                 skipOptionalPartCharacter: "",
                 definitions: {
                     0: {
-                        validator: decimalValidator
+                        validator: doubleValidator
                     },
                     1: {
-                        validator: decimalValidator,
+                        validator: doubleValidator,
                         definitionSymbol: "9"
                     },
                     "+": {
@@ -2341,11 +2341,11 @@
                 onBeforeMask: function onBeforeMask(initialValue, opts) {
                     var radixPoint = opts.radixPoint || ",";
                     isFinite(opts.digits) && (opts.digits = parseInt(opts.digits)), "number" != typeof initialValue && "number" !== opts.inputType || "" === radixPoint || (initialValue = initialValue.toString().replace(".", radixPoint));
-                    var valueParts = initialValue.split(radixPoint), integerPart = valueParts[0].replace(/[^\-0-9]/g, ""), decimalPart = 1 < valueParts.length ? valueParts[1].replace(/[^0-9]/g, "") : "", forceDigits = 1 < valueParts.length;
-                    initialValue = integerPart + ("" !== decimalPart ? radixPoint + decimalPart : decimalPart);
+                    var valueParts = initialValue.split(radixPoint), integerPart = valueParts[0].replace(/[^\-0-9]/g, ""), doublePart = 1 < valueParts.length ? valueParts[1].replace(/[^0-9]/g, "") : "", forceDigits = 1 < valueParts.length;
+                    initialValue = integerPart + ("" !== doublePart ? radixPoint + doublePart : doublePart);
                     var digits = 0;
-                    if ("" !== radixPoint && (digits = opts.digitsOptional ? opts.digits < decimalPart.length ? opts.digits : decimalPart.length : opts.digits, 
-                    "" !== decimalPart || !opts.digitsOptional)) {
+                    if ("" !== radixPoint && (digits = opts.digitsOptional ? opts.digits < doublePart.length ? opts.digits : doublePart.length : opts.digits, 
+                    "" !== doublePart || !opts.digitsOptional)) {
                         var digitsFactor = Math.pow(10, digits || 1);
                         initialValue = initialValue.replace(Inputmask.escapeRegex(radixPoint), "."), isNaN(parseFloat(initialValue)) || (initialValue = (opts.roundingFN(parseFloat(initialValue) * digitsFactor) / digitsFactor).toFixed(digits)), 
                         initialValue = initialValue.toString().replace(".", radixPoint);
@@ -2443,7 +2443,7 @@
                 digits: 2,
                 digitsOptional: !1
             },
-            decimal: {
+            double: {
                 alias: "numeric"
             },
             integer: {

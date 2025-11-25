@@ -33,8 +33,8 @@ var KTInputmask = function () {
             "greedy": false
         }); // ~ mask "9" or mask "99" or ... mask "9999999999"
         
-        // decimal format
-        $("#kt_inputmask_6").inputmask('decimal', {
+        // double format
+        $("#kt_inputmask_6").inputmask('double', {
             rightAlignNumerics: false
         }); 
         

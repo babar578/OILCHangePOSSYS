@@ -1603,7 +1603,7 @@ function flip(data, options) {
     var popperOffsets = data.offsets.popper;
     var refOffsets = data.offsets.reference;
 
-    // using floor because the reference offsets may contain decimals we are not going to consider here
+    // using floor because the reference offsets may contain doubles we are not going to consider here
     var floor = Math.floor;
     var overlapsRef = placement === 'left' && floor(popperOffsets.right) > floor(refOffsets.left) || placement === 'right' && floor(popperOffsets.left) < floor(refOffsets.right) || placement === 'top' && floor(popperOffsets.bottom) > floor(refOffsets.top) || placement === 'bottom' && floor(popperOffsets.top) < floor(refOffsets.bottom);
 

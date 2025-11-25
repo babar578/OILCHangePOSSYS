@@ -17873,10 +17873,10 @@
         'in': 4,
         '%': 4
       };
-      var maxDecimal = function (unit) {
+      var maxdouble = function (unit) {
         return unit in unitDec ? unitDec[unit] : 1;
       };
-      var numText = size.value.toFixed(maxDecimal(size.unit));
+      var numText = size.value.toFixed(maxdouble(size.unit));
       if (numText.indexOf('.') !== -1) {
         numText = numText.replace(/\.?0*$/, '');
       }

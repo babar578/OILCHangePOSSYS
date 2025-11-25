@@ -40,7 +40,7 @@ $.extend( $.validator.messages, {
 	maxWords:  $.validator.format( "Indtast venligst højst {0} ord" ),
 	step: $.validator.format( "Angiv en værdi gange {0}." ),
 	notEqualTo: "Angiv en anden værdi, værdierne må ikke være det samme.",
-	integer: "Angiv et ikke-decimaltal, der er positivt eller negativt."
+	integer: "Angiv et ikke-doubletal, der er positivt eller negativt."
 } );
 return $;
 }));

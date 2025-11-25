@@ -1,5 +1,6 @@
-﻿//using CrystalDecisions.CrystalReports.Engine;
+//using CrystalDecisions.CrystalReports.Engine;
 using Newtonsoft.Json;
+//using POS.Database.DatabaseModel;
 using POS.Utilities;
 using POS.Utilities.Services;
 using POS.Utilities.Utilities;
@@ -12,15 +13,13 @@ using System.Net;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Diagnostics;
+using System.Data.SqlClient;
+using POS.Database.DatabaseModel;
 
 namespace POS.Web.Controllers
 {
@@ -744,6 +743,7 @@ namespace POS.Web.Controllers
                     }
 
                     order.InvoiceNumber = Convert.ToString(inviceNo);
+              
                     order.CreationDate = DateTime.Now;
                     order.ModifyDate = DateTime.Now;
                     order = OrderServices.AddOrder(order, CartItems);
@@ -1022,8 +1022,6 @@ namespace POS.Web.Controllers
                     //Set message text which you want to send
                     String messageText = $"Hello {CustomerName.CustomerName},\r\nDate:{DateTime.Now}.\r\nCar No:{CustomerName.CarNumber}\r\n,Current Reading:{order.Tip}.\r\nThanks for choosing SHAHZAD OIL STORE CENTRAL PARK.";
                     //String messageText = "📜 یوم اقبال مبارک ہو!\r\n\r\n📚 \"خودی کر بولنا، کی ہار قسمت کے ہے،\r\n\"خود رب سے پوچھو، بتاؤ تمہارا راز کیا ہے؟\"\r\n\r\n\r\nشہزاد آئل سٹور سنٹرل پارک لاہور";
-                    //Provide msisdn list to whom you want to send messages for multiple set value as
-                    //92345xxxxxxx,92345xxxxxxx
                     String to = CustomerName.Mobile;
                     //Set mask value if you want to send from specific mask
                     String mask = "Shahzad Oil";
@@ -1182,6 +1180,119 @@ namespace POS.Web.Controllers
                 ex.Message.ToString();
             }
             return Json(message);
+        }
+
+        /// <summary>
+        /// Sends SMS reminders to customers for oil change service based on their last order date and number of days
+        /// This method is called automatically once per day via Hangfire scheduler
+        /// </summary>
+        public static void SendOilChangeReminderSMS()
+        {
+            try
+            {
+                List<CustomerReminderViewModel> customersToRemind = new List<CustomerReminderViewModel>();
+
+                // Execute the SQL query to get customers who need reminders today
+                using (POSEntities context = new POSEntities())
+                {
+                    string sqlQuery = @"
+                        WITH LatestOrders AS (
+                            SELECT 
+                                o.Id, o.InvoiceNumber, CONVERT(DATE,o.CreationDate) AS CreationDate,
+                                o.NoOfGuest AS CustomerID, c.CustomerName, c.CarNumber, c.Mobile,
+                                CASE WHEN CONVERT(INT, c.CNIC) > 100 THEN 0 ELSE CONVERT(INT, c.CNIC) END AS NoOfDays,
+                                ROW_NUMBER() OVER (PARTITION BY o.NoOfGuest ORDER BY o.CreationDate DESC) AS rn
+                            FROM Orders o
+                            INNER JOIN Customer c ON c.Id = o.NoOfGuest
+                            WHERE TRY_CONVERT(BIGINT, c.CNIC) IS NOT NULL
+                            AND CASE WHEN CONVERT(INT, c.CNIC) > 100 THEN 0 ELSE CONVERT(INT, c.CNIC) END > 0
+                        )
+                        SELECT 
+                            Id, InvoiceNumber, CreationDate,
+                            CustomerID, CustomerName, CarNumber, Mobile, NoOfDays,
+                            CONVERT(DATE,DATEADD(DAY,NoOfDays,CreationDate)) AS ActionDate
+                        FROM LatestOrders
+                        WHERE rn = 1 and Mobile Like '923114343115'
+                        AND CONVERT(DATE,DATEADD(DAY,NoOfDays,CreationDate)) = CONVERT(DATE,GETDATE())
+                        ORDER BY CreationDate DESC";
+
+                    customersToRemind = context.Database.SqlQuery<CustomerReminderViewModel>(sqlQuery).ToList();
+                }
+
+                // Send SMS to each customer
+                if (customersToRemind != null && customersToRemind.Count > 0)
+                {
+                    // SMS credentials
+                    String userName = "923428513077";
+                    String password = "1122334455667788Babar";
+                    String mask = "Shahzad Oil";
+                    
+                    QuickMessage smsClient = new QuickMessage(userName, password);
+                    String sessionId = smsClient.getSessionId();
+
+                    if (sessionId != null)
+                    {
+                        foreach (var customer in customersToRemind)
+                        {
+                            try
+                            {
+                                // Create reminder message
+                                String messageText = $"Hello {customer.CustomerName},\r\n" +
+                                    $"Your car ({customer.CarNumber}) is due for oil change service.\r\n" +
+                                    $"Last service date: {customer.CreationDate:dd/MM/yyyy}\r\n" +
+                                    $"Please visit SHAHZAD OIL STORE CENTRAL PARK for your next service.\r\n" +
+                                    $"Thank you!";
+
+                                // Send SMS
+                                if (!string.IsNullOrEmpty(customer.Mobile))
+                                {
+                                    String messageIds = smsClient.sendQuickMessage(sessionId, messageText, customer.Mobile, mask);
+                                    // Log success (you can add logging here if needed)
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                // Log error for individual customer (you can add logging here)
+                                System.Diagnostics.Debug.WriteLine($"Error sending SMS to {customer.CustomerName}: {ex.Message}");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log error (you can add proper logging here)
+                System.Diagnostics.Debug.WriteLine($"Error in SendOilChangeReminderSMS: {ex.Message}");
+            }
+        }
+        [HttpGet]
+        public JsonResult GetDailySummary()
+        {
+            try
+            {
+                var result = DashboardServices.GetDailySummary(DateTime.Now);
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetProfitReport(DateTime? fromDate, DateTime? toDate)
+        {
+            try
+            {
+                var from = fromDate ?? DateTime.Now.Date;
+                var to = toDate ?? DateTime.Now.Date;
+                var result = DashboardServices.GetProfitReport(from, to);
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
         #endregion
     }

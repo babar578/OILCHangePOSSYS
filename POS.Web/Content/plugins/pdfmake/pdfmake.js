@@ -22323,7 +22323,7 @@ var parse = function parse(path) {
   var ret = [];
   var args = [];
   var curArg = '';
-  var foundDecimal = false;
+  var founddouble = false;
   var params = 0;
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
@@ -22348,11 +22348,11 @@ var parse = function parse(path) {
           };
           args = [];
           curArg = '';
-          foundDecimal = false;
+          founddouble = false;
         }
 
         cmd = c;
-      } else if ([' ', ','].includes(c) || c === '-' && curArg.length > 0 && curArg[curArg.length - 1] !== 'e' || c === '.' && foundDecimal) {
+      } else if ([' ', ','].includes(c) || c === '-' && curArg.length > 0 && curArg[curArg.length - 1] !== 'e' || c === '.' && founddouble) {
         if (curArg.length === 0) {
           continue;
         }
@@ -22376,14 +22376,14 @@ var parse = function parse(path) {
           args[args.length] = +curArg;
         }
 
-        foundDecimal = c === '.'; // fix for negative numbers or repeated decimals with no delimeter between commands
+        founddouble = c === '.'; // fix for negative numbers or repeated doubles with no delimeter between commands
 
         curArg = ['-', '.'].includes(c) ? c : '';
       } else {
         curArg += c;
 
         if (c === '.') {
-          foundDecimal = true;
+          founddouble = true;
         }
       }
     } // add the last command
@@ -35337,11 +35337,11 @@ module.exports = {
 
 	    var HexFormatter = C_format.Hex = {
 	        /**
-	         * Converts the ciphertext of a cipher params object to a hexadecimally encoded string.
+	         * Converts the ciphertext of a cipher params object to a hexadoublely encoded string.
 	         *
 	         * @param {CipherParams} cipherParams The cipher params object.
 	         *
-	         * @return {string} The hexadecimally encoded string.
+	         * @return {string} The hexadoublely encoded string.
 	         *
 	         * @static
 	         *
@@ -35354,9 +35354,9 @@ module.exports = {
 	        },
 
 	        /**
-	         * Converts a hexadecimally encoded ciphertext string to a cipher params object.
+	         * Converts a hexadoublely encoded ciphertext string to a cipher params object.
 	         *
-	         * @param {string} input The hexadecimally encoded string.
+	         * @param {string} input The hexadoublely encoded string.
 	         *
 	         * @return {CipherParams} The cipher params object.
 	         *
@@ -62547,7 +62547,7 @@ DocMeasure.prototype.buildOrderedMarker = function (counter, styleStack, type, s
 		return roman;
 	}
 
-	function prepareDecimal(counter) {
+	function preparedouble(counter) {
 		return counter.toString();
 	}
 
@@ -62573,9 +62573,9 @@ DocMeasure.prototype.buildOrderedMarker = function (counter, styleStack, type, s
 			counterText = prepareRoman(counter).toLowerCase();
 			break;
 
-		case 'decimal':
+		case 'double':
 		default:
-			counterText = prepareDecimal(counter);
+			counterText = preparedouble(counter);
 			break;
 	}
 
@@ -62632,7 +62632,7 @@ DocMeasure.prototype.measureUnorderedList = function (node) {
 DocMeasure.prototype.measureOrderedList = function (node) {
 	var style = this.styleStack.clone();
 	var items = node.ol;
-	node.type = node.type || 'decimal';
+	node.type = node.type || 'double';
 	node.separator = node.separator || '.';
 	node.reversed = node.reversed || false;
 	if (!isNumber(node.start)) {

@@ -2722,14 +2722,14 @@
             }
         }
 
-        var unitHasDecimal = false;
+        var unitHasdouble = false;
         for (var i = 0; i < ordering.length; ++i) {
             if (m[ordering[i]]) {
-                if (unitHasDecimal) {
+                if (unitHasdouble) {
                     return false; // only allow non-integers for smallest unit
                 }
                 if (parseFloat(m[ordering[i]]) !== toInt(m[ordering[i]])) {
-                    unitHasDecimal = true;
+                    unitHasdouble = true;
                 }
             }
         }
@@ -3018,7 +3018,7 @@
     var aspNetRegex = /^(\-|\+)?(?:(\d*)[. ])?(\d+)\:(\d+)(?:\:(\d+)(\.\d*)?)?$/;
 
     // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
-    // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
+    // somewhat more in line with 4.4.3.2 2004 spec, but allows double anywhere
     // and further modified to allow for strings containing both week and day
     var isoRegex = /^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/;
 
@@ -3051,7 +3051,7 @@
                 h  : toInt(match[HOUR])                         * sign,
                 m  : toInt(match[MINUTE])                       * sign,
                 s  : toInt(match[SECOND])                       * sign,
-                ms : toInt(absRound(match[MILLISECOND] * 1000)) * sign // the millisecond decimal point is included in the match
+                ms : toInt(absRound(match[MILLISECOND] * 1000)) * sign // the millisecond double point is included in the match
             };
         } else if (!!(match = isoRegex.exec(input))) {
             sign = (match[1] === '-') ? -1 : 1;

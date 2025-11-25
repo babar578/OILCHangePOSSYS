@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -138,60 +138,6 @@
     <Compile Include="Services\UserServices.cs" />
     <Compile Include="Services\VendorServices.cs" />
     <Compile Include="Utilities\CartUtility.cs" />
-    <Compile Include="Utilities\AsciiControlChars.cs" />
-    <Compile Include="Utilities\InvoicePrinter.cs" />
-    <Compile Include="Utilities\NativeMethods.cs" />
-    <Compile Include="Utilities\NetworkHelper.cs" />
-    <Compile Include="Utilities\PosExtensions.cs" />
-    <Compile Include="Utilities\PrintHelper.cs" />
-    <Compile Include="Utilities\PrintReport.cs" />
-    <Compile Include="Utilities\Seeder.cs" />
-    <Compile Include="Utilities\Utility.cs" />
-    <Compile Include="Utilities\WebUtil.cs" />
-    <Compile Include="ViewModel\CartItemViewModel.cs" />
-    <Compile Include="ViewModel\CartViewModel.cs" />
-    <Compile Include="ViewModel\CategoryViewModel.cs" />
-    <Compile Include="ViewModel\CompanyViewModel.cs" />
-    <Compile Include="ViewModel\CityViewModel.cs" />
-    <Compile Include="ViewModel\ClosingInventoryDetailViewModel.cs" />
-    <Compile Include="ViewModel\ClosingInventoryHeadViewModel.cs" />
-    <Compile Include="ViewModel\CompanyInformationViewModel.cs" />
-    <Compile Include="ViewModel\ComsumptionReportViewModel.cs" />
-    <Compile Include="ViewModel\CustomerViewModel.cs" />
-    <Compile Include="ViewModel\CustomerReminderViewModel.cs" />
-    <Compile Include="ViewModel\DailySummaryViewModel.cs" />
-    <Compile Include="ViewModel\DashboardViewModel.cs" />
-    <Compile Include="ViewModel\DashboardDataViewModel.cs" />
-    <Compile Include="ViewModel\DepartmentViewModel.cs" />
-    <Compile Include="ViewModel\DesignationViewModel.cs" />
-    <Compile Include="ViewModel\ExpenseViewModel.cs" />
-    <Compile Include="ViewModel\ExtraSaleViewModel.cs" />
-    <Compile Include="ViewModel\FloorTableViewModel.cs" />
-    <Compile Include="ViewModel\ProfitReportViewModel.cs" />
-    <Compile Include="ViewModel\Fn_ReportWareHouseViewModel.cs" />
-    <Compile Include="ViewModel\GetHistoryCarVoucherViewModel.cs" />
-    <Compile Include="ViewModel\ImageViewModel.cs" />
-    <Compile Include="ViewModel\IssueToLocationDetailViewModel.cs" />
-    <Compile Include="ViewModel\IssueToLocationHeadViewModel.cs" />
-    <Compile Include="ViewModel\ItemGroupViewModel.cs" />
-    <Compile Include="ViewModel\ItemStockViewModel.cs" />
-    <Compile Include="ViewModel\ItemViewModel.cs" />
-    <Compile Include="ViewModel\JobCardViewModelReport.cs" />
-    <Compile Include="ViewModel\LocationViewModel.cs" />
-    <Compile Include="ViewModel\MainMenuViewModel.cs" />
-    <Compile Include="ViewModel\OpeningStockDetailViewModel.cs" />
-    <Compile Include="ViewModel\OpeningStockHeadViewModel.cs" />
-    <Compile Include="ViewModel\OrderFeedbackStatusViewModel.cs" />
-    <Compile Include="ViewModel\OrderFeedbackViewModel.cs" />
-    <Compile Include="ViewModel\OrderItemViewModel.cs" />
-    <Compile Include="ViewModel\OrderTableHistoryViewModel.cs" />
-    <Compile Include="ViewModel\OrderTypeViewModel.cs" />
-    <Compile Include="ViewModel\OrderViewModel.cs" />
-    <Compile Include="ViewModel\PaymentTypeViewModel.cs" />
-    <Compile Include="ViewModel\PrintInfoViewModel.cs" />
-    <Compile Include="ViewModel\ProcessViewModel.cs" />
-    <Compile Include="ViewModel\PurchaseViewModel.cs" />
-    <Compile Include="ViewModel\QuotationDetailViewModel.cs" />
     <Compile Include="ViewModel\QuotationheadViewModel.cs" />
     <Compile Include="ViewModel\QuottionViewModel.cs" />
     <Compile Include="ViewModel\POSOderSaleReportViewModel.cs" />

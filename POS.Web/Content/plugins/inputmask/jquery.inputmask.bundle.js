@@ -3297,7 +3297,7 @@
                         opts.positionCaretOnClick = opts.positionCaretOnClick === "radixFocus" ? "lvp" : opts.positionCaretOnClick;
                         opts.digitsOptional = false;
                         if (isNaN(opts.digits)) opts.digits = 2;
-                        opts.decimalProtect = false;
+                        opts.doubleProtect = false;
                     }
                     var mask = "[+]";
                     mask += autoEscape(opts.prefix, opts);
@@ -3305,7 +3305,7 @@
                         mask += "~{1," + opts.integerDigits + "}";
                     } else mask += "~{" + opts.integerDigits + "}";
                     if (opts.digits !== undefined) {
-                        var radixDef = opts.decimalProtect ? ":" : opts.radixPoint;
+                        var radixDef = opts.doubleProtect ? ":" : opts.radixPoint;
                         var dq = opts.digits.toString().split(",");
                         if (isFinite(dq[0]) && dq[1] && isFinite(dq[1])) {
                             mask += radixDef + ";{" + opts.digits + "}";
@@ -3340,7 +3340,7 @@
                 prefix: "",
                 suffix: "",
                 rightAlign: true,
-                decimalProtect: true,
+                doubleProtect: true,
                 min: null,
                 max: null,
                 step: 1,
@@ -3698,12 +3698,12 @@
                     if ((typeof initialValue == "number" || opts.inputType === "number") && radixPoint !== "") {
                         initialValue = initialValue.toString().replace(".", radixPoint);
                     }
-                    var valueParts = initialValue.split(radixPoint), integerPart = valueParts[0].replace(/[^\-0-9]/g, ""), decimalPart = valueParts.length > 1 ? valueParts[1].replace(/[^0-9]/g, "") : "";
-                    initialValue = integerPart + (decimalPart !== "" ? radixPoint + decimalPart : decimalPart);
+                    var valueParts = initialValue.split(radixPoint), integerPart = valueParts[0].replace(/[^\-0-9]/g, ""), doublePart = valueParts.length > 1 ? valueParts[1].replace(/[^0-9]/g, "") : "";
+                    initialValue = integerPart + (doublePart !== "" ? radixPoint + doublePart : doublePart);
                     var digits = 0;
                     if (radixPoint !== "") {
-                        digits = decimalPart.length;
-                        if (decimalPart !== "") {
+                        digits = doublePart.length;
+                        if (doublePart !== "") {
                             var digitsFactor = Math.pow(10, digits || 1);
                             if (isFinite(opts.digits)) {
                                 digits = parseInt(opts.digits);
@@ -3746,7 +3746,7 @@
                 digitsOptional: false,
                 clearMaskOnLostFocus: false
             },
-            decimal: {
+            double: {
                 alias: "numeric"
             },
             integer: {

@@ -4945,7 +4945,7 @@ Build date: 2019-12-19 16:51:02
   counter-increment: list-0; }
 
 .ql-editor ol li:before {
-  content: counter(list-0, decimal) ". "; }
+  content: counter(list-0, double) ". "; }
 
 .ql-editor ol li.ql-indent-1 {
   counter-increment: list-1; }
@@ -4969,7 +4969,7 @@ Build date: 2019-12-19 16:51:02
   counter-increment: list-3; }
 
 .ql-editor ol li.ql-indent-3:before {
-  content: counter(list-3, decimal) ". "; }
+  content: counter(list-3, double) ". "; }
 
 .ql-editor ol li.ql-indent-3 {
   counter-reset: list-4 list-5 list-6 list-7 list-8 list-9; }
@@ -4996,7 +4996,7 @@ Build date: 2019-12-19 16:51:02
   counter-increment: list-6; }
 
 .ql-editor ol li.ql-indent-6:before {
-  content: counter(list-6, decimal) ". "; }
+  content: counter(list-6, double) ". "; }
 
 .ql-editor ol li.ql-indent-6 {
   counter-reset: list-7 list-8 list-9; }
@@ -5023,7 +5023,7 @@ Build date: 2019-12-19 16:51:02
   counter-increment: list-9; }
 
 .ql-editor ol li.ql-indent-9:before {
-  content: counter(list-9, decimal) ". "; }
+  content: counter(list-9, double) ". "; }
 
 .ql-editor .ql-indent-1:not(.ql-direction-rtl) {
   padding-left: 3em; }

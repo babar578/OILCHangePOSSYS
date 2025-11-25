@@ -383,18 +383,18 @@
 
     return target;
   };
-  var REGEXP_DECIMALS = /\.\d*(?:0|9){12}\d*$/;
+  var REGEXP_doubleS = /\.\d*(?:0|9){12}\d*$/;
   /**
-   * Normalize decimal number.
+   * Normalize double number.
    * Check out {@link http://0.30000000000000004.com/}
    * @param {number} value - The value to normalize.
    * @param {number} [times=100000000000] - The times for normalizing.
    * @returns {number} Returns the normalized number.
    */
 
-  function normalizeDecimalNumber(value) {
+  function normalizedoubleNumber(value) {
     var times = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 100000000000;
-    return REGEXP_DECIMALS.test(value) ? Math.round(value * times) / times : value;
+    return REGEXP_doubleS.test(value) ? Math.round(value * times) / times : value;
   }
   var REGEXP_SUFFIX = /^width|height|left|top|marginLeft|marginTop$/;
   /**
@@ -985,8 +985,8 @@
     var destWidth = Math.min(destMaxSizes.width, Math.max(destMinSizes.width, imageNaturalWidth));
     var destHeight = Math.min(destMaxSizes.height, Math.max(destMinSizes.height, imageNaturalHeight));
     var params = [-destWidth / 2, -destHeight / 2, destWidth, destHeight];
-    canvas.width = normalizeDecimalNumber(width);
-    canvas.height = normalizeDecimalNumber(height);
+    canvas.width = normalizedoubleNumber(width);
+    canvas.height = normalizedoubleNumber(height);
     context.fillStyle = fillColor;
     context.fillRect(0, 0, width, height);
     context.save();
@@ -996,7 +996,7 @@
     context.imageSmoothingEnabled = imageSmoothingEnabled;
     context.imageSmoothingQuality = imageSmoothingQuality;
     context.drawImage.apply(context, [image].concat(_toConsumableArray(params.map(function (param) {
-      return Math.floor(normalizeDecimalNumber(param));
+      return Math.floor(normalizedoubleNumber(param));
     }))));
     context.restore();
     return canvas;
@@ -3068,8 +3068,8 @@
       height = Math.min(maxSizes.height, Math.max(minSizes.height, height));
       var canvas = document.createElement('canvas');
       var context = canvas.getContext('2d');
-      canvas.width = normalizeDecimalNumber(width);
-      canvas.height = normalizeDecimalNumber(height);
+      canvas.width = normalizedoubleNumber(width);
+      canvas.height = normalizedoubleNumber(height);
       context.fillStyle = options.fillColor || 'transparent';
       context.fillRect(0, 0, width, height);
       var _options$imageSmoothi = options.imageSmoothingEnabled,
@@ -3137,7 +3137,7 @@
 
 
       context.drawImage.apply(context, [source].concat(_toConsumableArray(params.map(function (param) {
-        return Math.floor(normalizeDecimalNumber(param));
+        return Math.floor(normalizedoubleNumber(param));
       }))));
       return canvas;
     },

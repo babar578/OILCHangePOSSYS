@@ -22,7 +22,7 @@
  */
 
 /*jslint evil: true, undef: true, browser: true */
-/*globals $,require,jQuery,define,_selector_run,_selector_opts,_selector_first,_selector_row_indexes,_ext,_Api,_api_register,_api_registerPlural,_re_new_lines,_re_html,_re_formatted_numeric,_re_escape_regex,_empty,_intVal,_numToDecimal,_isNumber,_isHtml,_htmlNumeric,_pluck,_pluck_order,_range,_stripHtml,_unique,_fnBuildAjax,_fnAjaxUpdate,_fnAjaxParameters,_fnAjaxUpdateDraw,_fnAjaxDataSrc,_fnAddColumn,_fnColumnOptions,_fnAdjustColumnSizing,_fnVisibleToColumnIndex,_fnColumnIndexToVisible,_fnVisbleColumns,_fnGetColumns,_fnColumnTypes,_fnApplyColumnDefs,_fnHungarianMap,_fnCamelToHungarian,_fnLanguageCompat,_fnBrowserDetect,_fnAddData,_fnAddTr,_fnNodeToDataIndex,_fnNodeToColumnIndex,_fnGetCellData,_fnSetCellData,_fnSplitObjNotation,_fnGetObjectDataFn,_fnSetObjectDataFn,_fnGetDataMaster,_fnClearTable,_fnDeleteIndex,_fnInvalidate,_fnGetRowElements,_fnCreateTr,_fnBuildHead,_fnDrawHead,_fnDraw,_fnReDraw,_fnAddOptionsHtml,_fnDetectHeader,_fnGetUniqueThs,_fnFeatureHtmlFilter,_fnFilterComplete,_fnFilterCustom,_fnFilterColumn,_fnFilter,_fnFilterCreateSearch,_fnEscapeRegex,_fnFilterData,_fnFeatureHtmlInfo,_fnUpdateInfo,_fnInfoMacros,_fnInitialise,_fnInitComplete,_fnLengthChange,_fnFeatureHtmlLength,_fnFeatureHtmlPaginate,_fnPageChange,_fnFeatureHtmlProcessing,_fnProcessingDisplay,_fnFeatureHtmlTable,_fnScrollDraw,_fnApplyToChildren,_fnCalculateColumnWidths,_fnThrottle,_fnConvertToWidth,_fnGetWidestNode,_fnGetMaxLenString,_fnStringToCss,_fnSortFlatten,_fnSort,_fnSortAria,_fnSortListener,_fnSortAttachListener,_fnSortingClasses,_fnSortData,_fnSaveState,_fnLoadState,_fnSettingsFromNode,_fnLog,_fnMap,_fnBindAction,_fnCallbackReg,_fnCallbackFire,_fnLengthOverflow,_fnRenderer,_fnDataSource,_fnRowAttributes*/
+/*globals $,require,jQuery,define,_selector_run,_selector_opts,_selector_first,_selector_row_indexes,_ext,_Api,_api_register,_api_registerPlural,_re_new_lines,_re_html,_re_formatted_numeric,_re_escape_regex,_empty,_intVal,_numTodouble,_isNumber,_isHtml,_htmlNumeric,_pluck,_pluck_order,_range,_stripHtml,_unique,_fnBuildAjax,_fnAjaxUpdate,_fnAjaxParameters,_fnAjaxUpdateDraw,_fnAjaxDataSrc,_fnAddColumn,_fnColumnOptions,_fnAdjustColumnSizing,_fnVisibleToColumnIndex,_fnColumnIndexToVisible,_fnVisbleColumns,_fnGetColumns,_fnColumnTypes,_fnApplyColumnDefs,_fnHungarianMap,_fnCamelToHungarian,_fnLanguageCompat,_fnBrowserDetect,_fnAddData,_fnAddTr,_fnNodeToDataIndex,_fnNodeToColumnIndex,_fnGetCellData,_fnSetCellData,_fnSplitObjNotation,_fnGetObjectDataFn,_fnSetObjectDataFn,_fnGetDataMaster,_fnClearTable,_fnDeleteIndex,_fnInvalidate,_fnGetRowElements,_fnCreateTr,_fnBuildHead,_fnDrawHead,_fnDraw,_fnReDraw,_fnAddOptionsHtml,_fnDetectHeader,_fnGetUniqueThs,_fnFeatureHtmlFilter,_fnFilterComplete,_fnFilterCustom,_fnFilterColumn,_fnFilter,_fnFilterCreateSearch,_fnEscapeRegex,_fnFilterData,_fnFeatureHtmlInfo,_fnUpdateInfo,_fnInfoMacros,_fnInitialise,_fnInitComplete,_fnLengthChange,_fnFeatureHtmlLength,_fnFeatureHtmlPaginate,_fnPageChange,_fnFeatureHtmlProcessing,_fnProcessingDisplay,_fnFeatureHtmlTable,_fnScrollDraw,_fnApplyToChildren,_fnCalculateColumnWidths,_fnThrottle,_fnConvertToWidth,_fnGetWidestNode,_fnGetMaxLenString,_fnStringToCss,_fnSortFlatten,_fnSort,_fnSortAria,_fnSortListener,_fnSortAttachListener,_fnSortingClasses,_fnSortData,_fnSaveState,_fnLoadState,_fnSettingsFromNode,_fnLog,_fnMap,_fnBindAction,_fnCallbackReg,_fnCallbackFire,_fnLengthOverflow,_fnRenderer,_fnDataSource,_fnRowAttributes*/
 
 (function( factory ) {
 	"use strict";
@@ -1370,19 +1370,19 @@
 	};
 	
 	// Convert from a formatted number with characters other than `.` as the
-	// decimal place, to a Javascript number
-	var _numToDecimal = function ( num, decimalPoint ) {
+	// double place, to a Javascript number
+	var _numTodouble = function ( num, doublePoint ) {
 		// Cache created regular expressions for speed as this function is called often
-		if ( ! _re_dic[ decimalPoint ] ) {
-			_re_dic[ decimalPoint ] = new RegExp( _fnEscapeRegex( decimalPoint ), 'g' );
+		if ( ! _re_dic[ doublePoint ] ) {
+			_re_dic[ doublePoint ] = new RegExp( _fnEscapeRegex( doublePoint ), 'g' );
 		}
-		return typeof num === 'string' && decimalPoint !== '.' ?
-			num.replace( /\./g, '' ).replace( _re_dic[ decimalPoint ], '.' ) :
+		return typeof num === 'string' && doublePoint !== '.' ?
+			num.replace( /\./g, '' ).replace( _re_dic[ doublePoint ], '.' ) :
 			num;
 	};
 	
 	
-	var _isNumber = function ( d, decimalPoint, formatted ) {
+	var _isNumber = function ( d, doublePoint, formatted ) {
 		var strType = typeof d === 'string';
 	
 		// If empty return immediately so there must be a number if it is a
@@ -1392,8 +1392,8 @@
 			return true;
 		}
 	
-		if ( decimalPoint && strType ) {
-			d = _numToDecimal( d, decimalPoint );
+		if ( doublePoint && strType ) {
+			d = _numTodouble( d, doublePoint );
 		}
 	
 		if ( formatted && strType ) {
@@ -1410,7 +1410,7 @@
 	};
 	
 	
-	var _htmlNumeric = function ( d, decimalPoint, formatted ) {
+	var _htmlNumeric = function ( d, doublePoint, formatted ) {
 		if ( _empty( d ) ) {
 			return true;
 		}
@@ -1418,7 +1418,7 @@
 		var html = _isHtml( d );
 		return ! html ?
 			null :
-			_isNumber( _stripHtml( d ), decimalPoint, formatted ) ?
+			_isNumber( _stripHtml( d ), doublePoint, formatted ) ?
 				true :
 				null;
 	};
@@ -1736,9 +1736,9 @@
 		var defaults = DataTable.defaults.oLanguage;
 	
 		// Default mapping
-		var defaultDecimal = defaults.sDecimal;
-		if ( defaultDecimal ) {
-			_addNumericSort( defaultDecimal );
+		var defaultdouble = defaults.sdouble;
+		if ( defaultdouble ) {
+			_addNumericSort( defaultdouble );
 		}
 	
 		if ( lang ) {
@@ -1764,9 +1764,9 @@
 				lang.sThousands = lang.sInfoThousands;
 			}
 	
-			var decimal = lang.sDecimal;
-			if ( decimal && defaultDecimal !== decimal ) {
-				_addNumericSort( decimal );
+			var double = lang.sdouble;
+			if ( double && defaultdouble !== double ) {
+				_addNumericSort( double );
 			}
 		}
 	}
@@ -11560,34 +11560,34 @@
 	
 	
 			/**
-			 * This decimal place operator is a little different from the other
+			 * This double place operator is a little different from the other
 			 * language options since DataTables doesn't output floating point
 			 * numbers, so it won't ever use this for display of a number. Rather,
 			 * what this parameter does is modify the sort methods of the table so
 			 * that numbers which are in a format which has a character other than
-			 * a period (`.`) as a decimal place will be sorted numerically.
+			 * a period (`.`) as a double place will be sorted numerically.
 			 *
-			 * Note that numbers with different decimal places cannot be shown in
+			 * Note that numbers with different double places cannot be shown in
 			 * the same table and still be sortable, the table must be consistent.
 			 * However, multiple different tables on the page can use different
-			 * decimal place characters.
+			 * double place characters.
 			 *  @type string
 			 *  @default 
 			 *
 			 *  @dtopt Language
-			 *  @name DataTable.defaults.language.decimal
+			 *  @name DataTable.defaults.language.double
 			 *
 			 *  @example
 			 *    $(document).ready( function() {
 			 *      $('#example').dataTable( {
 			 *        "language": {
-			 *          "decimal": ","
+			 *          "double": ","
 			 *          "thousands": "."
 			 *        }
 			 *      } );
 			 *    } );
 			 */
-			"sDecimal": "",
+			"sdouble": "",
 	
 	
 			/**
@@ -14207,7 +14207,7 @@
 		     *  1. `{*}` Data from the column cell to be analysed
 		     *  2. `{settings}` DataTables settings object. This can be used to
 		     *     perform context specific type detection - for example detection
-		     *     based on language settings such as using a comma for a decimal
+		     *     based on language settings such as using a comma for a double
 		     *     place. Generally speaking the options from the settings will not
 		     *     be required
 			 *
@@ -14673,8 +14673,8 @@
 		// e.g. Date.parse('55') (but not all, e.g. Date.parse('22')...).
 		function ( d, settings )
 		{
-			var decimal = settings.oLanguage.sDecimal;
-			return _isNumber( d, decimal ) ? 'num'+decimal : null;
+			var double = settings.oLanguage.sdouble;
+			return _isNumber( d, double ) ? 'num'+double : null;
 		},
 	
 		// Dates (only those recognised by the browser's Date.parse)
@@ -14693,22 +14693,22 @@
 		// Formatted numbers
 		function ( d, settings )
 		{
-			var decimal = settings.oLanguage.sDecimal;
-			return _isNumber( d, decimal, true ) ? 'num-fmt'+decimal : null;
+			var double = settings.oLanguage.sdouble;
+			return _isNumber( d, double, true ) ? 'num-fmt'+double : null;
 		},
 	
 		// HTML numeric
 		function ( d, settings )
 		{
-			var decimal = settings.oLanguage.sDecimal;
-			return _htmlNumeric( d, decimal ) ? 'html-num'+decimal : null;
+			var double = settings.oLanguage.sdouble;
+			return _htmlNumeric( d, double ) ? 'html-num'+double : null;
 		},
 	
 		// HTML numeric, formatted
 		function ( d, settings )
 		{
-			var decimal = settings.oLanguage.sDecimal;
-			return _htmlNumeric( d, decimal, true ) ? 'html-num-fmt'+decimal : null;
+			var double = settings.oLanguage.sdouble;
+			return _htmlNumeric( d, double, true ) ? 'html-num-fmt'+double : null;
 		},
 	
 		// HTML (this is strict checking - there must be html)
@@ -14725,7 +14725,7 @@
 	// what is required from these methods.
 	// 
 	// Note that additional search methods are added for the html numbers and
-	// html formatted numbers by `_addNumericSort()` when we know what the decimal
+	// html formatted numbers by `_addNumericSort()` when we know what the double
 	// place is
 	
 	
@@ -14751,16 +14751,16 @@
 	
 	
 	
-	var __numericReplace = function ( d, decimalPlace, re1, re2 ) {
+	var __numericReplace = function ( d, doublePlace, re1, re2 ) {
 		if ( d !== 0 && (!d || d === '-') ) {
 			return -Infinity;
 		}
 	
-		// If a decimal place other than `.` is used, it needs to be given to the
+		// If a double place other than `.` is used, it needs to be given to the
 		// function so we can detect it and replace with a `.` which is the only
-		// decimal place Javascript recognises - it is not locale aware.
-		if ( decimalPlace ) {
-			d = _numToDecimal( d, decimalPlace );
+		// double place Javascript recognises - it is not locale aware.
+		if ( doublePlace ) {
+			d = _numTodouble( d, doublePlace );
 		}
 	
 		if ( d.replace ) {
@@ -14779,37 +14779,37 @@
 	
 	// Add the numeric 'deformatting' functions for sorting and search. This is done
 	// in a function to provide an easy ability for the language options to add
-	// additional methods if a non-period decimal place is used.
-	function _addNumericSort ( decimalPlace ) {
+	// additional methods if a non-period double place is used.
+	function _addNumericSort ( doublePlace ) {
 		$.each(
 			{
 				// Plain numbers
 				"num": function ( d ) {
-					return __numericReplace( d, decimalPlace );
+					return __numericReplace( d, doublePlace );
 				},
 	
 				// Formatted numbers
 				"num-fmt": function ( d ) {
-					return __numericReplace( d, decimalPlace, _re_formatted_numeric );
+					return __numericReplace( d, doublePlace, _re_formatted_numeric );
 				},
 	
 				// HTML numeric
 				"html-num": function ( d ) {
-					return __numericReplace( d, decimalPlace, _re_html );
+					return __numericReplace( d, doublePlace, _re_html );
 				},
 	
 				// HTML numeric, formatted
 				"html-num-fmt": function ( d ) {
-					return __numericReplace( d, decimalPlace, _re_html, _re_formatted_numeric );
+					return __numericReplace( d, doublePlace, _re_html, _re_formatted_numeric );
 				}
 			},
 			function ( key, fn ) {
 				// Add the ordering method
-				_ext.type.order[ key+decimalPlace+'-pre' ] = fn;
+				_ext.type.order[ key+doublePlace+'-pre' ] = fn;
 	
 				// For HTML types add a search formatter that will strip the HTML
 				if ( key.match(/^html\-/) ) {
-					_ext.type.search[ key+decimalPlace ] = _ext.type.search.html;
+					_ext.type.search[ key+doublePlace ] = _ext.type.search.html;
 				}
 			}
 		);
@@ -14958,8 +14958,8 @@
 	 *   display, retaining the original unformatted data for sorting and filtering.
 	 *   It takes 5 parameters:
 	 *   * `string` - Thousands grouping separator
-	 *   * `string` - Decimal point indicator
-	 *   * `integer` - Number of decimal points to show
+	 *   * `string` - double point indicator
+	 *   * `integer` - Number of double points to show
 	 *   * `string` (optional) - Prefix.
 	 *   * `string` (optional) - Postfix (/suffix).
 	 * * `text` - Escape HTML to help prevent XSS attacks. It has no optional
@@ -14975,7 +14975,7 @@
 	 * @namespace
 	 */
 	DataTable.render = {
-		number: function ( thousands, decimal, precision, prefix, postfix ) {
+		number: function ( thousands, double, precision, prefix, postfix ) {
 			return {
 				display: function ( d ) {
 					if ( typeof d !== 'number' && typeof d !== 'string' ) {
@@ -14997,7 +14997,7 @@
 	
 					var intPart = parseInt( d, 10 );
 					var floatPart = precision ?
-						decimal+(d - intPart).toFixed( precision ).substring( 2 ):
+						double+(d - intPart).toFixed( precision ).substring( 2 ):
 						'';
 	
 					return negative + (prefix||'') +

@@ -14988,7 +14988,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 		}
 
 		// Since JavaScript has problems with large floats, round
-		// the final value to 5 digits after the decimal point (see #4124)
+		// the final value to 5 digits after the double point (see #4124)
 		return parseFloat( alignValue.toFixed( 5 ) );
 	},
 
@@ -15016,8 +15016,8 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 
 	_precisionOf: function( num ) {
 		var str = num.toString(),
-			decimal = str.indexOf( "." );
-		return decimal === -1 ? 0 : str.length - decimal - 1;
+			double = str.indexOf( "." );
+		return double === -1 ? 0 : str.length - double - 1;
 	},
 
 	_valueMin: function() {
@@ -17077,8 +17077,8 @@ $.widget( "ui.spinner", {
 
 	_precisionOf: function( num ) {
 		var str = num.toString(),
-			decimal = str.indexOf( "." );
-		return decimal === -1 ? 0 : str.length - decimal - 1;
+			double = str.indexOf( "." );
+		return double === -1 ? 0 : str.length - double - 1;
 	},
 
 	_adjustValue: function( value ) {

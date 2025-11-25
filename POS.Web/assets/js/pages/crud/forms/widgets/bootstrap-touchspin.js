@@ -12,7 +12,7 @@ var KTKBootstrapTouchspin = function() {
             min: 0,
             max: 100,
             step: 0.1,
-            decimals: 2,
+            doubles: 2,
             boostat: 5,
             maxboostedstep: 10,
         });
@@ -81,7 +81,7 @@ var KTKBootstrapTouchspin = function() {
             min: 0,
             max: 100,
             step: 0.1,
-            decimals: 2,
+            doubles: 2,
             boostat: 5,
             maxboostedstep: 10,
         });

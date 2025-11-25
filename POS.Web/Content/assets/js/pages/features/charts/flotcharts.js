@@ -212,12 +212,12 @@ var KTFlotchartsDemo = function() {
 			colors: [KTApp.getSettings()['colors']['theme']['base']["primary"], KTApp.getSettings()['colors']['theme']['base']["danger"]],
 			xaxis: {
 				ticks: 11,
-				tickDecimals: 0,
+				tickdoubles: 0,
 				tickColor: "#eee",
 			},
 			yaxis: {
 				ticks: 11,
-				tickDecimals: 0,
+				tickdoubles: 0,
 				tickColor: "#eee",
 			}
 		});
