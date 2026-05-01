@@ -1,4 +1,5 @@
 ﻿using POS.Database.DatabaseModel;
+using POS.Utilities.MultiTenant;
 using POS.Utilities.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace POS.Utilities.Services
             model.returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     Order entity = (Order)model;
                     context.Orders.Add(entity);
@@ -43,7 +44,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     if (cartItems?.Count > 0)
                     {
@@ -84,7 +85,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     OrderTableHistory entity = new OrderTableHistory
                     {
@@ -108,7 +109,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
 
                     var find = GetOrderById(OrderId ?? 0);
@@ -163,7 +164,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
 
                     var find = GetOrderById(OrderId ?? 0);
@@ -196,7 +197,7 @@ namespace POS.Utilities.Services
             OrderViewModel returnValue = new OrderViewModel();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from Orders where Id={orderId}";
                     returnValue = context.Database.SqlQuery<Order>(SQL).SingleOrDefault();
@@ -214,7 +215,7 @@ namespace POS.Utilities.Services
             OrderViewModel returnValue = new OrderViewModel();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from Orders ";
                     returnValue = context.Database.SqlQuery<Order>(SQL).LastOrDefault();
@@ -271,7 +272,7 @@ namespace POS.Utilities.Services
             OrderViewModel returnValue = new OrderViewModel();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"SELECT TOP 1 * FROM Orders where TableId={tableId} ORDER BY ID DESC";
                     returnValue = context.Database.SqlQuery<Order>(SQL).SingleOrDefault();
@@ -288,11 +289,29 @@ namespace POS.Utilities.Services
             List<OrderViewModel> returnValue = new List<OrderViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select * from Orders where IsUpdateMode = 0 and IsPayment = 1 order by ModifyDate ";
                     var orders = context.Database.SqlQuery<Order>(SQL).ToList();
                     returnValue = orders.Select(p => (OrderViewModel)p).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return returnValue;
+        }
+
+        public static OrderViewModel GetLatestPaidOrder()
+        {
+            OrderViewModel returnValue = new OrderViewModel();
+            try
+            {
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
+                {
+                    string SQL = $"SELECT TOP 1 * FROM Orders WHERE IsUpdateMode = 0 AND IsPayment = 1 ORDER BY ModifyDate DESC, Id DESC";
+                    returnValue = context.Database.SqlQuery<Order>(SQL).SingleOrDefault();
                 }
             }
             catch (Exception)
@@ -310,7 +329,7 @@ namespace POS.Utilities.Services
             CustomerViewModel returnValue = new CustomerViewModel();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select * from Customer Where id={CustomerId}";
                     returnValue = context.Database.SqlQuery<Customer>(SQL).SingleOrDefault();
@@ -328,7 +347,7 @@ namespace POS.Utilities.Services
             List<OrderViewModel> returnValue = new List<OrderViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select * from Orders where IsUpdateMode  <> 0 and IsPayment = 0 order by ModifyDate";
                     var orders = context.Database.SqlQuery<Order>(SQL).ToList();
@@ -346,7 +365,7 @@ namespace POS.Utilities.Services
             List<OrderViewModel> returnValue = new List<OrderViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select * from Orders where IsUpdateMode = 0 and IsPayment =0 order by ModifyDate";
                     var orders = context.Database.SqlQuery<Order>(SQL).ToList();
@@ -364,7 +383,7 @@ namespace POS.Utilities.Services
             List<OrderViewModel> returnValue = new List<OrderViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select * from Orders where IsUpdateMode <> 0 and IsPayment = 0 order by ModifyDate";
                     var orders = context.Database.SqlQuery<Order>(SQL).ToList();
@@ -382,7 +401,7 @@ namespace POS.Utilities.Services
             OrderViewModel returnValue = new OrderViewModel();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from Orders where InvoiceNumber='{invoiceNo}'";
                     returnValue = context.Database.SqlQuery<Order>(SQL).SingleOrDefault();
@@ -399,7 +418,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
 
                     var find = context.Orders.Where(p => p.Id == model.Id).SingleOrDefault();
@@ -462,7 +481,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
 
                     var delItems = context.OrderItems.Where(p => p.OrderId == orderId).ToList();
@@ -511,7 +530,7 @@ namespace POS.Utilities.Services
             List<OrderItemViewModel> returnValue = new List<OrderItemViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select * from OrderItems where OrderId={orderId}";
                     var OrderItems = context.Database.SqlQuery<OrderItem>(SQL).ToList();
@@ -529,7 +548,7 @@ namespace POS.Utilities.Services
             List<OrderItemViewModel> returnValue = new List<OrderItemViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select * from OrderItems where OrderId={orderId} and DepartmentId={departmentId}";
                     var OrderItems = context.Database.SqlQuery<OrderItem>(SQL).ToList();
@@ -547,7 +566,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.OrderItems.Where(p => p.OrderId == orderId).ToList();
                     if (del?.Count > 0)
@@ -569,7 +588,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.Orders.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -591,7 +610,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.Orders.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -615,7 +634,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     OrderType entity = (OrderType)model;
                     context.OrderTypes.Add(entity);
@@ -634,7 +653,7 @@ namespace POS.Utilities.Services
             OrderTypeViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from OrderTypes where Id={id}";
                     returnValue = context.Database.SqlQuery<OrderType>(SQL).SingleOrDefault();
@@ -651,7 +670,7 @@ namespace POS.Utilities.Services
             string returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select Name from OrderTypes where Id={id}";
                     returnValue = context.Database.SqlQuery<string>(SQL).SingleOrDefault();
@@ -668,7 +687,7 @@ namespace POS.Utilities.Services
             List<OrderTypeViewModel> returnValue = new List<OrderTypeViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from OrderTypes";
                     var OrderType = context.Database.SqlQuery<OrderType>(SQL).ToList();
@@ -686,7 +705,7 @@ namespace POS.Utilities.Services
             List<OrderTypeViewModel> returnValue = new List<OrderTypeViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select Name from OrderTypes";
                     var OrderType = context.Database.SqlQuery<OrderType>(SQL).ToList();
@@ -704,7 +723,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = GetOrderTypeById(model.Id);
                     if (find != null)
@@ -732,7 +751,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.OrderTypes.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)
@@ -756,7 +775,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     OrderFeedback entity = (OrderFeedback)model;
                     context.OrderFeedbacks.Add(entity);
@@ -775,7 +794,7 @@ namespace POS.Utilities.Services
             OrderFeedbackViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from OrderFeedbacks where Id={id}";
                     returnValue = context.Database.SqlQuery<OrderFeedback>(SQL).SingleOrDefault();
@@ -792,7 +811,7 @@ namespace POS.Utilities.Services
             List<OrderFeedbackViewModel> returnValue = new List<OrderFeedbackViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from OrderFeedbacks";
                     var OrderFeedback = context.Database.SqlQuery<OrderFeedback>(SQL).ToList();
@@ -810,7 +829,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.OrderFeedbacks.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)
@@ -834,7 +853,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     OrderFeedbackStatus entity = (OrderFeedbackStatus)model;
                     context.OrderFeedbackStatuses.Add(entity);
@@ -853,7 +872,7 @@ namespace POS.Utilities.Services
             OrderFeedbackStatusViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from OrderFeedbackStatuses where Id={id}";
                     returnValue = context.Database.SqlQuery<OrderFeedbackStatus>(SQL).SingleOrDefault();
@@ -870,7 +889,7 @@ namespace POS.Utilities.Services
             string returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select Name from OrderFeedbackStatuses where Id={id}";
                     returnValue = context.Database.SqlQuery<string>(SQL).SingleOrDefault();
@@ -887,7 +906,7 @@ namespace POS.Utilities.Services
             List<OrderFeedbackStatusViewModel> returnValue = new List<OrderFeedbackStatusViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from OrderFeedbackStatuses";
                     var OrderFeedbackStatus = context.Database.SqlQuery<OrderFeedbackStatus>(SQL).ToList();
@@ -905,7 +924,7 @@ namespace POS.Utilities.Services
             List<OrderFeedbackStatusViewModel> returnValue = new List<OrderFeedbackStatusViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select Name from OrderFeedbackStatuses";
                     var OrderFeedbackStatus = context.Database.SqlQuery<OrderFeedbackStatus>(SQL).ToList();
@@ -923,7 +942,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = GetOrderFeedbackStatusById(model.Id);
                     if (find != null)
@@ -950,7 +969,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.OrderFeedbackStatuses.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)
@@ -972,7 +991,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.OrderFeedbackStatuses.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -994,7 +1013,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.OrderFeedbackStatuses.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)

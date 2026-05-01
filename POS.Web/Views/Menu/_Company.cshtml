@@ -109,11 +109,26 @@
             }).done(function (res) {
                 console.log(res);
                 if (res == "Error" || res == "") {
-                    alertify.error("Something went wrong");
+                    if (typeof alertify !== 'undefined') {
+                        alertify.error("Something went wrong");
+                    } else {
+                        alert("Something went wrong");
+                    }
                 }
                 else if (res == "Success") {
-                    alertify.success("Saved successfully");
-                    location.reload();
+                    if (typeof alertify !== 'undefined') {
+                        alertify.success("Company information saved successfully");
+                    } else {
+                        alert("Company information saved successfully");
+                    }
+                    // If in Settings page, reload company form instead of full page
+                    if (window.location.pathname.includes('/Home/Settings')) {
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        location.reload();
+                    }
                 }
                 stopLoader();
             });

@@ -229,7 +229,7 @@ namespace POS.Web.Controllers
         {
 
             var Cities = VendorServices.GetAllCities();
-            return View("_GetAllCities", Cities);
+            return PartialView("_GetAllCities", Cities);
         }
 
         [HttpGet]

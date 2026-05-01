@@ -112,6 +112,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -132,11 +133,19 @@
     <Compile Include="Services\ExpenseServices.cs" />
     <Compile Include="Services\FmoServices.cs" />
     <Compile Include="Services\ItemServices.cs" />
+    <Compile Include="Services\LeadService.cs" />
+    <Compile Include="Services\MessagingSettingsService.cs" />
     <Compile Include="Services\OrderServices.cs" />
     <Compile Include="Services\ReportServices.cs" />
     <Compile Include="Services\Test.cs" />
     <Compile Include="Services\UserServices.cs" />
     <Compile Include="Services\VendorServices.cs" />
+    <Compile Include="MultiTenant\MultiTenantDbContextFactory.cs" />
+    <Compile Include="MultiTenant\TenantCache.cs" />
+    <Compile Include="MultiTenant\TenantContext.cs" />
+    <Compile Include="MultiTenant\TenantInfo.cs" />
+    <Compile Include="MultiTenant\TenantResolver.cs" />
+    <Compile Include="MultiTenant\TenantSecurityHelper.cs" />
     <Compile Include="Utilities\CartUtility.cs" />
     <Compile Include="Utilities\AsciiControlChars.cs" />
     <Compile Include="Utilities\InvoicePrinter.cs" />
@@ -226,6 +235,9 @@
     <Compile Include="ViewModel\VendorViewModel.cs" />
     <Compile Include="ViewModel\vendorWareHouseVoucherReporViewModel.cs" />
     <Compile Include="ViewModel\VendorWhereHouseViewModel.cs" />
+    <Compile Include="ViewModel\WebsiteLeadViewModel.cs" />
+    <Compile Include="ViewModel\SMSSettingsViewModel.cs" />
+    <Compile Include="ViewModel\WhatsAppSettingsViewModel.cs" />
     <Compile Include="ViewModel\WastageDetailViewModel.cs" />
     <Compile Include="ViewModel\WastageHeadViewModel.cs" />
     <Compile Include="WebConfigSettings.cs" />

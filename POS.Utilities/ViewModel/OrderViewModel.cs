@@ -55,9 +55,13 @@ namespace POS.Utilities.ViewModel
         public string CustomerName { get; set; }
         public string CarNo { get; set; }
         public string Reading { get; set; }
+        public double LastReading { get; set; }
+        public double CurrentReading { get; set; }
         public double AlignmentAmount { get; set; }
         public double wheelBalanceAmount { get; set; }
         public double NextReading { get; set; }
+        public DateTime? NextReadingDate { get; set; }
+        public string OilItemName { get; set; }
         public double NitrogenGas { get; set; }
         public double TPMS { get; set; }
         public string PaymentTypeName

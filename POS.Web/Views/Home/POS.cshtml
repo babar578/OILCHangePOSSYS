@@ -1,5 +1,4 @@
-﻿
-@using POS.Utilities.Services
+﻿@using POS.Utilities.Services
 @using POS.Utilities.Utilities
 @using POS.Utilities.ViewModel
 @model UserViewModel
@@ -13,62 +12,247 @@
 }
 
 <style>
-    .content-header {
-        display: none;
+    /* POS Specific Styles */
+    .pos-container {
+        font-family: 'Inter', 'Segoe UI', sans-serif;
+        background-color: #f4f6f9;
+        height: calc(100vh - 60px); /* Adjust based on navbar height */
+        overflow: hidden;
+        padding: 15px;
     }
+
+    .pos-header {
+        margin-bottom: 15px;
+    }
+
+    .barcode-input-wrapper {
+        position: relative;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border-radius: 8px;
+    }
+
+    .barcode-input-wrapper input {
+        height: 50px;
+        font-size: 18px;
+        padding-left: 45px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+    }
+
+    .barcode-input-wrapper i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #a0aec0;
+        font-size: 20px;
+    }
+
+    .pos-content-row {
+        height: calc(100% - 70px);
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+
+    .pos-col {
+        padding: 0 10px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pos-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+        border: 1px solid #edf2f7;
+    }
+
+    .pos-card-header {
+        padding: 15px;
+        background: #fff;
+        border-bottom: 1px solid #edf2f7;
+        font-weight: 700;
+        color: #2d3748;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .pos-card-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px;
+        background: #f8fafc;
+    }
+
+    /* Scrollbar Styling */
+    .pos-card-body::-webkit-scrollbar {
+        width: 6px;
+    }
+    .pos-card-body::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    .pos-card-body::-webkit-scrollbar-thumb {
+        background: #cbd5e0;
+        border-radius: 3px;
+    }
+
+    /* Category Buttons */
+    .small-box {
+        border-radius: 8px;
+        position: relative;
+        display: block;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+        background: white !important;
+        border: 1px solid #e2e8f0;
+        color: #4a5568 !important;
+    }
+
+    .small-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-color: #667eea;
+        color: #667eea !important;
+    }
+
+    .small-box .inner {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .small-box p {
+        margin: 0;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    /* Cart Styling */
+    #LoadCartItems .card {
+        box-shadow: none;
+        border: none;
+        margin-bottom: 0;
+    }
+
+    #LoadCartItems .table th {
+        border-top: none;
+        color: #718096;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    #LoadCartItems .table td {
+        vertical-align: middle;
+        font-size: 14px;
+        color: #2d3748;
+    }
+
+    .itemQuantity {
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .btn-group-sm .btn {
+        border-radius: 6px;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+
+    /* Total Section */
+    #LoadCartItems table.table:last-child {
+        background: #fff;
+        border-top: 2px solid #edf2f7;
+    }
+
+    #totalAmount {
+        font-size: 24px;
+        font-weight: 800;
+        color: #2d3748 !important;
+    }
+
 </style>
-<div class="col-md-12">
-    <div class="form-group">
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Bar Code", @required = "true", @id = "btnImportbarcode" })
 
+<div class="pos-container">
+    <!-- Barcode Search -->
+    <div class="row pos-header">
+        <div class="col-md-12">
+            <div class="barcode-input-wrapper">
+                <i class="fas fa-barcode"></i>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Scan Barcode or Search Item...", @required = "true", @id = "btnImportbarcode", autocomplete = "off" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row pos-content-row">
+        <!-- Categories -->
+        <div class="col-lg-2 col-md-3 pos-col">
+            <div class="pos-card">
+                <div class="pos-card-header">
+                    <i class="fas fa-th-large text-primary"></i> Categories
+                </div>
+                <div class="pos-card-body">
+                    @Html.Partial("_Categories")
+                </div>
+            </div>
+        </div>
+
+        <!-- Items -->
+        <div class="col-lg-4 col-md-4 pos-col">
+            <div class="pos-card">
+                <div class="pos-card-header">
+                    <i class="fas fa-box-open text-success"></i> Items
+                </div>
+                <div class="pos-card-body" id="LoadItems">
+                    <div class="text-center text-muted mt-5">
+                        <i class="fas fa-arrow-left fa-2x mb-3"></i>
+                        <p>Select a category to view items</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart -->
+        <div class="col-lg-6 col-md-5 pos-col">
+            <div class="pos-card">
+                <div class="pos-card-header">
+                    <i class="fas fa-shopping-cart text-warning"></i> Current Order
+                    <span class="badge badge-primary badge-pill" id="cartItemCount">0 Items</span>
+                </div>
+                <div class="pos-card-body" style="padding: 0;">
+                    <div id="LoadCartItems"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="row" style=" padding-top: 10px;">
-    @*<div class="col-lg-2 col-md-4 col-sm-4">
-            <p class="font-weight-bold">Setup</p>
-            @Html.Partial("_SideMenu")
-        </div>*@
-    <div class="col-lg-2 col-md-4 col-sm-4 ">
-        <p class="font-weight-bold">Menu</p>
-        @Html.Partial("_Categories")
-    </div>
-    <div class="col-lg-5 col-md-8 col-sm-8">
-        <p class="font-weight-bold">Items</p>
-        <div id="LoadItems"></div>
-    </div>
-    <div class="col-lg-5 col-md-12 col-sm-12">
-        <p class="font-weight-bold">Cart Detail</p>
-        <div id="LoadCartItems"></div>
-
-    </div>
-</div>
-
+<!-- Modals (Preserved) -->
 <div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModal-label">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="customerModal-label">Select Customer</h4>
-                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
             </div>
             <div class="modal-body">
                 @Html.DropDownListFor(m => m.Id, new SelectList(Model.Customers, "Id", "CarNumber"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = " Select Customer ", @required = "true", @id = "Guests" })
-
-
-                </a>
-                @*<input type="number" class="form-control" min="0" max="100" id="Guests" placeholder="0000">*@
-
             </div>
             <div class="modal-footer">
-
-                <a href="/Vendor/Customers">Add New Customer</a>
-                <a href="/home/GetCarHistory">Get History</a>
-                <a href="/Home/Index">Back</a>
-                <button type="button" class="btn btn-primary" onclick="SaveGuests()">Save</button>
-
-
-                @*<button href="/Home/Index"target="_blank"type="submit"class="btn btn-primary">Back</button>*@
-
+                <a href="/Vendor/Customers" class="btn btn-outline-primary btn-sm">Add New</a>
+                <a href="/home/GetCarHistory" class="btn btn-outline-info btn-sm">History</a>
+                <a href="/Home/Index" class="btn btn-outline-secondary btn-sm">Back</a>
+                <button type="button" class="btn btn-primary btn-sm" onclick="SaveGuests()">Save</button>
             </div>
         </div>
     </div>
@@ -79,12 +263,11 @@
         <input type="text" id="itemID" hidden />
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="ItemRemarksModal-title"></h4>
-                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title" id="ItemRemarksModal-title">Item Remarks</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <textarea class="form-control" rows="3" id="itemRemarks"> </textarea>
+                    <textarea class="form-control" rows="3" id="itemRemarks" placeholder="Enter remarks here..."></textarea>
                 </div>
             </div>
             <div class="modal-footer">
@@ -100,12 +283,11 @@
         <input type="text" id="orderID" hidden />
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModal-label">Reason</h4>
-                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+                <h4 class="modal-title" id="myModal-label">Order Reason</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <textarea class="form-control" rows="3" id="orderReason"> </textarea>
+                    <textarea class="form-control" rows="3" id="orderReason" placeholder="Enter reason here..."></textarea>
                 </div>
             </div>
             <div class="modal-footer">
@@ -134,7 +316,7 @@
         });
 
         $(function () {
-            debugger
+            // debugger
             var today = new Date();
             var dd = today.getDate();
             var mm = today.getMonth() + 1; //January is 0!
@@ -147,11 +329,11 @@
             }
 
             today = yyyy + '-' + mm + '-' + dd;
-            document.getElementById("TransactionDate").setAttribute("max", today);
+            // document.getElementById("TransactionDate").setAttribute("max", today); // Element not found in snippet, commented out to prevent error
         });
 
         $("#btnImport").click(function () {
-            debugger
+            // debugger
             var itemId = $("#ItemId").val();
             startLoader();
             $.ajax(
@@ -166,48 +348,21 @@
         });
 
         function handleBarcodeScan() {
-            debugger
+            // debugger
             var Barcode = $("#btnImportbarcode").val();
             startLoader();
             $.ajax({
                 url: "/Home/SearchBarcodeItem?Barcode=" + Barcode,
                 type: "POST"
             }).done(function (result) {
-                debugger
+                // debugger
                 RefreshCart()
                 $("#btnImportbarcode").val('');
                 stopLoader();
             });
         }
-
-        // Function to start the loader (you should define this)
-
-
-        // Function to handle additional details (you should define this)
-
     });
 
-
-
-
-    //$("#btnImportbarcode").click(function () {
-    //    debugger
-    //    var Barcode = $("#btnImportbarcode").val();
-        
-    //    $.ajax(
-    //        {
-    //            url: "/Home/SearchBarcodeItem?Barcode=" + Barcode,
-    //            type: "POST"
-    //        }
-    //    ).done(function (result) {
-    //        debugger
-    //        console.log(result)
-    //        RefreshCart()
-           
-    //        $("#btnImportbarcode").val('');
-           
-    //    });
-    //});
     function RefreshCart() {
         $.ajax(
             {
@@ -221,7 +376,7 @@
     function callHistoryReport() {
 
         if ($("#Guests").val() != "") {
-            debugger
+            // debugger
             var itemId = $("#Guests").val();
             GetCarHsitory(itemId);
         }
@@ -229,7 +384,7 @@
             var itemId = '0';
         }
         function GetCarHsitory(itemId) {
-            debugger
+            // debugger
             $.ajax
                 ({
                     url: "/Home/GetCarHistorybyId/",
@@ -253,7 +408,7 @@
 
 
     function GetCarHsitory(itemId) {
-        debugger
+        // debugger
         $.ajax
             ({
                 url: "/Home/GetCarHistorybyId/",
@@ -274,14 +429,43 @@
     }
 
     function GetCategoryDetail(categoryId) {
-        $.ajax
-            ({
+        // First check stock balance for the category
+        $.ajax({
+            url: "/Home/CheckCategoryStock/",
+            type: "POST",
+            data: { CategoryId: categoryId },
+        }).done(function (stockCheck) {
+            // Show warning if stock is low (zero or negative)
+            if (stockCheck.hasLowStock) {
+                // Show non-blocking warning popup
+                // Note: alertify doesn't have warning() method, using error() for visibility
+                if (typeof alertify !== 'undefined' && typeof alertify.error === 'function') {
+                    // Use error() method which shows a visible notification (red/warning style)
+                    alertify.error("Stock for this category is low. Please update the stock.");
+                } else {
+                    // Fallback to standard alert
+                    alert("Stock for this category is low. Please update the stock.");
+                }
+            }
+            
+            // Continue loading items regardless of stock status
+            $.ajax({
                 url: "/Home/CategoryDetails/",
                 type: "POST",
                 data: { CategoryId: categoryId },
             }).done(function (result) {
                 $("#LoadItems").html(result);
             });
+        }).fail(function () {
+            // If stock check fails, still load items
+            $.ajax({
+                url: "/Home/CategoryDetails/",
+                type: "POST",
+                data: { CategoryId: categoryId },
+            }).done(function (result) {
+                $("#LoadItems").html(result);
+            });
+        });
     }
 
     function TableRelease(tableId) {

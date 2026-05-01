@@ -1,23 +1,115 @@
-﻿@{
+﻿@using POS.Utilities.ViewModel
+@using POS.Utilities.Services
+@using POS.Utilities.Utilities
+@{
     Layout = null;
+    var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+    var companyInfo = ItemServices.GetCompanyById();
 }
 
-<!-- Navbar -->
-<!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<style>
+    .modern-navbar {
+        background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        padding: 0.5rem 1rem;
+    }
+    .navbar-brand-text {
+        color: white;
+        font-weight: 600;
+        font-size: 18px;
+        margin-left: 10px;
+    }
+    .nav-link-modern {
+        color: rgba(255,255,255,0.9) !important;
+        padding: 0.5rem 1rem !important;
+        transition: all 0.3s ease;
+        border-radius: 6px;
+        margin: 0 3px;
+    }
+    .nav-link-modern:hover {
+        background: rgba(255,255,255,0.1);
+        color: white !important;
+    }
+    .nav-link-modern i {
+        margin-right: 5px;
+    }
+    .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #dc3545;
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        font-size: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+    .search-input-modern {
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.1);
+        color: white;
+        padding: 8px 15px;
+        width: 300px;
+    }
+    .search-input-modern::placeholder {
+        color: rgba(255,255,255,0.7);
+    }
+    .search-input-modern:focus {
+        background: rgba(255,255,255,0.15);
+        border-color: rgba(255,255,255,0.5);
+        color: white;
+        outline: none;
+    }
+    .user-dropdown-menu {
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border: none;
+        margin-top: 10px;
+    }
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+    }
+</style>
+
+<nav class="main-header navbar navbar-expand modern-navbar">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            <a class="nav-link text-white" data-widget="pushmenu" href="#" role="button">
+                <i class="fas fa-bars"></i>
+            </a>
         </li>
+        @if (companyInfo != null)
+        {
+            <li class="nav-item d-none d-md-block">
+                <span class="navbar-brand-text">
+                    @companyInfo.CompanyName
+                </span>
+            </li>
+        }
     </ul>
 
     <!-- Search Form -->
-    <form class="form-inline ml-3">
-        <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Invoice / Customer / Mobile" aria-label="Search">
+    <form class="form-inline ml-auto mr-auto d-none d-lg-block" onsubmit="return handleSearch(event)">
+        <div class="input-group">
+            <input class="form-control search-input-modern" type="search" 
+                   placeholder="Search Invoice, Customer, or Mobile Number..." 
+                   aria-label="Search" id="globalSearchInput">
             <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
+                <button class="btn text-white" type="submit" style="background: transparent; border: none;">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
@@ -26,58 +118,279 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-        <!-- Alert -->
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link text-danger font-weight-bold">
-                <i class="fas fa-exclamation-triangle"></i> Backup Alert
+        <!-- Reports Quick Access -->
+        <li class="nav-item position-relative">
+            <a href="#" class="nav-link-modern" onclick="openReportsModal(); return false;" title="Quick Reports Access">
+                <i class="fas fa-chart-bar"></i>
+                <span class="d-none d-md-inline">Reports</span>
             </a>
         </li>
 
-        <!-- Actions -->
-        <li class="nav-item">
-            <a class="nav-link" href="#" title="Fingerprint">
-                <i class="fas fa-fingerprint"></i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" title="Notifications">
+        <!-- Reminder Messages -->
+        <li class="nav-item position-relative">
+            <a href="#" class="nav-link-modern" onclick="openRemindersModal(); return false;" title="View Reminder Messages">
                 <i class="fas fa-bell"></i>
+                <span class="d-none d-md-inline">Reminders</span>
+                <span class="notification-badge" id="reminderBadge" style="display: none;">0</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" title="Reports">
-                <i class="fas fa-file-alt"></i>
+
+        <!-- Notifications / Low Stock Alerts -->
+        <li class="nav-item position-relative">
+            <a href="/Home/LowStockItems" class="nav-link-modern" title="Low Stock Alerts">
+                <i class="fas fa-bell"></i>
+                <span class="d-none d-md-inline">Alerts</span>
             </a>
         </li>
+
+        <!-- Settings -->
         <li class="nav-item">
-            <a class="nav-link" href="#" title="Settings">
+            <a href="/Home/Settings" class="nav-link-modern" title="Settings">
                 <i class="fas fa-cog"></i>
+                <span class="d-none d-md-inline">Settings</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" title="Lock">
-                <i class="fas fa-lock"></i>
+
+        <!-- Backup Alert -->
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link-modern text-warning" onclick="showBackupAlert(); return false;" title="Backup Configuration Required">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span class="d-none d-md-inline">Backup</span>
             </a>
         </li>
 
         <!-- User Dropdown -->
         <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-user"></i>
+            <a class="nav-link-modern dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                <div class="user-avatar">
+                    @if (user != null && !string.IsNullOrEmpty(user.UserName))
+                    {
+                        @user.UserName.Substring(0, 1).ToUpper()
+                    }
+                </div>
+                <span class="d-none d-md-inline ml-2">@(user?.UserName ?? "User")</span>
+                <i class="fas fa-chevron-down d-none d-md-inline ml-1" style="font-size: 10px;"></i>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">Settings</span>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right user-dropdown-menu">
+                <div class="dropdown-header bg-primary text-white">
+                    <div class="d-flex align-items-center">
+                        <div class="user-avatar mr-2" style="width: 40px; height: 40px; font-size: 16px;">
+                            @if (user != null && !string.IsNullOrEmpty(user.UserName))
+                            {
+                                @user.UserName.Substring(0, 1).ToUpper()
+                            }
+                        </div>
+                        <div>
+                            <strong>@(user?.UserName ?? "User")</strong>
+                            <div style="font-size: 12px; opacity: 0.9;">@(user?.Email ?? "")</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-passport mr-2"></i> Change Password
+                <a href="#" class="dropdown-item" onclick="changePassword(); return false;">
+                    <i class="fas fa-key mr-2 text-primary"></i> Change Password
+                </a>
+                <a href="#" class="dropdown-item" onclick="viewProfile(); return false;">
+                    <i class="fas fa-user mr-2 text-info"></i> My Profile
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="/Account/Logout" class="dropdown-item">
-                    <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+                    <i class="fas fa-sign-out-alt mr-2 text-danger"></i> Logout
                 </a>
             </div>
         </li>
     </ul>
 </nav>
-<!-- /.navbar -->
-<!-- /.navbar -->
+
+<!-- Reports Modal -->
+<div class="modal fade" id="reportsModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modern-modal-header">
+                <h4><i class="fas fa-chart-bar"></i> Quick Reports Access</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modern-modal-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <a href="/Inventory/CurrentStockReport" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-box mr-2"></i> Inventory Stock In Hand
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Report/VenderToWarHouseReport" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-truck mr-2"></i> Vendor To Warehouse
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Report/POSSaleReport" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-shopping-cart mr-2"></i> POS Sale Report
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Report/IssueToDeptmentReport" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-building mr-2"></i> Issue To Department
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Report/WastageReport" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-trash mr-2"></i> Wastage Report
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Vendor/VendorsPayments" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-money-check-alt mr-2"></i> Vendor Payments Detail
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Vendor/VendorsPaymentsSummary" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-file-invoice-dollar mr-2"></i> Vendor Payments Summary
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Report/ComsumptionReport" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-chart-line mr-2"></i> Consumption Report
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Report/ReturnToVendorReport" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-undo mr-2"></i> Return To Vendor
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Report/ReturnToVendorSummaryReport" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-list-alt mr-2"></i> Return To Vendor Summary
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Report/ReturnToWasaHousesReport" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-warehouse mr-2"></i> Return To Store
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Report/ReturnToVendorSumamryReport" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-file-alt mr-2"></i> Return To Store Summary
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Report/StockCashReport" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-cash-register mr-2"></i> Total Cash Report
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/Report/InventoryBalance" class="btn btn-block btn-modern-primary text-left">
+                            <i class="fas fa-balance-scale mr-2"></i> Inventory Balance
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reminders Modal -->
+<div class="modal fade" id="remindersModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modern-modal-header">
+                <h4><i class="fas fa-bell"></i> Reminder Messages</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modern-modal-body">
+                <div id="remindersContent">
+                    <div class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading reminders...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openReportsModal() {
+        $('#reportsModal').modal('show');
+    }
+
+    function openRemindersModal() {
+        $('#remindersModal').modal('show');
+        loadReminders();
+    }
+
+    function handleSearch(event) {
+        event.preventDefault();
+        var searchTerm = $('#globalSearchInput').val().trim();
+        if (searchTerm) {
+            // Implement search functionality
+            window.location.href = '/Home/Index?search=' + encodeURIComponent(searchTerm);
+        }
+        return false;
+    }
+
+    function loadReminders() {
+        $.ajax({
+            url: '/Home/GetTodayReminders',
+            type: 'GET',
+            success: function(data) {
+                if (data && data.length > 0) {
+                    var html = '<div class="list-group">';
+                    data.forEach(function(reminder) {
+                        html += '<div class="list-group-item">';
+                        html += '<div class="d-flex justify-content-between align-items-start">';
+                        html += '<div class="flex-grow-1">';
+                        html += '<h6 class="mb-1">' + reminder.CustomerName + '</h6>';
+                        html += '<p class="mb-1">' + reminder.Message + '</p>';
+                        html += '<small class="text-muted">Car: ' + reminder.CarNumber + ' | Sent: ' + reminder.SentTime + '</small>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    html += '</div>';
+                    $('#remindersContent').html(html);
+                    
+                    // Update badge
+                    $('#reminderBadge').text(data.length).show();
+                } else {
+                    $('#remindersContent').html('<div class="alert alert-info">No reminders sent today.</div>');
+                    $('#reminderBadge').hide();
+                }
+            },
+            error: function() {
+                $('#remindersContent').html('<div class="alert alert-danger">Error loading reminders.</div>');
+            }
+        });
+    }
+
+    // Load reminders count on page load
+    $(document).ready(function() {
+        $.ajax({
+            url: '/Home/GetTodayRemindersCount',
+            type: 'GET',
+            success: function(count) {
+                if (count > 0) {
+                    $('#reminderBadge').text(count).show();
+                }
+            }
+        });
+    });
+
+    function changePassword() {
+        // Implement change password
+        alertify.info('Change Password functionality will be implemented');
+    }
+
+    function viewProfile() {
+        // Implement view profile
+        alertify.info('View Profile functionality will be implemented');
+    }
+
+    function showBackupAlert() {
+        alertify.warning('Please configure backup locations to enable data backup.');
+    }
+
+    function openNotifications() {
+        alertify.info('Notifications panel will be implemented');
+    }
+</script>

@@ -1,0 +1,98 @@
+@using POS.Utilities.Services
+@using POS.Utilities.ViewModel
+@model OrderViewModel
+
+@{
+    Layout = null;
+    var company = ItemServices.GetCompanyById();
+    var printDate = (Model.CreationDate ?? DateTime.Now).ToString("dd-MMM-yyyy");
+    var nextDate = (Model.NextReadingDate ?? DateTime.Now.Date.AddDays(30)).ToString("dd-MMM-yyyy");
+    var oilName = string.IsNullOrWhiteSpace(Model.OilItemName) ? "Oil" : Model.OilItemName;
+}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Reading Sticker</title>
+    <style>
+        @@page {
+            size: 2in 2in;
+            margin: 0;
+        }
+        html, body {
+            width: 2in;
+            height: 2in;
+            margin: 0;
+            padding: 0;
+        }
+        .sticker {
+            box-sizing: border-box;
+            width: 2in;
+            height: 2in;
+            padding: 0.10in;
+            font-family: Arial, sans-serif;
+            color: #000;
+        }
+        .title {
+            font-weight: 800;
+            font-size: 12px;
+            text-align: center;
+            line-height: 1.1;
+        }
+        .phone {
+            font-size: 10px;
+            text-align: center;
+            margin-top: 2px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            margin-top: 4px;
+        }
+        .label { font-weight: 700; }
+        .big {
+            font-size: 14px;
+            font-weight: 900;
+            text-align: center;
+            margin-top: 6px;
+        }
+        .small {
+            font-size: 9px;
+            text-align: center;
+            margin-top: 4px;
+        }
+        .line {
+            border-top: 1px solid #000;
+            margin: 6px 0 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="sticker">
+        <div class="title">@company.CompanyName</div>
+        <div class="phone">Ph: @(!string.IsNullOrWhiteSpace(company.PhoneNumber2) ? company.PhoneNumber2 : company.PhoneNumber1)</div>
+
+        <div class="line"></div>
+
+        <div class="row"><span class="label">Date</span><span>@printDate</span></div>
+        <div class="row"><span class="label">Car</span><span>@Model.CarNo</span></div>
+        <div class="row"><span class="label">Item</span><span>@oilName</span></div>
+
+        <div class="big">Current: @Model.CurrentReading</div>
+        <div class="row"><span class="label">Last</span><span>@Model.LastReading</span></div>
+        <div class="row"><span class="label">Next</span><span>@Model.NextReading</span></div>
+        <div class="small">Next Date: @nextDate</div>
+    </div>
+
+    <script>
+        // Auto-print when opened in a new window
+        window.onload = function () {
+            window.focus();
+            window.print();
+        };
+    </script>
+</body>
+</html>
+

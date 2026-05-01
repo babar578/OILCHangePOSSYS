@@ -5,78 +5,81 @@
     var searchKeyword = ViewBag.search;
 }
 
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">List of Available Categories</h3>
+<style>
+    .categories-page {
+        padding: 20px;
+    }
+    .empty-categories {
+        text-align: center;
+        padding: 60px 20px;
+        color: #718096;
+    }
+    .empty-categories i {
+        font-size: 64px;
+        color: #cbd5e0;
+        margin-bottom: 20px;
+    }
+</style>
 
-                <div class="card-tools">
-                    @{
-
-                        <div class="btn-group float-left" role="group">
-                            <div class="">
-                                <a href="/Menu/Category" id="btn-add"
-                                   class="btn btn-primary waves-effect"
-                                   data-toggle="tooltip" data-placement="bottom" title="New Category"
-                                   data-caption="Add New Category">
-                                    <span class="fas fa-plus"></span> Add New Category
-                                </a>
-                            </div>
-
-                            @*<div class="">
-                                @using (Html.BeginForm("Categories", "Category", FormMethod.Post))
+<div class="categories-page">
+    <div class="row">
+        <div class="col-12">
+            <div class="modern-card">
+                <div class="modern-card-header">
+                    <h3><i class="fas fa-tags"></i> Categories Management</h3>
+                    <a href="/Menu/Category" id="btn-add"
+                       class="btn-modern-primary"
+                       data-toggle="tooltip" data-placement="bottom" title="Add New Category"
+                       data-caption="Add New Category">
+                        <i class="fas fa-plus"></i> Add New Category
+                    </a>
+                </div>
+                <div class="modern-table-wrapper">
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Category Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var e in Model)
                                 {
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="Search" name="Search" placeholder="Search" required>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="submit" id="btn-search"><span class="fa fa-search"></span></button>
-                                        </div>
-                                    </div>
+                                    <tr class="dgrow" data-id="@e.Id">
+                                        <td>@e.Id</td>
+                                        <td><strong>@e.Name</strong></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <a href="/Menu/Category/@e.Id" class="action-btn-edit" data-toggle="tooltip" data-placement="bottom" title="Edit Category">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                                <a href="/Menu/DeleteCategory/@e.Id" class="action-btn-delete" data-toggle="tooltip" data-placement="bottom" title="Delete Category">
+                                                    <i class="fas fa-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 }
-                            </div>*@
-                        </div>
-
+                            </tbody>
+                        </table>
                     }
-
-
-
+                    else
+                    {
+                        <div class="empty-categories">
+                            <i class="fas fa-tags"></i>
+                            <h4>No Categories Found</h4>
+                            <p>Get started by adding your first category.</p>
+                            <a href="/Menu/Category" class="btn-modern-primary" style="margin-top: 20px;">
+                                <i class="fas fa-plus"></i> Add Category
+                            </a>
+                        </div>
+                    }
                 </div>
             </div>
-            <!-- /.card-header -->
-            <div class="card-body table-responsive">
-                <table id="bootstrap-data-table-export" class="table table-hover table-striped text-nowrap">
-                    <thead>
-                        <tr>
-                            <th>Code</th>
-                            <th>Category Name</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @if (Model != null && Model.Count() > 0)
-                        {
-                            foreach (var e in Model)
-                            {
-                                <tr class="dgrow" data-id="@e.Id">
-
-                                    <td>@e.Id</td>
-                                    <td>@e.Name</td>
-                                    <td>
-                                        <a href="/Menu/Category/" class="btn btn-xs btn-warning btn-edit" data-toggle="tooltip" data-placement="bottom" title="Edit Category" data-caption="Update Category Detail"><span class="fas fa-edit"></span></a>
-                                        <a href="/Menu/DeleteCategory/" class="btn btn-xs btn-danger btn-delete" data-toggle="tooltip" data-placement="bottom" title="Delete Category"><span class="fas fa-trash"></span></a>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.card-body -->
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
 </div>
 

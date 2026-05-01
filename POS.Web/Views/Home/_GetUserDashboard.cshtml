@@ -4,12 +4,13 @@
 @{
     Layout = null;
     var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
-    var date = DateTime.Now;
-    var fromDate = date.Date;
-    var toDate = date.Date;
+    var fromDate = ViewBag.FromDate != null ? (DateTime)ViewBag.FromDate : DateTime.Now.Date;
+    var toDate = ViewBag.ToDate != null ? (DateTime)ViewBag.ToDate : DateTime.Now.Date;
+    var currentFilter = ViewBag.Filter as string ?? "Today";
     
     var dashboard01 = DashboardServices.GetDashboard01(fromDate, toDate);
     var dashboard02 = DashboardServices.GetDashboard02(fromDate, toDate);
+    var generalDashboard = DashboardServices.GetDashboard(DateTime.Now);
 }
 
 <style>
@@ -332,6 +333,32 @@
     .profit-negative {
         color: #dc3545;
     }
+
+    .filter-btn {
+        padding: 8px 15px;
+        border: 1px solid #4a90e2;
+        background: white;
+        color: #4a90e2;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 14px;
+    }
+    .filter-btn.active {
+        background: #4a90e2;
+        color: white;
+    }
+    .filter-btn:first-child {
+        border-radius: 5px 0 0 5px;
+    }
+    .filter-btn:last-child {
+        border-radius: 0 5px 5px 0;
+    }
+    .filter-btn:not(:first-child) {
+        border-left: none;
+    }
+    .filter-btn:hover:not(.active) {
+        background: #e6f0fa;
+    }
 </style>
 
 <div class="dashboard-view-content">
@@ -343,15 +370,11 @@
             <div class="stats-header">
                 <h2><i class="fas fa-chart-pie"></i> Dashboard Overview</h2>
                 <div class="date-selector">
-                    <select id="dateFilter" style="padding: 8px 15px; border: 1px solid #ddd; border-radius: 5px;">
-                        <option>Today</option>
-                        <option>Yesterday</option>
-                        <option>Last 7 Days</option>
-                        <option>Last 30 Days</option>
-                    </select>
-                    <button style="background: #4a90e2; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
-                        <i class="fas fa-sync-alt"></i>
-                    </button>
+                    <div style="display: flex;">
+                        <button class="filter-btn @(currentFilter == "Today" ? "active" : "")" onclick="filterDashboard('Today')">Today</button>
+                        <button class="filter-btn @(currentFilter == "Last 7 Days" ? "active" : "")" onclick="filterDashboard('Last 7 Days')">7 Days</button>
+                        <button class="filter-btn @(currentFilter == "Last 30 Days" ? "active" : "")" onclick="filterDashboard('Last 30 Days')">30 Days</button>
+                    </div>
                 </div>
             </div>
 
@@ -379,6 +402,10 @@
                     <i class="fas fa-file-invoice"></i>
                     <span>New Invoice</span>
                 </button>
+                <button class="action-btn" style="background:#111827;" onclick="printLatestReadingSticker()">
+                    <i class="fas fa-sticky-note"></i>
+                    <span>Print 2x2 Sticker</span>
+                </button>
                 <button class="action-btn" onclick="location.href='/Quotations/Quotations'">
                     <i class="fas fa-file-alt"></i>
                     <span>New Quotation</span>
@@ -395,10 +422,6 @@
                     <i class="fas fa-user-plus"></i>
                     <span>Add Customer</span>
                 </button>
-                <button class="action-btn" onclick="openDailyReminder()">
-                    <i class="fas fa-bell"></i>
-                    <span>Daily Reminder</span>
-                </button>
                 <button class="action-btn" onclick="openDailySummary()">
                     <i class="fas fa-calendar-day"></i>
                     <span>Daily Summary</span>
@@ -407,12 +430,8 @@
                     <i class="fas fa-chart-line"></i>
                     <span>Profit Report</span>
                 </button>
-                <button class="action-btn" style="background: #28a745;" onclick="location.href='/Home/POS'">
-                    <i class="fas fa-plus-circle"></i>
-                    <span>Payment In</span>
-                </button>
-                <button class="action-btn" style="background: #dc3545;" onclick="location.href='/Vendor/VendorPayments'">
-                    <i class="fas fa-minus-circle"></i>
+                <button class="action-btn" style="background: #dc3545;" onclick="location.href='/Vendor/VendorsPayments'">
+                    <i class="fas fa-money-bill-wave"></i>
                     <span>Payment Out</span>
                 </button>
             </div>
@@ -423,29 +442,17 @@
             <div class="vital-stats">
                 <h3>VITAL STATS</h3>
                 <div class="vital-grid">
-                    <div class="vital-item orange">
-                        <p>Amount Outstanding</p>
-                        <h4>0.00</h4>
-                    </div>
                     <div class="vital-item green">
                         <p>Unpaid Invoices</p>
                         <h4>@(dashboard01?.NoOfUnpaidInvoices ?? 0)</h4>
                     </div>
-                    <div class="vital-item green">
-                        <p>Unpaid Purchases</p>
-                        <h4>0</h4>
-                    </div>
                     <div class="vital-item orange">
-                        <p>Overdue Invoices</p>
-                        <h4>0</h4>
+                        <p>Open Orders</p>
+                        <h4>@(generalDashboard?.TotalOpenOrders ?? 0)</h4>
                     </div>
-                    <div class="vital-item orange">
-                        <p>Open Quotation</p>
-                        <h4>0</h4>
-                    </div>
-                    <div class="vital-item green">
-                        <p>Staff Present Today</p>
-                        <h4>0</h4>
+                    <div class="vital-item blue">
+                        <p>Draft Orders</p>
+                        <h4>@(generalDashboard?.TotalDraftOrders ?? 0)</h4>
                     </div>
                 </div>
             </div>
@@ -656,6 +663,34 @@
 </div>
 
 <script>
+    function printLatestReadingSticker() {
+        // Opens sticker view in new window; it auto-prints (2x2)
+        window.open('/Home/PrintLatestReadingSticker', 'STICKER', 'height=420,width=420');
+    }
+
+    function filterDashboard(filter) {
+        // Show loading or disable buttons
+        $('.filter-btn').prop('disabled', true);
+        
+        $.ajax({
+            url: '/Home/GetUserDashboard',
+            type: 'GET',
+            data: { filter: filter },
+            success: function (result) {
+                // Replace the entire dashboard content
+                $('.dashboard-view-content').replaceWith(result);
+                // Re-initialize charts after content replacement
+                if (typeof initDashboardCharts === 'function') {
+                    initDashboardCharts();
+                }
+            },
+            error: function () {
+                alert('Failed to load dashboard data.');
+                $('.filter-btn').prop('disabled', false);
+            }
+        });
+    }
+
     // Modal Functions
     function openDailySummary() {
         $('#dailySummaryModal').modal('show');
@@ -767,98 +802,123 @@
         }
     };
 
-    // Initialize Charts (Keep existing logic or update as needed)
-    // ... (Charts initialization code remains similar but ensure IDs match)
-    const businessInsightsCtx = document.getElementById('businessInsightsChart');
-    if (businessInsightsCtx) {
-        new Chart(businessInsightsCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Paid', 'Overdue', 'Due'],
-                datasets: [{
-                    data: [0, 0, 0],
-                    backgroundColor: ['#28a745', '#dc3545', '#ffc107']
-                }]
-            },
-            options: chartOptions
-        });
+    function initDashboardCharts() {
+        console.log("Initializing Dashboard Charts...");
+        
+        if (typeof Chart === 'undefined') {
+            console.error("Chart.js is not loaded!");
+            return;
+        }
+
+        // Business Insights Chart
+        const businessInsightsCtx = document.getElementById('businessInsightsChart');
+        if (businessInsightsCtx) {
+            // Destroy existing chart if any (to avoid duplicates on reload)
+            if (window.businessInsightsChartInstance) {
+                window.businessInsightsChartInstance.destroy();
+            }
+            window.businessInsightsChartInstance = new Chart(businessInsightsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Paid', 'Unpaid'],
+                    datasets: [{
+                        data: [@(dashboard01?.NoOfInvoices - dashboard01?.NoOfUnpaidInvoices ?? 0), @(dashboard01?.NoOfUnpaidInvoices ?? 0)],
+                        backgroundColor: ['#28a745', '#dc3545']
+                    }]
+                },
+                options: chartOptions
+            });
+        }
+
+        // Activity Chart
+        const activityCtx = document.getElementById('activityChart');
+        if (activityCtx) {
+            if (window.activityChartInstance) window.activityChartInstance.destroy();
+            window.activityChartInstance = new Chart(activityCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Sales Activity',
+                        data: [12, 19, 3, 5, 2, 3, 10], // Dummy data for now as no daily series available
+                        borderColor: '#4a90e2',
+                        backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: chartOptions
+            });
+        }
+
+        // Sale Analysis Chart
+        const saleAnalysisCtx = document.getElementById('saleAnalysisChart');
+        if (saleAnalysisCtx) {
+            if (window.saleAnalysisChartInstance) window.saleAnalysisChartInstance.destroy();
+            window.saleAnalysisChartInstance = new Chart(saleAnalysisCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Current Period'],
+                    datasets: [{
+                        label: 'Sales',
+                        data: [@(dashboard01?.TotalNetSales ?? 0)],
+                        borderColor: '#28a745',
+                        backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                        pointRadius: 5,
+                        pointBackgroundColor: '#28a745',
+                        tension: 0.4
+                    }]
+                },
+                options: chartOptions
+            });
+        }
+
+        // Purchase Analysis Chart
+        const purchaseAnalysisCtx = document.getElementById('purchaseAnalysisChart');
+        if (purchaseAnalysisCtx) {
+            if (window.purchaseAnalysisChartInstance) window.purchaseAnalysisChartInstance.destroy();
+            window.purchaseAnalysisChartInstance = new Chart(purchaseAnalysisCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Current Period'],
+                    datasets: [{
+                        label: 'Purchases',
+                        data: [@(dashboard01?.TotalPurchases ?? 0)],
+                        borderColor: '#4a90e2',
+                        backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                        pointRadius: 5,
+                        pointBackgroundColor: '#4a90e2',
+                        tension: 0.4
+                    }]
+                },
+                options: chartOptions
+            });
+        }
+
+        // Expense Analysis Chart
+        const expenseAnalysisCtx = document.getElementById('expenseAnalysisChart');
+        if (expenseAnalysisCtx) {
+            if (window.expenseAnalysisChartInstance) window.expenseAnalysisChartInstance.destroy();
+            window.expenseAnalysisChartInstance = new Chart(expenseAnalysisCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Current Period'],
+                    datasets: [{
+                        label: 'Expenses',
+                        data: [@(dashboard01?.TotalExpenses ?? 0)],
+                        borderColor: '#dc3545',
+                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                        pointRadius: 5,
+                        pointBackgroundColor: '#dc3545',
+                        tension: 0.4
+                    }]
+                },
+                options: chartOptions
+            });
+        }
     }
 
-    const activityCtx = document.getElementById('activityChart');
-    if (activityCtx) {
-        new Chart(activityCtx, {
-            type: 'line',
-            data: {
-                labels: ['19 Oct', '20 Oct', '21 Oct', '22 Oct', '23 Oct', '24 Oct', '25 Oct'],
-                datasets: [{
-                    label: 'Activity',
-                    data: [0, 0, 0, 0, 0, 0, 0],
-                    borderColor: '#4a90e2',
-                    backgroundColor: 'rgba(74, 144, 226, 0.1)',
-                    tension: 0.4
-                }]
-            },
-            options: chartOptions
-        });
-    }
-
-    const saleAnalysisCtx = document.getElementById('saleAnalysisChart');
-    if (saleAnalysisCtx) {
-        new Chart(saleAnalysisCtx, {
-            type: 'line',
-            data: {
-                labels: ['15', '30', '45', '60', '75', '90'],
-                datasets: [{
-                    label: 'Amount',
-                    data: [0, 0, 0, 0, 0, 0],
-                    borderColor: '#28a745',
-                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
-                    pointRadius: 5,
-                    pointBackgroundColor: '#28a745',
-                    tension: 0.4
-                }]
-            },
-            options: chartOptions
-        });
-    }
-
-    const purchaseAnalysisCtx = document.getElementById('purchaseAnalysisChart');
-    if (purchaseAnalysisCtx) {
-        new Chart(purchaseAnalysisCtx, {
-            type: 'line',
-            data: {
-                labels: ['15', '30', '45', '60', '75', '90'],
-                datasets: [{
-                    label: 'Amount',
-                    data: [0, 0, 0, 0, 0, 0],
-                    borderColor: '#4a90e2',
-                    backgroundColor: 'rgba(74, 144, 226, 0.1)',
-                    pointRadius: 5,
-                    pointBackgroundColor: '#4a90e2',
-                    tension: 0.4
-                }]
-            },
-            options: chartOptions
-        });
-    }
-
-    const expenseAnalysisCtx = document.getElementById('expenseAnalysisChart');
-    if (expenseAnalysisCtx) {
-        new Chart(expenseAnalysisCtx, {
-            type: 'line',
-            data: {
-                labels: ['15', '30', '45', '60', '75', '90'],
-                datasets: [{
-                    label: 'Amount',
-                    data: [0, 0, 0, 0, 0, 0],
-                    borderColor: '#dc3545',
-                    backgroundColor: 'rgba(220, 53, 69, 0.1)',
-                    pointRadius: 5,
-                    pointBackgroundColor: '#dc3545',
-                    tension: 0.4
-                }]
-            },
-            options: chartOptions
-        });
-    }
+    // Initialize on load
+    $(document).ready(function() {
+        initDashboardCharts();
+    });
 </script>

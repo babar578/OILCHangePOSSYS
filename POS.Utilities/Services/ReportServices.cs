@@ -1,6 +1,7 @@
 ﻿
 using CrystalDecisions.CrystalReports.Engine;
 using POS.Database.DatabaseModel;
+using POS.Utilities.MultiTenant;
 using POS.Utilities.ReportsModel;
 using POS.Utilities.ViewModel;
 using System;
@@ -23,7 +24,7 @@ namespace POS.Utilities.Services
             List<Sp_StockInCashReport> returnValue = new List<Sp_StockInCashReport>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -48,7 +49,7 @@ namespace POS.Utilities.Services
             List<POSOderSaleReportViewModel> returnValue = new List<POSOderSaleReportViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -75,7 +76,7 @@ namespace POS.Utilities.Services
             List<ReturnTowareHouseSummaryViewModel> returnValue = new List<ReturnTowareHouseSummaryViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -122,7 +123,7 @@ namespace POS.Utilities.Services
             List<GetHistoryCarVoucherViewModel> returnValue = new List<GetHistoryCarVoucherViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (ID > 0)
@@ -140,19 +141,22 @@ namespace POS.Utilities.Services
             return returnValue;
         }
 
-        public static List<ReturnToWareHouseViewModel> GetReturnTowareHouseReport(DateTime fromDate, DateTime toDate)
+        public static List<ReturnToWareHouseViewModel> GetReturnTowareHouseReport(DateTime fromDate, DateTime toDate, int? itemId = null, int? categoryId = null)
         {
             List<ReturnToWareHouseViewModel> returnValue = new List<ReturnToWareHouseViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
                     {
-                        returnValue = context.Database.SqlQuery<ReturnToWareHouseViewModel>("execute  ReturnToWareHouse  @fromDate , @toDate",
-                        new SqlParameter("@fromDate", SqlDbType.DateTime) { Value = fromDate },
-                        new SqlParameter("@toDate", SqlDbType.DateTime) { Value = toDate }).ToList();
+                        // Stored procedure expects: @Todate, @fromdate, @itemID, @CategoryID
+                        returnValue = context.Database.SqlQuery<ReturnToWareHouseViewModel>("execute ReturnToWareHouse @Todate, @fromdate, @itemID, @CategoryID",
+                        new SqlParameter("@Todate", SqlDbType.DateTime) { Value = toDate },
+                        new SqlParameter("@fromdate", SqlDbType.DateTime) { Value = fromDate },
+                        new SqlParameter("@itemID", SqlDbType.Int) { Value = (object)itemId ?? DBNull.Value },
+                        new SqlParameter("@CategoryID", SqlDbType.Int) { Value = (object)categoryId ?? DBNull.Value }).ToList();
 
                     }
 
@@ -171,7 +175,7 @@ namespace POS.Utilities.Services
             List<ReturnToVendorSummaryViewModel> returnValue = new List<ReturnToVendorSummaryViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -199,7 +203,7 @@ namespace POS.Utilities.Services
             List<GetHistoryCarVoucherViewModel> returnValue = new List<GetHistoryCarVoucherViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
 
                     string SQL = $"Exec GetHistoryCarVoucher Id={id}";
@@ -218,7 +222,7 @@ namespace POS.Utilities.Services
             List<ReturnToVendorViewModel> returnValue = new List<ReturnToVendorViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -243,7 +247,7 @@ namespace POS.Utilities.Services
             List<ComsumptionReportViewModel> returnValue = new List<ComsumptionReportViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -269,19 +273,21 @@ namespace POS.Utilities.Services
 
 
 
-        public static List<VenderPaymentLedgerSummaryViewModel> GetVendorPaymentSummaryReport(DateTime fromDate, DateTime toDate)
+        public static List<VenderPaymentLedgerSummaryViewModel> GetVendorPaymentSummaryReport(DateTime fromDate, DateTime toDate, int? venderId = null)
         {
             List<VenderPaymentLedgerSummaryViewModel> returnValue = new List<VenderPaymentLedgerSummaryViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
                     {
-                        returnValue = context.Database.SqlQuery<VenderPaymentLedgerSummaryViewModel>("execute  VenderPaymentLedgerSummary  @fromDate , @toDate",
-                        new SqlParameter("@fromDate", SqlDbType.DateTime) { Value = fromDate },
-                        new SqlParameter("@toDate", SqlDbType.DateTime) { Value = toDate }).ToList();
+                        // Stored procedure expects: @Todate, @fromdate, @VenderId
+                        returnValue = context.Database.SqlQuery<VenderPaymentLedgerSummaryViewModel>("execute VenderPaymentLedgerSummary @Todate, @fromdate, @VenderId",
+                        new SqlParameter("@Todate", SqlDbType.DateTime) { Value = toDate },
+                        new SqlParameter("@fromdate", SqlDbType.DateTime) { Value = fromDate },
+                        new SqlParameter("@VenderId", SqlDbType.Int) { Value = (object)venderId ?? DBNull.Value }).ToList();
 
                     }
 
@@ -298,7 +304,7 @@ namespace POS.Utilities.Services
             List<WastageDetailViewModel> returnValue = new List<WastageDetailViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -323,7 +329,7 @@ namespace POS.Utilities.Services
             List<IssueToLocationDetailViewModel> returnValue = new List<IssueToLocationDetailViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -353,7 +359,7 @@ namespace POS.Utilities.Services
             List<VendorToWarehouseHeadViewModel> returnValue = new List<VendorToWarehouseHeadViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -409,7 +415,7 @@ namespace POS.Utilities.Services
             List<VenderPaymentLedgeReportView> returnValue = new List<VenderPaymentLedgeReportView>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -442,7 +448,7 @@ namespace POS.Utilities.Services
             List<VendorPaymentViewModel> returnValue = new List<VendorPaymentViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -469,7 +475,7 @@ namespace POS.Utilities.Services
             List<Fn_ReportWareHouseViewModel> returnValue = new List<Fn_ReportWareHouseViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -502,7 +508,7 @@ namespace POS.Utilities.Services
             List<WastageDetailViewModel> returnValue = new List<WastageDetailViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -531,7 +537,7 @@ namespace POS.Utilities.Services
             List<IssueToLocationDetailViewModel> returnValue = new List<IssueToLocationDetailViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
@@ -563,16 +569,16 @@ namespace POS.Utilities.Services
             List<VendorWhereHouseViewModel> returnValue = new List<VendorWhereHouseViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
                     {
-                        returnValue = context.Database.SqlQuery<VendorWhereHouseViewModel>("execute  VenderToWarhouse  @fromDate , @toDate  , @VenderId",
-                        new SqlParameter("@fromDate", SqlDbType.DateTime) { Value = fromDate },
-                         
-                            new SqlParameter("@VenderId", SqlDbType.Int) { Value = VenderId },
-                        new SqlParameter("@toDate", SqlDbType.DateTime) { Value = toDate }).ToList();
+                        returnValue = context.Database.SqlQuery<VendorWhereHouseViewModel>("execute VenderToWarhouse @Todate, @fromdate, @itemid, @VenderID",
+                        new SqlParameter("@Todate", SqlDbType.DateTime) { Value = toDate },
+                        new SqlParameter("@fromdate", SqlDbType.DateTime) { Value = fromDate },
+                        new SqlParameter("@itemid", SqlDbType.Int) { Value = ItemId },
+                        new SqlParameter("@VenderID", SqlDbType.Int) { Value = VenderId }).ToList();
                     }
                 }
             }
@@ -588,7 +594,7 @@ namespace POS.Utilities.Services
             List<VenderPaymentLedgeReportView> returnValue = new List<VenderPaymentLedgeReportView>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     StringBuilder SQL = new StringBuilder();
                     if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)

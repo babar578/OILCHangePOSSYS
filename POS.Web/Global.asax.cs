@@ -21,8 +21,8 @@ namespace POS.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            // Configure Hangfire
-            string connectionString = ConfigurationManager.ConnectionStrings["Dock27PosWebPortalConnectionString"].ConnectionString;
+            // Configure Hangfire - Use ControlDB for storing Hangfire jobs
+            string connectionString = ConfigurationManager.ConnectionStrings["ControlDB"].ConnectionString;
             
             GlobalConfiguration.Configuration
                 .UseSqlServerStorage(connectionString, new SqlServerStorageOptions
@@ -35,20 +35,27 @@ namespace POS.Web
                     TransactionTimeout = TimeSpan.FromMinutes(1)
                 });
 
-            // Schedule daily SMS reminder job - runs once per day at 9:00 AM
-            RecurringJob.AddOrUpdate(
-                "oil-change-reminder-sms",
-                () => HomeController.SendOilChangeReminderSMS(),
-                Cron.Daily(9, 0),
-                new RecurringJobOptions
-                {
-                    TimeZone = TimeZoneInfo.Local
-                });
+            // Note: Background jobs will be configured per-tenant
+            // For now, commented out the global SMS job
+            // See Phase 8 of multi-tenant implementation plan for tenant-aware background jobs
+            
+            // TODO: Implement tenant-aware background jobs
+            // Example: Schedule jobs for all active tenants
+            // var tenants = GetAllActiveTenants();
+            // foreach (var tenant in tenants)
+            // {
+            //     RecurringJob.AddOrUpdate(
+            //         $"oil-change-reminder-sms-{tenant.TenantId}",
+            //         () => HomeController.SendOilChangeReminderSMS(tenant.TenantId),
+            //         Cron.Daily(9, 0)
+            //     );
+            // }
         }
 
         void Session_Start(object sender, EventArgs e)
         {
-            Session.Timeout = 900;
+            // Increased session timeout to 1440 minutes (24 hours) to prevent frequent session expiration
+            Session.Timeout = 1440;
         }
 
     }

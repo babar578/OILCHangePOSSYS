@@ -1,6 +1,8 @@
 ﻿using Microsoft.Reporting.WebForms;
+using POS.Utilities.MultiTenant;
 using POS.Utilities.ReportsModel;
 using POS.Utilities.Services;
+using POS.Utilities.Utilities;
 using POS.Utilities.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -11,10 +13,45 @@ using System.Web.UI.WebControls;
 
 namespace POS.Web.Reports
 {
-    public partial class CurrentStock : System.Web.UI.Page
+    public partial class CurrentStock : ReportBasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // === MULTI-TENANT FIX: Ensure tenant context is set ===
+            if (!TenantContext.HasTenant)
+            {
+                // Check if user is logged in
+                var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+                if (user == null)
+                {
+                    Response.Redirect("~/Account/Login");
+                    return;
+                }
+
+                // Get tenant from session and set context
+                var tenantId = Session["TenantId"] as int?;
+                if (tenantId.HasValue)
+                {
+                    var tenant = TenantCache.GetTenant(tenantId.Value);
+                    if (tenant != null && tenant.IsActive)
+                    {
+                        TenantContext.CurrentTenant = tenant;
+                        System.Diagnostics.Debug.WriteLine($"[CurrentStock] Tenant context set: {tenant.TenantName}");
+                    }
+                    else
+                    {
+                        Response.Redirect("~/Account/Login");
+                        return;
+                    }
+                }
+                else
+                {
+                    Response.Redirect("~/Account/Login");
+                    return;
+                }
+            }
+            // === END MULTI-TENANT FIX ===
+            
             if (!IsPostBack)
             {
                 ReportViewer1.ProcessingMode = ProcessingMode.Local;

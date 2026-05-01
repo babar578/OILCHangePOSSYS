@@ -5,58 +5,52 @@
     Layout = null;
     List<ItemStockViewModel> items = Session[WebUtil.IssueToLocation] as List<ItemStockViewModel>;
 }
-<style>
-    .form-control-sm {
-        border-radius: 5px !important;
-        border: 1px solid !important;
-    }
-
-
-
-</style>
 <div class="row">
     <div class="col-md-12">
-        <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-height: 500px;">
-            <div class="card">
-                <!-- /.card-Detailer -->
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-sm table-striped table-hover text-wrap"id="tblSale">
-                        <thead>
-                            <tr>
-                                <th class="">Item Name</th>
-                                <th class="">Physical Quantity</th>
-                                <th class="">Issuance Quantity</th>
-                                <th class="">Remaining Quantity</th>
-                                <th class="">Line Remarks</th>
-                                <th class="">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @{
-                                if (items?.Count > 0)
+        <div class="card card-custom" style="min-height: 500px;">
+            <div class="card-body table-responsive p-0">
+                <table class="table table-custom text-wrap" id="tblSale">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Item Name</th>
+                            <th style="width: 15%;">Physical Qty</th>
+                            <th style="width: 15%;">Issuance Qty</th>
+                            <th style="width: 15%;">Remaining Qty</th>
+                            <th style="width: 20%;">Remarks</th>
+                            <th style="width: 10%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (items?.Count > 0)
+                            {
+                                foreach (var p in items)
                                 {
-                                    foreach (var p in items)
-                                    {
-                                        <tr>
-                                            <td class=""> @Html.HiddenFor(m => p.ItemId, new { @class = "itemId" }) <span class="itemName">@p.ItemName </span></td>
-                                            <td class=""> <input type="text" id="PhyQuantity_@p.ItemId" class="form-control-sm" value="@p.BalanceQuantity" readonly /></td>
-                                            <td class=""> <input type="text" id="IssQuantity_@p.ItemId"  class="form-control-sm itemQuantity" value="@p.xQuantity" onchange="CalculateQty(@p.ItemId)" /></td>
-                                            <td class=""> <span id="RemQuantity_@p.ItemId" class="remQuantity">@p.xRemainingQuantity</span></td>
-                                            <td class=""><input type="text" id="Remarks_@p.ItemId" class="form-control-sm itemRemarks" /></td>
-                                            <td class=""><span class="fa fa-trash" style="cursor:pointer;" onclick="RemoveIssueItem(@p.ItemId)"></span></td>
-                                        </tr>
-                                    }
+                                    <tr>
+                                        <td> @Html.HiddenFor(m => p.ItemId, new { @class = "itemId" }) <span class="itemName font-weight-bold">@p.ItemName </span></td>
+                                        <td class="text-center"> <input type="text" id="PhyQuantity_@p.ItemId" class="form-control text-center" value="@p.BalanceQuantity" readonly style="background-color: #e9ecef;" /></td>
+                                        <td class="text-center"> <input type="text" id="IssQuantity_@p.ItemId"  class="form-control itemQuantity text-center" value="@p.xQuantity" onchange="CalculateQty(@p.ItemId)" onkeypress="return isNumber(event)" /></td>
+                                        <td class="text-center"> <span id="RemQuantity_@p.ItemId" class="remQuantity badge badge-light" style="font-size: 14px;">@p.xRemainingQuantity</span></td>
+                                        <td><input type="text" id="Remarks_@p.ItemId" class="form-control itemRemarks" placeholder="Remarks" /></td>
+                                        <td class="text-center"><button class="btn btn-sm btn-outline-danger border-0" onclick="RemoveIssueItem(@p.ItemId)"><i class="fas fa-trash"></i></button></td>
+                                    </tr>
                                 }
                             }
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /.card-body -->
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted" style="padding: 50px;">
+                                        <i class="fas fa-box-open fa-3x mb-3" style="opacity: 0.3;"></i>
+                                        <p>No items added yet. Select items to issue.</p>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-
 </div>
 
 

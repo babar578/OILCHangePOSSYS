@@ -1,0 +1,390 @@
+@using POS.Utilities.Services
+@using POS.Utilities.ViewModel
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var company = ItemServices.GetCompanyById();
+    var users = UserServices.GetAllUsers();
+}
+
+<style>
+    .settings-container {
+        padding: 20px;
+        background-color: #f5f5f5;
+        min-height: calc(100vh - 100px);
+    }
+    .settings-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .settings-header h2 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 600;
+    }
+    .settings-tabs {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .nav-tabs {
+        border-bottom: 2px solid #dee2e6;
+        padding: 0 15px;
+    }
+    .nav-tabs .nav-link {
+        border: none;
+        border-bottom: 3px solid transparent;
+        color: #495057;
+        padding: 15px 20px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+    .nav-tabs .nav-link:hover {
+        border-bottom-color: #667eea;
+        color: #667eea;
+    }
+    .nav-tabs .nav-link.active {
+        border-bottom-color: #667eea;
+        color: #667eea;
+        background: transparent;
+    }
+    .tab-content {
+        padding: 20px;
+    }
+    .settings-card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .settings-card h4 {
+        color: #333;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e9ecef;
+    }
+    .form-group label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 5px;
+    }
+    .btn-action {
+        margin-right: 10px;
+    }
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .quick-link-card {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.2s;
+        margin-bottom: 15px;
+    }
+    .quick-link-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .quick-link-card i {
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+    .quick-link-card h5 {
+        margin: 0;
+        font-weight: 600;
+    }
+</style>
+
+<div class="settings-container">
+    <div class="settings-header">
+        <h2>
+            <i class="fas fa-cog"></i> System Settings
+        </h2>
+        <p>Manage company profile, users, permissions, and system configuration</p>
+    </div>
+
+    <div class="settings-tabs">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#company" role="tab">
+                    <i class="fas fa-building"></i> Company Profile
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#users" role="tab">
+                    <i class="fas fa-users"></i> User Management
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#rights" role="tab">
+                    <i class="fas fa-shield-alt"></i> User Rights
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#messaging" role="tab">
+                    <i class="fas fa-comments"></i> Messaging Settings
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#other" role="tab">
+                    <i class="fas fa-tools"></i> Other Settings
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- Company Profile Tab -->
+            <div class="tab-pane fade show active" id="company" role="tabpanel">
+                <div class="settings-card">
+                    <h4><i class="fas fa-building"></i> Company Information</h4>
+                    @Html.Partial("~/Views/Menu/_Company.cshtml", company ?? new CompanyViewModel())
+                </div>
+            </div>
+
+            <!-- User Management Tab -->
+            <div class="tab-pane fade" id="users" role="tabpanel">
+                <div class="settings-card">
+                    <h4><i class="fas fa-users"></i> User Management</h4>
+                    <div class="mb-3">
+                        <a href="/User/AddUser" class="btn btn-primary" data-toggle="modal" data-target="#userModal">
+                            <i class="fas fa-plus"></i> Add New User
+                        </a>
+                    </div>
+                    <div id="usersList">
+                        @Html.Partial("~/Views/User/_GetAllUsers.cshtml", users)
+                    </div>
+                </div>
+
+                <!-- Change Password Section -->
+                <div class="settings-card">
+                    <h4><i class="fas fa-key"></i> Change User Password</h4>
+                    <form id="changePasswordForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Select User</label>
+                                <select id="passwordUserId" class="form-control selectpicker" data-live-search="true" required>
+                                    <option value="">-- Select User --</option>
+                                    @if (users != null)
+                                    {
+                                        foreach (var u in users)
+                                        {
+                                            <option value="@u.Id">@u.UserName (@u.FullName)</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>New Password</label>
+                                <input type="password" id="newPassword" class="form-control" required />
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="ChangeUserPassword()">
+                            <i class="fas fa-save"></i> Update Password
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- User Rights Tab -->
+            <div class="tab-pane fade" id="rights" role="tabpanel">
+                <div class="settings-card">
+                    <h4><i class="fas fa-shield-alt"></i> User Rights & Permissions</h4>
+                    <p class="text-muted">Assign menu access rights to users</p>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5>Users</h5>
+                            @Html.Partial("~/Views/User/_GetUsers.cshtml")
+                        </div>
+                        <div class="col-md-9">
+                            <h5>Menu Rights</h5>
+                            <div id="LoadUserRights"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messaging Settings Tab -->
+            <div class="tab-pane fade" id="messaging" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="settings-card">
+                            <h4><i class="fas fa-sms"></i> SMS Settings</h4>
+                            <div id="smsSettingsContainer">
+                                @Html.Partial("_SMSSettings", POS.Utilities.Services.MessagingSettingsService.GetSMSSettings())
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="settings-card">
+                            <h4><i class="fab fa-whatsapp"></i> WhatsApp Settings</h4>
+                            <div id="whatsappSettingsContainer">
+                                @Html.Partial("_WhatsAppSettings", POS.Utilities.Services.MessagingSettingsService.GetWhatsAppSettings())
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Settings Tab -->
+            <div class="tab-pane fade" id="other" role="tabpanel">
+                <div class="settings-card">
+                    <h4><i class="fas fa-tools"></i> Other Settings & Quick Links</h4>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="quick-link-card" onclick="window.location.href='/Inventory/OpeningStockIndex'">
+                                <i class="fas fa-boxes"></i>
+                                <h5>Opening Stock</h5>
+                                <p style="margin: 0; opacity: 0.9;">Manage opening stock inventory</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="quick-link-card" onclick="window.location.href='/Home/LowStockItems'" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <h5>Low Stock Alerts</h5>
+                                <p style="margin: 0; opacity: 0.9;">View items with low stock</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="quick-link-card" onclick="window.location.href='/Report/InventoryBalance'" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                <i class="fas fa-chart-bar"></i>
+                                <h5>Inventory Reports</h5>
+                                <p style="margin: 0; opacity: 0.9;">View inventory reports</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add/Edit User</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="userModalBody">
+                <!-- User form will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Initialize selectpicker
+        if ($.fn.selectpicker) {
+            $('.selectpicker').selectpicker();
+        }
+
+        // Load user form in modal
+        $('#userModal').on('show.bs.modal', function () {
+            $('#userModalBody').load('/User/AddUser');
+        });
+
+        // Refresh users list after modal closes
+        $('#userModal').on('hidden.bs.modal', function () {
+            RefreshUsersList();
+        });
+    });
+
+    function RefreshUsersList() {
+        startLoader();
+        $.ajax({
+            url: '/User/GetAllUsers',
+            type: 'GET'
+        }).done(function (result) {
+            $('#usersList').html(result);
+            stopLoader();
+        });
+    }
+
+    function ChangeUserPassword() {
+        var userId = $('#passwordUserId').val();
+        var newPassword = $('#newPassword').val();
+
+        if (!userId || !newPassword) {
+            if (typeof alertify !== 'undefined') {
+                alertify.error('Please select user and enter new password.');
+            } else {
+                alert('Please select user and enter new password.');
+            }
+            return;
+        }
+
+        if (newPassword.length < 6) {
+            if (typeof alertify !== 'undefined') {
+                alertify.error('Password must be at least 6 characters long.');
+            } else {
+                alert('Password must be at least 6 characters long.');
+            }
+            return;
+        }
+
+        startLoader();
+        $.ajax({
+            url: '/User/ChangePassword',
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({
+                Id: parseInt(userId),
+                Password: newPassword
+            }),
+            success: function (response) {
+                stopLoader();
+                if (response == "Success") {
+                    if (typeof alertify !== 'undefined') {
+                        alertify.success('Password updated successfully.');
+                    } else {
+                        alert('Password updated successfully.');
+                    }
+                    $('#changePasswordForm')[0].reset();
+                    if ($.fn.selectpicker) {
+                        $('#passwordUserId').selectpicker('refresh');
+                    }
+                } else {
+                    if (typeof alertify !== 'undefined') {
+                        alertify.error('Failed to update password.');
+                    } else {
+                        alert('Failed to update password.');
+                    }
+                }
+            },
+            error: function () {
+                stopLoader();
+                if (typeof alertify !== 'undefined') {
+                    alertify.error('Error updating password.');
+                } else {
+                    alert('Error updating password.');
+                }
+            }
+        });
+    }
+
+    // User Rights function (from existing code)
+    function GetUserRights(userId) {
+        startLoader();
+        $.ajax({
+            url: "/User/GetUserRights/",
+            type: "POST",
+            data: { UserId: userId },
+        }).done(function (result) {
+            $("#LoadUserRights").html(result);
+            stopLoader();
+        });
+    }
+</script>
+

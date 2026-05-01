@@ -840,7 +840,7 @@ namespace POS.Web.Controllers
                 }
                 else
                 {
-                    //add = ItemServices.UpdateUnit(model);
+                    add = ItemServices.UpdateCompany(model);
                 }
 
                 if (1==1)

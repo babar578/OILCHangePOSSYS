@@ -2,87 +2,76 @@
 @using POS.Utilities.ViewModel
 @model ReturnToVendorHeadViewModel
 @{
-
     Layout = null;
-    //Model.Locations = VendorServices.GetAllLocations();
-    //Model.Departments = ItemServices.GetAllDepartments();
-    //var warehouseItems = VendorServices.GetAllIssueToLocationItemsName();
-    Model.ItemStocks = VendorServices.GetAllItemStock();
-    Model.Vendors = VendorServices.GetAllVendors();
+    // Data loaded in controller action - not here
+    // This prevents tenant context issues during view rendering
 }
 
 @using (Html.BeginForm("", "", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
-    <div class=" row">
-        <div class=" col-md-12">
-            <div class="card card-custom accent-dark">
-                <div class="card-header card-blue">
-                    <div class="card-title">
-                        <span class="card-icon">
-                            <i class="flaticon2-line-chart text-primary"></i>
-                        </span>
-                        <h3 class="card-label">
-                            Return to Vendor
-
-                        </h3>
+    
+    <div class="card card-custom">
+        <div class="card-header-custom">
+            <i class="fas fa-undo-alt"></i>
+            <span>Return to Vendor</span>
+        </div>
+        <div class="card-body" style="padding: 20px;">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-form-label">Transaction Date <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                            </div>
+                            @Html.TextBoxFor(m => m.TransactionDate, new { @type = "date", @class = "form-control", min = "1990-05-11", max = "2000-08-20", placeholder = "Transaction Date * ", @required = "true", onkeydown = "return false" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-form-label">Doc No</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+                            </div>
+                            @Html.TextBoxFor(m => m.DocNo, new { @class = "form-control", placeholder = "DocNo ", @required = "true" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-form-label">Vendor <span class="text-danger">*</span></label>
+                        @Html.DropDownListFor(m => m.VendorId, new SelectList(Model.Vendors, "Id", "VendorName"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Select Vendor", @required = "true" })
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="col-form-label">Transaction Date <b class="text-danger">*</b></label>
-                @Html.TextBoxFor(m => m.TransactionDate, new { @type = "date", @class = "form-control", min = "1990-05-11", max = "2000-08-20", placeholder = "Transaction Date * ", @required = "true", onkeydown = "return false" })
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="col-form-label">Doc No</label>
-                @Html.TextBoxFor(m => m.DocNo, new { @class = "form-control", placeholder = "DocNo ", @required = "true" })
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group ">
-                <label class="col-form-label">Vendor <b class="text-danger">*</b></label>
-                @Html.DropDownListFor(m => m.VendorId, new SelectList(Model.Vendors, "Id", "VendorName"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Vendor", @required = "true" })
-            </div>
-        </div>
-        @*<div class="col-md-3">
-                <div class="form-group ">
-                    <label class="col-form-label">Location <b class="text-danger">*</b></label>
-                    @Html.DropDownListFor(m => m.LocationId, new SelectList(Model.Locations, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Locations", @required = "true" })
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-form-label">Remarks</label>
+                        @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control", placeholder = "Enter Remarks", @required = "true" })
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group ">
-                    <label class="col-form-label">Department <b class="text-danger">*</b></label>
-                    @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Departments", @required = "true" })
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-form-label">Add Item</label>
+                        <div class="input-group">
+                            @Html.DropDownListFor(m => m.ItemStocks, "ItemId", "ItemName"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Select Item to Return", @required = "true" })
+                            <div class="input-group-append">
+                                <button type="button" id="btnImport" class="btn btn-primary"><i class="fas fa-plus"></i> Import</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>*@
-        <div class="col-md-6">
-            <div class="form-group">
-                @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control", placeholder = "Remarks", @required = "true" })
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="form-group">
-                
-                <div class="input-group">
-                    @Html.DropDownListFor(m => m.ItemId, new SelectList(Model.ItemStocks, "ItemId", "ItemName"), new { @class = "form-control selectpicker", data_live_search = "true", data_hide_disabled = "true", title = "Import Issuance Items", @required = "true" })
-                    <span class="input-group-append">
-                        <button type="button" id="btnImport" class="btn btn-info btn-flat">Import Item</button>
-                    </span>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="col-form-label">&nbsp;</label>
+                        <button type="button" onclick="ReturnToVendor()" class="btn btn-block btn-danger btn-action shadow-sm"><i class="fas fa-save"></i> SAVE</button>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="form-group  pull-right">
-                <a href="javascript: void(0)" onclick="ReturnToVendor()" class="btn btn-block btn-success">SAVE</a>
             </div>
         </div>
     </div>
@@ -127,10 +116,3 @@
     });
 
 </script>
-
-
-
-
-
-
-

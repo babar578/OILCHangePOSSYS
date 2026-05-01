@@ -1,17 +1,14 @@
 ﻿@using POS.Utilities.ViewModel
 @model UserViewModel
-@using POS.Utilities.Services
-@using POS.Utilities.Utilities
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Login - TorroSell";
     Layout = null;
-    var companyInfo = ItemServices.GetCompanyById();
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>@(companyInfo != null ? companyInfo.CompanyName : "Login") - AI Powered System</title>
+    <title>TorroSell - Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Fonts -->
@@ -30,79 +27,107 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
             height: 100vh;
             overflow: hidden;
             display: flex;
-            background-color: #fff;
+            background: #36393f; /* Dark charcoal gray like logo */
         }
 
-        /* Left Side - AI Branding */
+        /* Left Side - TorroSell Branding */
         .login-brand-section {
             flex: 1.2;
-            background: linear-gradient(135deg, rgba(10, 25, 47, 0.95), rgba(16, 42, 67, 0.9)), url('/Content/login_background_ai_tech.png'); /* Fallback or dynamic path */
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(135deg, #2c2f33 0%, #36393f 50%, #23272a 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: white;
-            padding: 40px;
+            padding: 60px 40px;
             position: relative;
+            overflow: hidden;
         }
 
-            /* Overlay for better text readability if needed */
-            .login-brand-section::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: radial-gradient(circle at center, transparent 0%, #0a192f 100%);
-                opacity: 0.6;
-            }
+        /* Animated geometric pattern background */
+        .login-brand-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(98, 114, 164, 0.03) 35px, rgba(98, 114, 164, 0.03) 70px);
+            animation: movePattern 20s linear infinite;
+        }
+
+        @@keyframes movePattern {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
 
         .brand-content {
             position: relative;
             z-index: 2;
             text-align: center;
-            max-width: 600px;
-            animation: fadeIn 1s ease-out;
+            max-width: 500px;
+            animation: fadeInUp 0.8s ease-out;
         }
 
-        .brand-logo {
-            font-size: 64px;
-            margin-bottom: 20px;
-            color: #4db5ff; /* Cyan/Blue accent */
-            text-shadow: 0 0 20px rgba(77, 181, 255, 0.5);
+        /* Logo container */
+        .brand-logo-container {
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
         }
 
-        .brand-title {
-            font-size: 36px;
+        .bull-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(98, 114, 164, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #6272a4;
+            box-shadow: 0 8px 32px rgba(98, 114, 164, 0.2);
+            border: 2px solid rgba(98, 114, 164, 0.3);
+        }
+
+        .brand-name {
+            font-size: 48px;
             font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: -0.5px;
+            color: #8b95b0;
+            letter-spacing: -1px;
         }
 
-        .brand-subtitle {
-            font-size: 18px;
-            color: #b0c4de;
+        .brand-tagline {
+            font-size: 20px;
+            color: #8b95b0;
             line-height: 1.6;
             font-weight: 300;
+            margin-bottom: 30px;
         }
 
-        .ai-badge {
-            display: inline-block;
-            background: rgba(77, 181, 255, 0.15);
-            border: 1px solid rgba(77, 181, 255, 0.3);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 14px;
-            color: #4db5ff;
-            margin-top: 30px;
-            backdrop-filter: blur(5px);
+        .feature-list {
+            text-align: left;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #a3a9b8;
+        }
+
+        .feature-item i {
+            color: #6272a4;
+            margin-right: 12px;
+            font-size: 18px;
         }
 
         /* Right Side - Login Form */
@@ -111,33 +136,56 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #ffffff;
+            background: #2c2f33;
             padding: 40px;
             position: relative;
         }
 
         .login-card {
             width: 100%;
-            max-width: 420px;
-            padding: 40px;
+            max-width: 450px;
+            background: #23272a;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(98, 114, 164, 0.2);
             animation: slideUp 0.8s ease-out;
         }
 
         .login-header {
             margin-bottom: 40px;
+            text-align: center;
         }
 
-            .login-header h2 {
-                font-size: 28px;
-                font-weight: 700;
-                color: #1a202c;
-                margin-bottom: 10px;
-            }
+        .login-header-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
 
-            .login-header p {
-                color: #718096;
-                font-size: 15px;
-            }
+        .login-header-logo i {
+            font-size: 36px;
+            color: #6272a4;
+        }
+
+        .login-header-logo span {
+            font-size: 32px;
+            font-weight: 700;
+            color: #8b95b0;
+        }
+
+        .login-header h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e4e7eb;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #8b95b0;
+            font-size: 14px;
+        }
 
         .form-group {
             margin-bottom: 25px;
@@ -148,101 +196,112 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
-            color: #4a5568;
-            font-size: 14px;
+            color: #8b95b0;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .input-group {
             position: relative;
         }
 
-            .input-group i {
-                position: absolute;
-                left: 15px;
-                top: 50%;
-                transform: translateY(-50%);
-                color: #a0aec0;
-                transition: color 0.3s;
-            }
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6272a4;
+            transition: color 0.3s;
+            z-index: 10;
+        }
 
         .form-control {
             width: 100%;
-            padding: 14px 14px 14px 45px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #40444b;
+            border-radius: 10px;
             font-size: 15px;
             transition: all 0.3s;
             outline: none;
-            background: #f7fafc;
-            color: #2d3748;
+            background: #2c2f33;
+            color: #e4e7eb;
             font-family: 'Inter', sans-serif;
         }
 
-            .form-control:focus {
-                border-color: #4db5ff;
-                background: #fff;
-                box-shadow: 0 0 0 4px rgba(77, 181, 255, 0.1);
-            }
+        .form-control:focus {
+            border-color: #6272a4;
+            background: #36393f;
+            box-shadow: 0 0 0 4px rgba(98, 114, 164, 0.15);
+        }
 
-                .form-control:focus + i {
-                    color: #4db5ff;
-                }
+        .form-control:focus + i {
+            color: #8b9dc3;
+        }
+
+        .form-control::placeholder {
+            color: #72767d;
+        }
 
         .form-options {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .remember-me {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #4a5568;
+            color: #8b95b0;
             cursor: pointer;
         }
 
-            .remember-me input {
-                width: 16px;
-                height: 16px;
-                accent-color: #4db5ff;
-            }
+        .remember-me input {
+            width: 16px;
+            height: 16px;
+            accent-color: #6272a4;
+            cursor: pointer;
+        }
 
         .forgot-password {
-            color: #4db5ff;
+            color: #6272a4;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s;
         }
 
-            .forgot-password:hover {
-                color: #3182ce;
-            }
+        .forgot-password:hover {
+            color: #8b9dc3;
+        }
 
         .btn-login {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, #2b6cb0 0%, #1a365d 100%);
+            background: linear-gradient(135deg, #5b6eae 0%, #6272a4 100%);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(43, 108, 176, 0.3);
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(98, 114, 164, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-            .btn-login:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 16px rgba(43, 108, 176, 0.4);
-            }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(98, 114, 164, 0.4);
+            background: linear-gradient(135deg, #6272a4 0%, #5b6eae 100%);
+        }
 
-            .btn-login:active {
-                transform: translateY(0);
-            }
+        .btn-login:active {
+            transform: translateY(0);
+        }
 
         .copyright {
             position: absolute;
@@ -250,17 +309,16 @@
             left: 0;
             right: 0;
             text-align: center;
-            color: #a0aec0;
+            color: #72767d;
             font-size: 12px;
         }
 
         /* Animations */
-        @@keyframes fadeIn {
+        @@keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -270,13 +328,22 @@
         @@keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateX(20px);
+                transform: translateY(20px) scale(0.95);
             }
-
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateY(0) scale(1);
             }
+        }
+
+        @@keyframes movePattern {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        @@keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         /* Responsive */
@@ -287,24 +354,74 @@
 
             .login-form-section {
                 padding: 20px;
+                background: #23272a;
             }
+
+            .login-card {
+                padding: 30px 25px;
+            }
+        }
+
+        /* Divider */
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #40444b;
+        }
+
+        .divider span {
+            background: #23272a;
+            padding: 0 15px;
+            color: #72767d;
+            font-size: 12px;
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
-    <!-- Left Side: AI Branding -->
-    <div class="login-brand-section" style="background-image: linear-gradient(135deg, rgba(10, 25, 47, 0.92), rgba(16, 42, 67, 0.85)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+    <!-- Left Side: TorroSell Branding -->
+    <div class="login-brand-section">
         <div class="brand-content">
-            <div class="brand-logo">
-                <i class="fas fa-brain"></i>
+            <!-- TorroSell Logo -->
+            <div class="brand-logo-container">
+                <div class="bull-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <div class="brand-name">TorroSell</div>
             </div>
-            <h1 class="brand-title">Smart POS System</h1>
-            <p class="brand-subtitle">
-                Experience the future of inventory management with our AI-powered solution.
-                Streamline your oil change store operations with intelligent insights.
+            
+            <p class="brand-tagline">
+                Enterprise Point of Sale System
             </p>
-            <div class="ai-badge">
-                <i class="fas fa-robot"></i> AI-Powered Engine v2.0
+
+            <div class="feature-list">
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Multi-Tenant Architecture</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Inventory Management</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Advanced Reporting</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Real-Time Analytics</span>
+                </div>
             </div>
         </div>
     </div>
@@ -313,47 +430,48 @@
     <div class="login-form-section">
         <div class="login-card">
             <div class="login-header">
-                @if (companyInfo != null)
-                {
-                    <h2>@companyInfo.CompanyNameUrdu</h2>
-                }
-                else
-                {
-                    <h2>Welcome Back</h2>
-                }
-                <p>Please enter your credentials to access your account.</p>
+                <div class="login-header-logo">
+                    <i class="fas fa-gem"></i>
+                    <span>TorroSell</span>
+                </div>
+                <h2>Sign In</h2>
+                <p>Enter your credentials to access your account</p>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="UserName">Username</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="UserName" placeholder="Enter your username" required />
                     <i class="fas fa-user"></i>
+                    <input type="text" class="form-control" id="UserName" placeholder="Enter your username" required autocomplete="username" />
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="Password">Password</label>
                 <div class="input-group">
-                    <input type="password" class="form-control" id="Password" placeholder="Enter your password" required />
                     <i class="fas fa-lock"></i>
+                    <input type="password" class="form-control" id="Password" placeholder="Enter your password" required autocomplete="current-password" />
                 </div>
             </div>
 
             <div class="form-options">
                 <label class="remember-me">
-                    <input type="checkbox" /> Remember me
+                    <input type="checkbox" id="RememberMe" /> Remember me
                 </label>
-                <a href="#" class="forgot-password">Forgot Password?</a>
+                <a href="#" class="forgot-password">Need help?</a>
             </div>
 
             <button id="btn-login" class="btn-login">
-                Sign In <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                <i class="fas fa-sign-in-alt"></i> Sign In
             </button>
+
+            <div class="divider">
+                <span>Secure Multi-Tenant Login</span>
+            </div>
         </div>
 
         <div class="copyright">
-            &copy; @DateTime.Now.Year POS System. All rights reserved.
+            &copy; @DateTime.Now.Year TorroSell. All rights reserved.
         </div>
     </div>
 
@@ -377,14 +495,16 @@
             $("body").loadingModal('destroy');
         }
 
-        // Toastr config
+        // Toastr config - Dark theme
         toastr.options = {
             closeButton: true,
             progressBar: true,
             positionClass: "toast-top-right",
             showMethod: "slideDown",
             hideMethod: "fadeOut",
-            timeOut: 4000
+            timeOut: 4000,
+            backgroundColor: '#23272a',
+            iconColor: '#6272a4'
         };
 
         // Login logic
@@ -407,12 +527,12 @@
                 data: JSON.stringify(modelData),
                 success: function (res) {
                     if (res === "Success") {
-                        toastr.success("Redirecting to dashboard...", "Login Successful");
+                        toastr.success("Welcome to TorroSell! Redirecting...", "Login Successful");
                         setTimeout(function() {
                             window.location.href = "/Home/Index";
-                        }, 1000);
+                        }, 800);
                     } else {
-                        toastr.error("Invalid username or password.", "Login Failed");
+                        toastr.error(res || "Invalid username or password.", "Login Failed");
                     }
                     stopLoader();
                 },

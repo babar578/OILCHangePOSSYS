@@ -15,6 +15,13 @@ namespace POS.Web
             //Seeder.Seed();
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // API route for leads
+            routes.MapRoute(
+                name: "LeadsAPI",
+                url: "api/leads",
+                defaults: new { controller = "Website", action = "SubmitLeadPublic" }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

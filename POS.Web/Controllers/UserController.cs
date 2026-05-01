@@ -95,6 +95,39 @@ namespace POS.Web.Controllers
             }
             return Json(message);
         }
+
+        [HttpPost]
+        public JsonResult ChangePassword(UserViewModel model)
+        {
+            string message = string.Empty;
+            try
+            {
+                if (model.Id > 0 && !string.IsNullOrWhiteSpace(model.Password))
+                {
+                    // Encrypt password before saving
+                    model.Password = Utility.Encrypt(model.Password);
+                    var result = UserServices.ChangePassword(model);
+                    if (result)
+                    {
+                        message = "Success";
+                    }
+                    else
+                    {
+                        message = "Error";
+                    }
+                }
+                else
+                {
+                    message = "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+                message = "Error";
+            }
+            return Json(message);
+        }
         #endregion
         #region UserRight Panel
         public ActionResult UserRights()

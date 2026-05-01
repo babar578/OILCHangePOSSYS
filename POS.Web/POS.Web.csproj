@@ -234,9 +234,16 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\QuotationsController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\TenantManagementController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
+    <Compile Include="Controllers\WebsiteController.cs" />
+    <Compile Include="Filters\TenantAuthorizationFilter.cs" />
+    <Compile Include="Infrastructure\TenantContextHttpModule.cs" />
+    <Compile Include="Reports\ReportBasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="DailyCashReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -6696,6 +6703,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\LowStockItems.cshtml" />
+    <Content Include="Views\Home\Settings.cshtml" />
+    <Content Include="Views\Home\_SMSSettings.cshtml" />
+    <Content Include="Views\Home\_WhatsAppSettings.cshtml" />
     <Content Include="Views\Shared\_modal.cshtml" />
     <Content Include="Views\Shared\_navbar.cshtml" />
     <Content Include="Views\Shared\_sidebar.cshtml" />

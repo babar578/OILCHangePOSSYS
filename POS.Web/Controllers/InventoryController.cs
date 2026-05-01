@@ -1,6 +1,8 @@
 ﻿using POS.Utilities.Services;
 using POS.Utilities.Utilities;
 using POS.Utilities.ViewModel;
+using POS.Utilities.MultiTenant;
+using POS.Database.DatabaseModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +30,16 @@ namespace POS.Web.Controllers
 
             VendorToWarehouseHeadViewModel model = new VendorToWarehouseHeadViewModel();
 
-            if (id != null)
+            try
             {
-                model = VendorServices.GetVendorToWarehouseHeadById(id ?? 0);
+                if (id != null)
+                {
+                    model = VendorServices.GetVendorToWarehouseHeadById(id ?? 0);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[VendorToWarehouseHead] Error: {ex.Message}");
             }
 
             return PartialView("_VendorToWarehouseHead", model);
@@ -440,10 +449,19 @@ namespace POS.Web.Controllers
                 return RedirectToAction("Login", new { Controller = "Account" });
 
             ReturnToWarehouseHeadViewModel model = new ReturnToWarehouseHeadViewModel();
-            if (id != null)
+            
+            try
             {
-                // model = VendorServices.GetVendorToWarehouseHeadById(id ?? 0);
+                if (id != null)
+                {
+                    // model = VendorServices.GetReturnToWarehouseHeadById(id ?? 0);
+                }
             }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[ReturnToWarehouseHead] Error: {ex.Message}");
+            }
+            
             return PartialView("_ReturnToWarehouseHead", model);
         }
 
@@ -621,9 +639,21 @@ namespace POS.Web.Controllers
 
             ReturnToVendorHeadViewModel model = new ReturnToVendorHeadViewModel();
 
-            if (id != null)
+            try
             {
-                // model = VendorServices.GetVendorToWarehouseHeadById(id ?? 0);
+                // Load dropdown data in controller (not in view)
+                model.ItemStocks = VendorServices.GetAllItemStock();
+                model.Vendors = VendorServices.GetAllVendors();
+                
+                if (id != null)
+                {
+                    // model = VendorServices.GetVendorToWarehouseHeadById(id ?? 0);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[ReturnToVendorHead] Error: {ex.Message}");
+                // Return empty model on error
             }
 
             return PartialView("_ReturnToVendorHead", model);
@@ -1185,6 +1215,241 @@ namespace POS.Web.Controllers
             if (user == null)
                 return RedirectToAction("Login", new { Controller = "Account" });
             return View();
+        }
+
+        /// <summary>
+        /// Export Opening Stock Excel Template with all items
+        /// </summary>
+        public ActionResult ExportOpeningStockTemplate()
+        {
+            try
+            {
+                var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+                if (user == null)
+                    return RedirectToAction("Login", new { Controller = "Account" });
+
+                // Get all items from Items table (same as /Menu/Items)
+                // Using GetAllItems(false) which should get all items
+                var items = ItemServices.GetAllItems(false);
+                
+                // If GetAllItems returns empty or wrong data, get all items directly
+                if (items == null || items.Count == 0)
+                {
+                    items = new List<ItemViewModel>();
+                    using (var context = MultiTenantDbContextFactory.CreateDbContext())
+                    {
+                        string SQL = "SELECT * FROM Items WHERE IsActive = 1 ORDER BY Name";
+                        var dbItems = context.Database.SqlQuery<Item>(SQL).ToList();
+                        items = dbItems.Select(p => (ItemViewModel)p).ToList();
+                    }
+                }
+
+                // Create CSV format that Excel can open
+                Response.Clear();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment;filename=OpeningStockTemplate_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv");
+                Response.ContentType = "text/csv";
+                Response.Charset = "";
+
+                // Write CSV header
+                Response.Write("Item Code,Item Name,Purchase Price,Quantity\r\n");
+
+                // Write data rows
+                foreach (var item in items)
+                {
+                    string itemName = (item.Name ?? "").Replace(",", ";").Replace("\"", "\"\"");
+                    Response.Write($"{item.Id},\"{itemName}\",{item.PPrice},\r\n");
+                }
+
+                Response.Flush();
+                Response.End();
+                return null;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error exporting Excel: {ex.Message}");
+                return Json(new { success = false, message = "Error exporting Excel template." });
+            }
+        }
+
+        /// <summary>
+        /// Import Opening Stock from Excel/CSV file
+        /// </summary>
+        [HttpPost]
+        public JsonResult ImportOpeningStockFromExcel()
+        {
+            try
+            {
+                var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+                if (user == null)
+                    return Json(new { success = false, message = "Please login first." });
+
+                if (Request.Files.Count == 0)
+                    return Json(new { success = false, message = "Please select an Excel/CSV file." });
+
+                var file = Request.Files[0];
+                if (file == null || file.ContentLength == 0)
+                    return Json(new { success = false, message = "File is empty." });
+
+                // Get form data
+                string transactionDateStr = Request.Form["TransactionDate"];
+                string docNo = Request.Form["DocNo"];
+                string remarks = Request.Form["Remarks"];
+
+                if (string.IsNullOrEmpty(transactionDateStr))
+                    return Json(new { success = false, message = "Transaction Date is required." });
+
+                DateTime transactionDate;
+                if (!DateTime.TryParse(transactionDateStr, out transactionDate))
+                    return Json(new { success = false, message = "Invalid Transaction Date format." });
+
+                // Read CSV/Excel file
+                var items = new List<ItemViewModel>();
+                string fileExtension = System.IO.Path.GetExtension(file.FileName).ToLower();
+
+                using (var stream = file.InputStream)
+                {
+                    using (var reader = new System.IO.StreamReader(stream))
+                    {
+                        string line;
+                        bool isFirstLine = true;
+                        int lineNumber = 0;
+
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            lineNumber++;
+                            if (isFirstLine)
+                            {
+                                isFirstLine = false;
+                                continue; // Skip header
+                            }
+
+                            if (string.IsNullOrWhiteSpace(line))
+                                continue;
+
+                            // Parse CSV line - handle quoted values
+                            var values = ParseCsvLine(line);
+                            if (values.Length >= 4)
+                            {
+                                int itemCode;
+                                double purchasePrice;
+                                double quantity;
+
+                                // Item Code (column 0)
+                                if (int.TryParse(values[0]?.Trim(), out itemCode))
+                                {
+                                    // Purchase Price (column 2)
+                                    if (double.TryParse(values[2]?.Trim(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out purchasePrice))
+                                    {
+                                        // Quantity (column 3) - must have a value
+                                        if (double.TryParse(values[3]?.Trim(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out quantity) && quantity > 0)
+                                        {
+                                            var item = ItemServices.GetItemById(itemCode);
+                                            if (item != null)
+                                            {
+                                                // Set both Price and PPrice to purchase price
+                                                // Price is used for Rate in OpeningDetail
+                                                // PPrice is used for SubTotal calculation (Quantity * PPrice)
+                                                item.Price = purchasePrice;
+                                                item.PPrice = purchasePrice;
+                                                item.Quantity = quantity;
+                                                items.Add(item);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (items.Count == 0)
+                    return Json(new { success = false, message = "No valid items found in file. Please ensure Quantity column has values greater than 0." });
+
+                // Calculate GrossAmount and TotalNetAmount from items
+                // GrossAmount = Sum of all SubTotal (Quantity * PPrice)
+                double grossAmount = items.Sum(i => i.SubTotal);
+                grossAmount = Math.Round(grossAmount, 2);
+
+                // TotalNetAmount = GrossAmount (for opening stock, no discounts/taxes applied)
+                double totalNetAmount = grossAmount;
+
+                // Create OpeningStockHead
+                var openingStockModel = new OpeningStockHeadViewModel
+                {
+                    TransactionDate = transactionDate,
+                    DocNo = docNo ?? "",
+                    Remarks = remarks ?? "Imported from Excel",
+                    RawItems = items,
+                    GrossAmount = grossAmount,
+                    TotalNetAmount = totalNetAmount,
+                    CreationDate = DateTime.Now,
+                    ModifyDate = DateTime.Now,
+                    CreatedBy = user.Id
+                };
+
+                // Save to database
+                bool result = VendorServices.AddOpeningStock(openingStockModel);
+
+                if (result)
+                {
+                    return Json(new { success = true, message = $"Successfully imported {items.Count} items." });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Failed to save opening stock." });
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error importing Excel: {ex.Message}");
+                return Json(new { success = false, message = $"Error: {ex.Message}" });
+            }
+        }
+
+        /// <summary>
+        /// Parse CSV line handling quoted values
+        /// </summary>
+        private string[] ParseCsvLine(string line)
+        {
+            var values = new List<string>();
+            bool inQuotes = false;
+            var currentValue = new System.Text.StringBuilder();
+
+            for (int i = 0; i < line.Length; i++)
+            {
+                char c = line[i];
+
+                if (c == '"')
+                {
+                    if (inQuotes && i + 1 < line.Length && line[i + 1] == '"')
+                    {
+                        // Escaped quote
+                        currentValue.Append('"');
+                        i++; // Skip next quote
+                    }
+                    else
+                    {
+                        // Toggle quote state
+                        inQuotes = !inQuotes;
+                    }
+                }
+                else if (c == ',' && !inQuotes)
+                {
+                    // End of field
+                    values.Add(currentValue.ToString());
+                    currentValue.Clear();
+                }
+                else
+                {
+                    currentValue.Append(c);
+                }
+            }
+
+            // Add last value
+            values.Add(currentValue.ToString());
+
+            return values.ToArray();
         }
         public ActionResult OpeningStockHead(int? id)
         {

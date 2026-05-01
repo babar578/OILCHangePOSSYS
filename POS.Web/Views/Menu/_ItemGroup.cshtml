@@ -1,30 +1,41 @@
 ﻿@using POS.Utilities.ViewModel
 @model ItemGroupViewModel
 @{
-
     Layout = null;
 }
+
+<style>
+    .item-group-form {
+        padding: 20px;
+    }
+</style>
 
 @using (Html.BeginForm("", "", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
-    <div class="form-group ">
-        <label class="col-form-label">Name <b class="text-danger">*</b></label>
-        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Name ", @required = "true" })
-    </div>
+    
+    <div class="item-group-form">
+        <div class="modern-form-group">
+            <label class="modern-form-label">
+                <i class="fas fa-layer-group"></i> Group Name <b class="text-danger">*</b>
+            </label>
+            @Html.TextBoxFor(m => m.Name, new { @class = "modern-form-control", placeholder = "Enter Item Group Name", @required = "true" })
+        </div>
 
-    <div class="modal-footer col-md-12">
-        <div class="form-group">
-            <button type="button" id="AddItemGroup" class="btn btn-primary"><span class="fa fa-save"></span> Save</button>
-            <button type="button" data-dismiss="modal" class="btn btn-dark"><span class="fa fa-remove"></span> Cancel</button>
+        <div class="card-actions">
+            <button type="button" data-dismiss="modal" class="btn-modern-secondary">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            <button type="button" id="AddItemGroup" class="btn-modern-primary">
+                <i class="fas fa-save"></i> Save Item Group
+            </button>
         </div>
     </div>
 }
+
 <script>
-
     $("#AddItemGroup").click(function () {
-
         var id = $("#Id").val();
         var name = $("#Name").val();
 
@@ -32,14 +43,12 @@
             alertify.error("Fill required fields.");
             return;
         }
-        else
-        {
+        else {
             var modelData = {
-                Id:id,
+                Id: id,
                 Name: name,
             };
             SaveItemGroup(modelData);
         }
     });
 </script>
-

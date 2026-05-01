@@ -22,6 +22,12 @@ namespace POS.Database.DatabaseModel
         {
         }
     
+        // Constructor for multi-tenant connection string
+        public POSEntities(string connectionString)
+            : base(connectionString)
+        {
+        }
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

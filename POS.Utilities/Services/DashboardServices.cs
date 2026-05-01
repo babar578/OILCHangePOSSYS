@@ -1,4 +1,5 @@
 ﻿using POS.Database.DatabaseModel;
+using POS.Utilities.MultiTenant;
 using POS.Utilities.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace POS.Utilities.Services
 
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     // Raw SQL for Total Net Sales (Orders)
                     string salesQuery = $@"
@@ -77,7 +78,7 @@ namespace POS.Utilities.Services
 
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     // Calculate days difference for averages
                     int days = (toDate - fromDate).Days + 1;
@@ -153,7 +154,7 @@ namespace POS.Utilities.Services
             DailySummaryViewModel result = new DailySummaryViewModel();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string dateStr = date.ToString("yyyy-MM-dd");
 
@@ -193,7 +194,7 @@ namespace POS.Utilities.Services
             ProfitReportViewModel result = new ProfitReportViewModel();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string from = fromDate.ToString("yyyy-MM-dd");
                     string to = toDate.ToString("yyyy-MM-dd");
@@ -225,7 +226,7 @@ namespace POS.Utilities.Services
             DashboardViewModel returnValue = new DashboardViewModel();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     returnValue.TotalOpenOrders = context.Orders.Where(p => p.IsUpdateMode == true && p.IsPayment == false).Count();
                     returnValue.TotalDraftOrders = context.Orders.Where(p => p.IsUpdateMode == true && p.IsPayment == false).Count();
@@ -243,7 +244,7 @@ namespace POS.Utilities.Services
             int returnValue = 0;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     returnValue = context.FloorTables.Where(p => p.FloorId == floorId).Count();
                 }

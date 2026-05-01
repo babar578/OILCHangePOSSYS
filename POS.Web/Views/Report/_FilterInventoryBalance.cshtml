@@ -40,9 +40,7 @@
 }
 
 <script>
-
     $("#Search").click(function () {
-
         var fromDate = $("#FromDate").val();
         var toDate = $("#ToDate").val();
         var itemId = $("#ItemId").val();
@@ -68,10 +66,17 @@
                 data: JSON.stringify(modelData),
                 datatype: "Json",
             }).done(function (res) {
-                alertify.success("Saved successfully");
-                window.location.href = "/Report/InventoryBalance";
-
-
+                alertify.success("Filter applied successfully");
+                $('#filterModal').modal('hide');
+                // Reload the report by calling the parent page's function or reloading
+                if (typeof window.GetInventoryBalance === 'function') {
+                    window.GetInventoryBalance();
+                } else {
+                    window.location.href = "/Report/InventoryBalance";
+                }
+            }).fail(function () {
+                alertify.error("Error applying filter");
+                stopLoader();
             });
         }
     });

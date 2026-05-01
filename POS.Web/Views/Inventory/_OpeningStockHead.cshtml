@@ -27,6 +27,14 @@
                             <small>(Purchases)</small>
                         </h3>
                     </div>
+                    <div class="card-toolbar">
+                        <a href="/Inventory/ExportOpeningStockTemplate" class="btn btn-sm btn-success mr-2" title="Download Excel Template">
+                            <i class="fas fa-download"></i> Download Excel Template
+                        </a>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#importExcelModal" title="Import from Excel">
+                            <i class="fas fa-upload"></i> Import from Excel
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -111,6 +119,116 @@
         });
     });
 
+</script>
+
+<!-- Import Excel Modal -->
+<div class="modal fade" id="importExcelModal" tabindex="-1" role="dialog" aria-labelledby="importExcelModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="importExcelModalLabel">
+                    <i class="fas fa-upload"></i> Import Opening Stock from Excel
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="importExcelForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Transaction Date <span class="text-danger">*</span></label>
+                        <input type="date" id="ImportTransactionDate" name="TransactionDate" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Doc No</label>
+                        <input type="text" id="ImportDocNo" name="DocNo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <input type="text" id="ImportRemarks" name="Remarks" class="form-control" value="Imported from Excel" />
+                    </div>
+                    <div class="form-group">
+                        <label>Select Excel/CSV File <span class="text-danger">*</span></label>
+                        <input type="file" id="ImportExcelFile" name="file" class="form-control" accept=".xlsx,.xls,.csv" required />
+                        <small class="form-text text-muted">
+                            <i class="fas fa-info-circle"></i> 
+                            Please download the template first, fill in the Quantity column, and upload it here.
+                        </small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="ImportExcelFile()">
+                    <i class="fas fa-upload"></i> Import
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Set today's date as default for import
+    $(document).ready(function () {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        today = yyyy + '-' + mm + '-' + dd;
+        $("#ImportTransactionDate").val(today);
+        $("#ImportTransactionDate").attr("max", today);
+    });
+
+    function ImportExcelFile() {
+        var formData = new FormData();
+        var fileInput = document.getElementById("ImportExcelFile");
+        var transactionDate = $("#ImportTransactionDate").val();
+        var docNo = $("#ImportDocNo").val();
+        var remarks = $("#ImportRemarks").val();
+
+        if (!transactionDate) {
+            alertify.error("Transaction Date is required.");
+            return;
+        }
+
+        if (!fileInput.files || fileInput.files.length === 0) {
+            alertify.error("Please select an Excel/CSV file.");
+            return;
+        }
+
+        formData.append("file", fileInput.files[0]);
+        formData.append("TransactionDate", transactionDate);
+        formData.append("DocNo", docNo);
+        formData.append("Remarks", remarks);
+
+        startLoader();
+        $.ajax({
+            url: '@Url.Action("ImportOpeningStockFromExcel", "Inventory")',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                stopLoader();
+                if (response.success) {
+                    alertify.success(response.message);
+                    $("#importExcelModal").modal('hide');
+                    $("#importExcelForm")[0].reset();
+                    VendorToWarehouseHead();
+                    VendorToWarehouseDetail();
+                } else {
+                    alertify.error(response.message || "Failed to import file.");
+                }
+            },
+            error: function (xhr, status, error) {
+                stopLoader();
+                console.error("Error:", error);
+                alertify.error("An error occurred while importing the file.");
+            }
+        });
+    }
 </script>
 
 

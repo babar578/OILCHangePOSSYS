@@ -1,4 +1,5 @@
 ﻿using POS.Database.DatabaseModel;
+using POS.Utilities.MultiTenant;
 using POS.Utilities.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     ExtraSale entity = (ExtraSale)model;
                     context.ExtraSales.Add(entity);
@@ -37,7 +38,7 @@ namespace POS.Utilities.Services
             ExtraSaleViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from ExtraSale where Id={id}";
                     returnValue = context.Database.SqlQuery<ExtraSale>(SQL).SingleOrDefault();
@@ -55,7 +56,7 @@ namespace POS.Utilities.Services
             List<ExtraSaleViewModel> returnValue = new List<ExtraSaleViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     //string SQL = $"select *from ExtraSale Where DATEDIFF (DAY , CreationDate , GETDATE()) between 1 and 30 order by CreationDate ASC";
                     string SQL = $"select * from ExtraSale  order by CreationDate ASC";
@@ -75,7 +76,7 @@ namespace POS.Utilities.Services
             List<ExtraSaleViewModel> returnValue = new List<ExtraSaleViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select Id, Name from ExtraSale";
                     var Users = context.Database.SqlQuery<ExtraSale>(SQL).ToList();

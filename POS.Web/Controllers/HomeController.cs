@@ -1,10 +1,3 @@
-//using CrystalDecisions.CrystalReports.Engine;
-using Newtonsoft.Json;
-//using POS.Database.DatabaseModel;
-using POS.Utilities;
-using POS.Utilities.Services;
-using POS.Utilities.Utilities;
-using POS.Utilities.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,6 +12,12 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Diagnostics;
 using System.Data.SqlClient;
+using Newtonsoft.Json;
+using POS.Utilities;
+using POS.Utilities.MultiTenant;
+using POS.Utilities.Services;
+using POS.Utilities.Utilities;
+using POS.Utilities.ViewModel;
 using POS.Database.DatabaseModel;
 
 namespace POS.Web.Controllers
@@ -32,21 +31,42 @@ namespace POS.Web.Controllers
                 return RedirectToAction("Login", new { Controller = "Account" });
             return View();
         }
-                          public ActionResult GetUserDashboard()
-        {
 
+        public ActionResult GetUserDashboard(string filter = "Today")
+        {
+            DateTime fromDate = DateTime.Now.Date;
+            DateTime toDate = DateTime.Now.Date;
+
+            if (filter == "Yesterday")
+            {
+                fromDate = DateTime.Now.Date.AddDays(-1);
+                toDate = DateTime.Now.Date.AddDays(-1);
+            }
+            else if (filter == "Last 7 Days")
+            {
+                fromDate = DateTime.Now.Date.AddDays(-6);
+                toDate = DateTime.Now.Date;
+            }
+            else if (filter == "Last 30 Days")
+            {
+                fromDate = DateTime.Now.Date.AddDays(-29);
+                toDate = DateTime.Now.Date;
+            }
+
+            ViewBag.FromDate = fromDate;
+            ViewBag.ToDate = toDate;
+            ViewBag.Filter = filter;
 
             return PartialView("_GetUserDashboard");
         }
+
         #region POS Panel
         public ActionResult POS(int? id, int? OrderId = null, bool? IsUpdateMode = null )
         {
-
             var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
             UserViewModel model = new UserViewModel();
             if (user == null)
                 return RedirectToAction("Login", new { Controller = "Account" });
-
 
             OrderViewModel order = new OrderViewModel();
             List<OrderItemViewModel> orderItems = new List<OrderItemViewModel>();
@@ -156,6 +176,61 @@ namespace POS.Web.Controllers
                 items = VendorServices.GetItemStockbyCategoriesID(CategoryId ?? 0);
             }
             return PartialView("_CategoryDetails", items);
+        }
+
+        /// <summary>
+        /// Settings page with Company, Users, Rights, and Configuration
+        /// </summary>
+        public ActionResult Settings()
+        {
+            var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+            if (user == null)
+                return RedirectToAction("Login", new { Controller = "Account" });
+            
+            return View();
+        }
+
+        /// <summary>
+        /// Display low stock items page
+        /// </summary>
+        public ActionResult LowStockItems()
+        {
+            var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+            if (user == null)
+                return RedirectToAction("Login", new { Controller = "Account" });
+            
+            var lowStockItems = VendorServices.GetLowStockItems();
+            return View(lowStockItems);
+        }
+
+        /// <summary>
+        /// Check if category has low stock (zero or negative balance)
+        /// </summary>
+        [HttpPost]
+        public JsonResult CheckCategoryStock(int? CategoryId)
+        {
+            try
+            {
+                if (!CategoryId.HasValue)
+                {
+                    return Json(new { hasLowStock = false });
+                }
+
+                // Get all items for this category and check their stock balance
+                var items = VendorServices.GetItemStockbyCategoriesID(CategoryId ?? 0);
+                
+                // Check if any item has zero or negative balance
+                // BalanceQuantity <= 0 means low/out of stock
+                bool hasLowStock = items != null && items.Any(item => item.BalanceQuantity <= 0);
+                
+                return Json(new { hasLowStock = hasLowStock });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error checking category stock: {ex.Message}");
+                // Return false on error so user can continue
+                return Json(new { hasLowStock = false });
+            }
         }
 
         [HttpPost]
@@ -1018,29 +1093,114 @@ namespace POS.Web.Controllers
                     order.Reading = CustomerName.Reading;
                     order.CreationDate =  DateTime.Now;
 
+                    // Reading sticker helpers (computed at print-time)
+                    if (double.TryParse(order.Reading, out var lastReading))
+                        order.LastReading = lastReading;
+                    order.CurrentReading = order.Tip;
+                    order.NextReading = order.LastReading + order.CurrentReading;
+                    order.NextReadingDate = DateTime.Now.Date.AddDays(30);
 
-                    //Set message text which you want to send
-                    String messageText = $"Hello {CustomerName.CustomerName},\r\nDate:{DateTime.Now}.\r\nCar No:{CustomerName.CarNumber}\r\n,Current Reading:{order.Tip}.\r\nThanks for choosing SHAHZAD OIL STORE CENTRAL PARK.";
-                    //String messageText = "📜 یوم اقبال مبارک ہو!\r\n\r\n📚 \"خودی کر بولنا، کی ہار قسمت کے ہے،\r\n\"خود رب سے پوچھو، بتاؤ تمہارا راز کیا ہے؟\"\r\n\r\n\r\nشہزاد آئل سٹور سنٹرل پارک لاہور";
-                    String to = CustomerName.Mobile;
-                    //Set mask value if you want to send from specific mask
-                    String mask = "Shahzad Oil";
-                    //Please provide correct username and password here of your account
-                    String userName = "923428513077";
-                    String password = "1122334455667788Babar";
-                    QuickMessage obj = new QuickMessage(userName, password);
-                    String sessionId = obj.getSessionId();
-                    if (sessionId != null)
+                    // Try to pick an "oil" item name; fallback to first item
+                    var oilItem = order.OrderItems?
+                        .FirstOrDefault(x => (x.ItemName ?? "").ToLower().Contains("oil"))
+                        ?? order.OrderItems?.FirstOrDefault();
+                    order.OilItemName = oilItem?.ItemName;
+
+
+                    // Check if SMS is enabled and send SMS dynamically
+                    var smsSettings = MessagingSettingsService.GetSMSSettings();
+                    if (smsSettings != null && smsSettings.IsEnabled && !string.IsNullOrEmpty(smsSettings.Username) && !string.IsNullOrEmpty(smsSettings.Password))
                     {
-                        //Un Coment After Use Metro Only Use For Moshin Oil 
-                        String messageIds = obj.sendQuickMessage(sessionId, messageText, to, mask);
-                      
+                        //Set message text which you want to send
+                        String messageText = $"Hello {CustomerName.CustomerName},\r\nDate:{DateTime.Now}.\r\nCar No:{CustomerName.CarNumber}\r\n,Current Reading:{order.Tip}.\r\nThanks for choosing SHAHZAD OIL STORE CENTRAL PARK.";
+                        //String messageText = "📜 یوم اقبال مبارک ہو!\r\n\r\n📚 \"خودی کر بولنا، کی ہار قسمت کے ہے،\r\n\"خود رب سے پوچھو، بتاؤ تمہارا راز کیا ہے؟\"\r\n\r\n\r\nشہزاد آئل سٹور سنٹرل پارک لاہور";
+                        String to = CustomerName.Mobile;
+                        //Get mask from settings
+                        String mask = smsSettings.Mask ?? "Shahzad Oil";
+                        //Get credentials from database settings
+                        String userName = smsSettings.Username;
+                        String password = smsSettings.Password;
+                        
+                        QuickMessage obj = new QuickMessage(userName, password);
+                        String sessionId = obj.getSessionId();
+                        if (sessionId != null && !string.IsNullOrEmpty(to))
+                        {
+                            //Un Coment After Use Metro Only Use For Moshin Oil 
+                            String messageIds = obj.sendQuickMessage(sessionId, messageText, to, mask);
+                          
+                        }
                     }
                 }
 
                 return PartialView("_PrintInvoice", order);
             }
             return RedirectToAction("Login", new { area = "", Controller = "Account" });
+        }
+
+        [HttpGet]
+        public ActionResult PrintReadingSticker(int id)
+        {
+            var order = OrderServices.GetOrderById(id);
+            if (order == null)
+                return new HttpNotFoundResult();
+
+            order.OrderItems = OrderServices.GetOrderItemsByOrderId(order.Id);
+
+            var customer = VendorServices.GetCustomerById(order.NoOfGuest ?? 0);
+            if (customer != null)
+            {
+                order.CustomerName = customer.CustomerName;
+                order.CarNo = customer.CarNumber;
+                order.Reading = customer.Reading;
+            }
+
+            if (double.TryParse(order.Reading, out var lastReading))
+                order.LastReading = lastReading;
+            order.CurrentReading = order.Tip;
+            order.NextReading = order.LastReading + order.CurrentReading;
+            order.NextReadingDate = DateTime.Now.Date.AddDays(30);
+
+            var oilItem = order.OrderItems?
+                .FirstOrDefault(x => (x.ItemName ?? "").ToLower().Contains("oil"))
+                ?? order.OrderItems?.FirstOrDefault();
+            order.OilItemName = oilItem?.ItemName;
+
+            order.CreationDate = DateTime.Now;
+
+            return PartialView("_ReadingSticker", order);
+        }
+
+        [HttpGet]
+        public ActionResult PrintLatestReadingSticker()
+        {
+            var order = OrderServices.GetLatestPaidOrder();
+            if (order == null || order.Id <= 0)
+                return new HttpNotFoundResult("No paid invoice found to print sticker.");
+
+            order.OrderItems = OrderServices.GetOrderItemsByOrderId(order.Id);
+
+            var customer = VendorServices.GetCustomerById(order.NoOfGuest ?? 0);
+            if (customer != null)
+            {
+                order.CustomerName = customer.CustomerName;
+                order.CarNo = customer.CarNumber;
+                order.Reading = customer.Reading;
+            }
+
+            if (double.TryParse(order.Reading, out var lastReading))
+                order.LastReading = lastReading;
+            order.CurrentReading = order.Tip;
+            order.NextReading = order.LastReading + order.CurrentReading;
+            order.NextReadingDate = DateTime.Now.Date.AddDays(30);
+
+            var oilItem = order.OrderItems?
+                .FirstOrDefault(x => (x.ItemName ?? "").ToLower().Contains("oil"))
+                ?? order.OrderItems?.FirstOrDefault();
+            order.OilItemName = oilItem?.ItemName;
+
+            order.CreationDate = DateTime.Now;
+
+            return PartialView("_ReadingSticker", order);
         }
      
         [HttpPost]
@@ -1185,15 +1345,29 @@ namespace POS.Web.Controllers
         /// <summary>
         /// Sends SMS reminders to customers for oil change service based on their last order date and number of days
         /// This method is called automatically once per day via Hangfire scheduler
+        /// Updated for multi-tenancy: accepts tenantId parameter
         /// </summary>
-        public static void SendOilChangeReminderSMS()
+        public static void SendOilChangeReminderSMS(int tenantId)
         {
+            List<CustomerReminderViewModel> customersToRemind = null;
+            
             try
             {
-                List<CustomerReminderViewModel> customersToRemind = new List<CustomerReminderViewModel>();
+                // Resolve tenant
+                var tenant = TenantResolver.GetTenantById(tenantId);
+                if (tenant == null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Tenant {tenantId} not found for SMS reminder job");
+                    return;
+                }
+
+                // Set tenant context
+                TenantContext.CurrentTenant = tenant;
+                
+                customersToRemind = new List<CustomerReminderViewModel>();
 
                 // Execute the SQL query to get customers who need reminders today
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string sqlQuery = @"
                         WITH LatestOrders AS (
@@ -1219,50 +1393,68 @@ namespace POS.Web.Controllers
                     customersToRemind = context.Database.SqlQuery<CustomerReminderViewModel>(sqlQuery).ToList();
                 }
 
-                // Send SMS to each customer
+                // Send SMS to each customer - Dynamic SMS from database settings
                 if (customersToRemind != null && customersToRemind.Count > 0)
                 {
-                    // SMS credentials
-                    String userName = "923428513077";
-                    String password = "1122334455667788Babar";
-                    String mask = "Shahzad Oil";
+                    // Get SMS settings from database
+                    var smsSettings = MessagingSettingsService.GetSMSSettings();
                     
-                    QuickMessage smsClient = new QuickMessage(userName, password);
-                    String sessionId = smsClient.getSessionId();
-
-                    if (sessionId != null)
+                    // Only send SMS if enabled and credentials are configured
+                    if (smsSettings != null && smsSettings.IsEnabled && 
+                        !string.IsNullOrEmpty(smsSettings.Username) && !string.IsNullOrEmpty(smsSettings.Password))
                     {
-                        foreach (var customer in customersToRemind)
-                        {
-                            try
-                            {
-                                // Create reminder message
-                                String messageText = $"Hello {customer.CustomerName},\r\n" +
-                                    $"Your car ({customer.CarNumber}) is due for oil change service.\r\n" +
-                                    $"Last service date: {customer.CreationDate:dd/MM/yyyy}\r\n" +
-                                    $"Please visit SHAHZAD OIL STORE CENTRAL PARK for your next service.\r\n" +
-                                    $"Thank you!";
+                        // SMS credentials from database
+                        String userName = smsSettings.Username;
+                        String password = smsSettings.Password;
+                        String mask = smsSettings.Mask ?? "Shahzad Oil";
+                        
+                        QuickMessage smsClient = new QuickMessage(userName, password);
+                        String sessionId = smsClient.getSessionId();
 
-                                // Send SMS
-                                if (!string.IsNullOrEmpty(customer.Mobile))
+                        if (sessionId != null)
+                        {
+                            foreach (var customer in customersToRemind)
+                            {
+                                try
                                 {
-                                    String messageIds = smsClient.sendQuickMessage(sessionId, messageText, customer.Mobile, mask);
-                                    // Log success (you can add logging here if needed)
+                                    // Create reminder message
+                                    String messageText = $"Hello {customer.CustomerName},\r\n" +
+                                        $"Your car ({customer.CarNumber}) is due for oil change service.\r\n" +
+                                        $"Last service date: {customer.CreationDate:dd/MM/yyyy}\r\n" +
+                                        $"Please visit SHAHZAD OIL STORE CENTRAL PARK for your next service.\r\n" +
+                                        $"Thank you!";
+
+                                    // Send SMS
+                                    if (!string.IsNullOrEmpty(customer.Mobile))
+                                    {
+                                       // String messageIds = smsClient.sendQuickMessage(sessionId, messageText, customer.Mobile, mask);
+                                        // Log success (you can add logging here if needed)
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    // Log error for individual customer (you can add logging here)
+                                    System.Diagnostics.Debug.WriteLine($"Error sending SMS to {customer.CustomerName}: {ex.Message}");
                                 }
                             }
-                            catch (Exception ex)
-                            {
-                                // Log error for individual customer (you can add logging here)
-                                System.Diagnostics.Debug.WriteLine($"Error sending SMS to {customer.CustomerName}: {ex.Message}");
-                            }
                         }
+                    }
+                    else
+                    {
+                        // SMS is disabled or not configured
+                        System.Diagnostics.Debug.WriteLine("SMS is disabled or not configured. Skipping SMS reminders.");
                     }
                 }
             }
             catch (Exception ex)
             {
                 // Log error (you can add proper logging here)
-                System.Diagnostics.Debug.WriteLine($"Error in SendOilChangeReminderSMS: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Error in SendOilChangeReminderSMS for tenant {tenantId}: {ex.Message}");
+            }
+            finally
+            {
+                // Clear tenant context
+                TenantContext.Clear();
             }
         }
         [HttpGet]
@@ -1294,6 +1486,234 @@ namespace POS.Web.Controllers
                 return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        /// <summary>
+        /// Get count of reminder messages sent today
+        /// </summary>
+        [HttpGet]
+        public JsonResult GetTodayRemindersCount()
+        {
+            try
+            {
+                using (POSEntities context = new POSEntities())
+                {
+                    string sqlQuery = @"
+                        WITH LatestOrders AS (
+                            SELECT 
+                                o.Id, o.InvoiceNumber, CONVERT(DATE,o.CreationDate) AS CreationDate,
+                                o.NoOfGuest AS CustomerID, c.CustomerName, c.CarNumber, c.Mobile,
+                                CASE WHEN CONVERT(INT, c.CNIC) > 100 THEN 0 ELSE CONVERT(INT, c.CNIC) END AS NoOfDays,
+                                ROW_NUMBER() OVER (PARTITION BY o.NoOfGuest ORDER BY o.CreationDate DESC) AS rn
+                            FROM Orders o
+                            INNER JOIN Customer c ON c.Id = o.NoOfGuest
+                            WHERE TRY_CONVERT(BIGINT, c.CNIC) IS NOT NULL
+                            AND CASE WHEN CONVERT(INT, c.CNIC) > 100 THEN 0 ELSE CONVERT(INT, c.CNIC) END > 0
+                        )
+                        SELECT COUNT(*) as Count
+                        FROM LatestOrders
+                        WHERE rn = 1
+                        AND CONVERT(DATE,DATEADD(DAY,NoOfDays,CreationDate)) = CONVERT(DATE,GETDATE())";
+
+                    var count = context.Database.SqlQuery<int>(sqlQuery).FirstOrDefault();
+                    return Json(count, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// Get list of reminder messages sent today
+        /// </summary>
+        [HttpGet]
+        public JsonResult GetTodayReminders()
+        {
+            try
+            {
+                List<CustomerReminderViewModel> reminders = new List<CustomerReminderViewModel>();
+                using (POSEntities context = new POSEntities())
+                {
+                    string sqlQuery = @"
+                        WITH LatestOrders AS (
+                            SELECT 
+                                o.Id, o.InvoiceNumber, CONVERT(DATE,o.CreationDate) AS CreationDate,
+                                o.NoOfGuest AS CustomerID, c.CustomerName, c.CarNumber, c.Mobile,
+                                CASE WHEN CONVERT(INT, c.CNIC) > 100 THEN 0 ELSE CONVERT(INT, c.CNIC) END AS NoOfDays,
+                                ROW_NUMBER() OVER (PARTITION BY o.NoOfGuest ORDER BY o.CreationDate DESC) AS rn
+                            FROM Orders o
+                            INNER JOIN Customer c ON c.Id = o.NoOfGuest
+                            WHERE TRY_CONVERT(BIGINT, c.CNIC) IS NOT NULL
+                            AND CASE WHEN CONVERT(INT, c.CNIC) > 100 THEN 0 ELSE CONVERT(INT, c.CNIC) END > 0
+                        )
+                        SELECT 
+                            Id, InvoiceNumber, CreationDate,
+                            CustomerID, CustomerName, CarNumber, Mobile, NoOfDays,
+                            CONVERT(DATE,DATEADD(DAY,NoOfDays,CreationDate)) AS ActionDate
+                        FROM LatestOrders
+                        WHERE rn = 1
+                        AND CONVERT(DATE,DATEADD(DAY,NoOfDays,CreationDate)) = CONVERT(DATE,GETDATE())
+                        ORDER BY CreationDate DESC";
+
+                    reminders = context.Database.SqlQuery<CustomerReminderViewModel>(sqlQuery).ToList();
+                }
+
+                // Format the results for display
+                var result = reminders.Select(r => new
+                {
+                    CustomerName = r.CustomerName,
+                    CarNumber = r.CarNumber,
+                    Mobile = r.Mobile,
+                    Message = $"Hello {r.CustomerName}, Your car ({r.CarNumber}) is due for oil change service. Last service date: {r.CreationDate:dd/MM/yyyy}",
+                    SentTime = DateTime.Now.ToString("hh:mm tt")
+                }).ToList();
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new List<object>(), JsonRequestBehavior.AllowGet);
+            }
+        }
+        #endregion
+
+        #region SMS & WhatsApp Settings
+
+        [HttpGet]
+        public ActionResult GetSMSSettings()
+        {
+            var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+            if (user == null)
+                return RedirectToAction("Login", new { Controller = "Account" });
+
+            var settings = MessagingSettingsService.GetSMSSettings();
+            return PartialView("_SMSSettings", settings);
+        }
+
+        [HttpPost]
+        public JsonResult SaveSMSSettings(SMSSettingsViewModel model)
+        {
+            string message = string.Empty;
+            try
+            {
+                var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+                if (user != null)
+                {
+                    model.ModifiedBy = user.Id;
+                    if (model.Id == 0)
+                    {
+                        model.CreatedBy = user.Id;
+                    }
+                }
+
+                bool saved = MessagingSettingsService.SaveSMSSettings(model);
+                if (saved)
+                {
+                    message = "Success";
+                }
+                else
+                {
+                    message = "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
+            return Json(message);
+        }
+
+        [HttpPost]
+        public JsonResult ToggleSMS(bool isEnabled)
+        {
+            string message = string.Empty;
+            try
+            {
+                bool toggled = MessagingSettingsService.ToggleSMSEnabled(isEnabled);
+                if (toggled)
+                {
+                    message = "Success";
+                }
+                else
+                {
+                    message = "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
+            return Json(message);
+        }
+
+        [HttpGet]
+        public ActionResult GetWhatsAppSettings()
+        {
+            var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+            if (user == null)
+                return RedirectToAction("Login", new { Controller = "Account" });
+
+            var settings = MessagingSettingsService.GetWhatsAppSettings();
+            return PartialView("_WhatsAppSettings", settings);
+        }
+
+        [HttpPost]
+        public JsonResult SaveWhatsAppSettings(WhatsAppSettingsViewModel model)
+        {
+            string message = string.Empty;
+            try
+            {
+                var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+                if (user != null)
+                {
+                    model.ModifiedBy = user.Id;
+                    if (model.Id == 0)
+                    {
+                        model.CreatedBy = user.Id;
+                    }
+                }
+
+                bool saved = MessagingSettingsService.SaveWhatsAppSettings(model);
+                if (saved)
+                {
+                    message = "Success";
+                }
+                else
+                {
+                    message = "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
+            return Json(message);
+        }
+
+        [HttpPost]
+        public JsonResult ToggleWhatsApp(bool isEnabled)
+        {
+            string message = string.Empty;
+            try
+            {
+                bool toggled = MessagingSettingsService.ToggleWhatsAppEnabled(isEnabled);
+                if (toggled)
+                {
+                    message = "Success";
+                }
+                else
+                {
+                    message = "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
+            return Json(message);
+        }
+
         #endregion
     }
 }

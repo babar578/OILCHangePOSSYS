@@ -1,4 +1,5 @@
 ﻿using Microsoft.Reporting.WebForms;
+using POS.Utilities.MultiTenant;
 using POS.Utilities.Utilities;
 using POS.Utilities.ViewModel;
 using System;
@@ -15,14 +16,57 @@ namespace POS.Web.RptViewer
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                var report = Session[WebUtil.REPORT_DATA] as ReportViewModel;
-                if (report != null)
+                // === MULTI-TENANT: Ensure tenant context is set ===
+                if (!TenantContext.HasTenant)
                 {
-                    GetReport(report.ReportFilePath, report.DatasetName, report.Dataset);
-                }
+                    var user = Session[WebUtil.CURRENT_USER] as UserViewModel;
+                    if (user == null)
+                    {
+                        Response.Redirect("~/Account/Login");
+                        return;
+                    }
 
+                    var tenantId = Session["TenantId"] as int?;
+                    if (tenantId.HasValue)
+                    {
+                        var tenant = TenantCache.GetTenant(tenantId.Value);
+                        if (tenant != null && tenant.IsActive)
+                        {
+                            TenantContext.CurrentTenant = tenant;
+                        }
+                        else
+                        {
+                            Response.Redirect("~/Account/Login");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        Response.Redirect("~/Account/Login");
+                        return;
+                    }
+                }
+                // === END MULTI-TENANT FIX ===
+
+                if (!IsPostBack)
+                {
+                    var report = Session[WebUtil.REPORT_DATA] as ReportViewModel;
+                    if (report != null)
+                    {
+                        GetReport(report.ReportFilePath, report.DatasetName, report.Dataset);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[MainViewer] Page_Load Error: {ex.Message}");
+                Response.Write($"<div style='padding:20px;background:#ffebee;border:1px solid #f44336;margin:20px;'>");
+                Response.Write($"<h3 style='color:#c62828;'>Report Viewer Error</h3>");
+                Response.Write($"<p><strong>Message:</strong> {ex.Message}</p>");
+                Response.Write($"<p><a href='/Home/Index'>Return to Dashboard</a></p>");
+                Response.Write($"</div>");
             }
         }
 
@@ -59,11 +103,11 @@ namespace POS.Web.RptViewer
                 ReportViewer1.Height = Unit.Percentage(100);
                 ReportViewer1.LocalReport.Refresh();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"[MainViewer] GetReport Error: {ex.Message}");
                 throw;
             }
-
         }
     }
 }

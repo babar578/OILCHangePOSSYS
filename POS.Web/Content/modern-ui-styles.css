@@ -1,0 +1,575 @@
+/* Modern UI Styles - Shared across all screens */
+/* Matching Dashboard and Login Screen Design */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Modern Card Styling */
+.modern-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 25px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.modern-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.modern-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.modern-card-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e3a5f;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modern-card-header h3 i {
+    color: #4a90e2;
+}
+
+/* Modern Button Styles */
+.btn-modern-primary {
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.3);
+}
+
+.btn-modern-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.4);
+    background: linear-gradient(135deg, #357abd 0%, #2c5a8a 100%);
+}
+
+.btn-modern-success {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+}
+
+.btn-modern-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
+}
+
+.btn-modern-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    color: #212529;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-modern-warning:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(255, 193, 7, 0.4);
+}
+
+.btn-modern-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #bd2130 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-modern-danger:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.4);
+}
+
+.btn-modern-secondary {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-modern-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+
+/* Modern Form Controls */
+.modern-form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: #f7fafc;
+    color: #2d3748;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modern-form-control:focus {
+    border-color: #4a90e2;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+    outline: none;
+}
+
+.modern-form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #4a5568;
+    font-size: 14px;
+}
+
+.modern-form-group {
+    margin-bottom: 20px;
+}
+
+/* Modern Table Styling */
+.modern-table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 14px;
+}
+
+.modern-table thead {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+    color: white;
+}
+
+.modern-table thead th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modern-table tbody tr {
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.2s ease;
+}
+
+.modern-table tbody tr:hover {
+    background-color: #f7fafc;
+}
+
+.modern-table tbody td {
+    padding: 15px;
+    color: #2d3748;
+}
+
+/* Modern Modal Styling */
+.modern-modal-header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 8px 8px 0 0;
+}
+
+.modern-modal-header h4 {
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modern-modal-body {
+    padding: 25px;
+    background: white;
+}
+
+.modern-modal-footer {
+    padding: 20px 25px;
+    background: #f7fafc;
+    border-top: 1px solid #e2e8f0;
+    border-radius: 0 0 8px 8px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Action Buttons in Tables */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn-edit,
+.action-btn-delete {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.action-btn-edit {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    color: #212529;
+}
+
+.action-btn-edit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(255, 193, 7, 0.4);
+}
+
+.action-btn-delete {
+    background: linear-gradient(135deg, #dc3545 0%, #bd2130 100%);
+    color: white;
+}
+
+.action-btn-delete:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.4);
+}
+
+/* Page Header */
+.modern-page-header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+    color: white;
+    padding: 20px 25px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.modern-page-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modern-page-header p {
+    margin: 5px 0 0 0;
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #718096;
+}
+
+.empty-state i {
+    font-size: 64px;
+    color: #cbd5e0;
+    margin-bottom: 20px;
+}
+
+.empty-state h4 {
+    font-size: 18px;
+    color: #4a5568;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    font-size: 14px;
+    color: #718096;
+}
+
+/* Badge Styles */
+.modern-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.badge-danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.badge-warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.badge-info {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+/* Loading Spinner */
+.modern-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #4a90e2;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modern-card {
+        padding: 15px;
+    }
+    
+    .modern-table-wrapper {
+        font-size: 12px;
+    }
+    
+    .modern-table thead th,
+    .modern-table tbody td {
+        padding: 10px;
+    }
+}
+
+/* Card Actions Section */
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Search Bar */
+.modern-search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.modern-search-bar input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.modern-search-bar input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+    outline: none;
+}
+
+/* Status Indicators */
+.status-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.status-active {
+    background: #28a745;
+    box-shadow: 0 0 6px rgba(40, 167, 69, 0.5);
+}
+
+.status-inactive {
+    background: #dc3545;
+    box-shadow: 0 0 6px rgba(220, 53, 69, 0.5);
+}
+
+/* Report Specific Styles */
+.report-header {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.report-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.report-content {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Override AdminLTE defaults where needed */
+.card {
+    border-radius: 8px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    border: none !important;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%) !important;
+    color: white !important;
+    border-radius: 8px 8px 0 0 !important;
+    padding: 20px 25px !important;
+    border-bottom: none !important;
+}
+
+.card-header h3 {
+    color: white !important;
+    font-weight: 600 !important;
+    font-size: 18px !important;
+}
+
+.card-body {
+    padding: 25px !important;
+}
+
+/* Form Control Overrides */
+.form-control {
+    border-radius: 8px !important;
+    border: 2px solid #e2e8f0 !important;
+    padding: 12px 16px !important;
+    transition: all 0.3s ease !important;
+}
+
+.form-control:focus {
+    border-color: #4a90e2 !important;
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1) !important;
+}
+
+/* Button Overrides */
+.btn-primary {
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 12px 24px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.4) !important;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%) !important;
+    border: none !important;
+    border-radius: 6px !important;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #bd2130 100%) !important;
+    border: none !important;
+    border-radius: 6px !important;
+}
+
+/* Table Overrides */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    font-size: 13px !important;
+    letter-spacing: 0.5px !important;
+    border: none !important;
+    padding: 15px !important;
+}
+
+.table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f7fafc !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd):hover {
+    background-color: #f0f1f2 !important;
+}
+

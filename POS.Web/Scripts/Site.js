@@ -642,6 +642,9 @@ function GetInvoice(id) {
                     $("#InvoiceFormat").html(result);
                     //printdiv('InvoiceFormat')
                     printDiv01("InvoiceFormat");
+
+                    // Print 2x2 reading sticker/reminder right after invoice
+                    PrintReadingSticker(id);
                 });
             stopLoader();
         }
@@ -649,6 +652,19 @@ function GetInvoice(id) {
             window.location.href = "/Home/Index";
         }
     }, "Default Value");
+}
+
+function PrintReadingSticker(id) {
+    $.ajax({
+        url: '/Home/PrintReadingSticker/' + id,
+        type: "GET"
+    }).done(function (result) {
+        // Open a new window with sticker HTML (auto-prints on load)
+        var w = window.open('', 'STICKER', 'height=400,width=400');
+        w.document.open();
+        w.document.write(result);
+        w.document.close();
+    });
 }
 
 function GetPrintBill(invoiceNo) {

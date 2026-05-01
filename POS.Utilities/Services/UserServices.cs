@@ -1,4 +1,5 @@
 ﻿using POS.Database.DatabaseModel;
+using POS.Utilities.MultiTenant;
 using POS.Utilities.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     User entity = (User)model;
                     context.Users.Add(entity);
@@ -38,7 +39,7 @@ namespace POS.Utilities.Services
             UserViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from Users where Id={id}";
                     returnValue = context.Database.SqlQuery<User>(SQL).SingleOrDefault();
@@ -55,7 +56,7 @@ namespace POS.Utilities.Services
             string returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select UserName from Users where Id={id}";
                     returnValue = context.Database.SqlQuery<string>(SQL).SingleOrDefault();
@@ -73,7 +74,7 @@ namespace POS.Utilities.Services
             List<UserViewModel> returnValue = new List<UserViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from Users";
                     var Users = context.Database.SqlQuery<User>(SQL).ToList();
@@ -92,7 +93,7 @@ namespace POS.Utilities.Services
             List<UserViewModel> returnValue = new List<UserViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select Id, UserName from Users";
                     var Users = context.Database.SqlQuery<User>(SQL).ToList();
@@ -111,7 +112,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.Users.Where(p => p.Id == model.Id).SingleOrDefault();
                     if (find != null)
@@ -152,7 +153,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.Users.Where(p => p.Id == model.Id).SingleOrDefault();
                     if (find != null)
@@ -176,7 +177,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.Users.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)
@@ -199,7 +200,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.Users.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -222,7 +223,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.Users.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -245,7 +246,7 @@ namespace POS.Utilities.Services
             UserViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     returnValue = context.Users.Where(p => p.UserName == username && p.Password == password).SingleOrDefault();
                 }
@@ -268,7 +269,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     UserType entity = (UserType)model;
                     context.UserTypes.Add(entity);
@@ -288,7 +289,7 @@ namespace POS.Utilities.Services
             UserTypeViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from UserTypes where Id={id}";
                     returnValue = context.Database.SqlQuery<UserType>(SQL).SingleOrDefault();
@@ -306,7 +307,7 @@ namespace POS.Utilities.Services
             string returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select Name from UserTypes where Id={id}";
                     returnValue = context.Database.SqlQuery<string>(SQL).SingleOrDefault();
@@ -324,7 +325,7 @@ namespace POS.Utilities.Services
             List<UserTypeViewModel> returnValue = new List<UserTypeViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from UserTypes";
                     var UserType = context.Database.SqlQuery<UserType>(SQL).ToList();
@@ -343,7 +344,7 @@ namespace POS.Utilities.Services
             List<UserTypeViewModel> returnValue = new List<UserTypeViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select Name from UserTypes";
                     var UserType = context.Database.SqlQuery<UserType>(SQL).ToList();
@@ -362,7 +363,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = GetUserTypeById(model.Id);
                     if (find != null)
@@ -391,7 +392,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.UserTypes.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)
@@ -414,7 +415,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.UserTypes.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -437,7 +438,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.UserTypes.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -464,7 +465,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     Designation entity = (Designation)model;
                     context.Designations.Add(entity);
@@ -484,7 +485,7 @@ namespace POS.Utilities.Services
             DesignationViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from Designations where Id={id}";
                     returnValue = context.Database.SqlQuery<Designation>(SQL).SingleOrDefault();
@@ -502,7 +503,7 @@ namespace POS.Utilities.Services
             string returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select Name from Designations where Id={id}";
                     returnValue = context.Database.SqlQuery<string>(SQL).SingleOrDefault();
@@ -520,7 +521,7 @@ namespace POS.Utilities.Services
             List<DesignationViewModel> returnValue = new List<DesignationViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from Designations";
                     var Designation = context.Database.SqlQuery<Designation>(SQL).ToList();
@@ -539,7 +540,7 @@ namespace POS.Utilities.Services
             List<DesignationViewModel> returnValue = new List<DesignationViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select Name from Designations";
                     var Designation = context.Database.SqlQuery<Designation>(SQL).ToList();
@@ -558,7 +559,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = GetDesignationById(model.Id);
                     if (find != null)
@@ -587,7 +588,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.Designations.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)
@@ -610,7 +611,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.Designations.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -633,7 +634,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.Designations.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -660,7 +661,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     PrintInfo entity = (PrintInfo)model;
                     context.PrintInfoes.Add(entity);
@@ -680,7 +681,7 @@ namespace POS.Utilities.Services
             PrintInfoViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from PrintInfo where Id={id}";
                     returnValue = context.Database.SqlQuery<PrintInfo>(SQL).SingleOrDefault();
@@ -698,7 +699,7 @@ namespace POS.Utilities.Services
             PrintInfoViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from PrintInfo where DepartmentId={id}";
                     returnValue = context.Database.SqlQuery<PrintInfo>(SQL).SingleOrDefault();
@@ -716,7 +717,7 @@ namespace POS.Utilities.Services
             string returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select Name from PrintInfo where Id={id}";
                     returnValue = context.Database.SqlQuery<string>(SQL).SingleOrDefault();
@@ -734,7 +735,7 @@ namespace POS.Utilities.Services
             List<PrintInfoViewModel> returnValue = new List<PrintInfoViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from PrintInfoes";
                     var PrintInfo = context.Database.SqlQuery<PrintInfo>(SQL).ToList();
@@ -753,7 +754,7 @@ namespace POS.Utilities.Services
             List<PrintInfoViewModel> returnValue = new List<PrintInfoViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select Name from PrintInfoes";
                     var PrintInfo = context.Database.SqlQuery<PrintInfo>(SQL).ToList();
@@ -772,7 +773,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = GetPrintInfoById(model.Id);
                     if (find != null)
@@ -803,7 +804,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.PrintInfoes.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)
@@ -830,7 +831,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     MainMenu entity = (MainMenu)model;
                     context.MainMenus.Add(entity);
@@ -850,7 +851,7 @@ namespace POS.Utilities.Services
             MainMenuViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from MainMenu where Id={id}";
                     returnValue = context.Database.SqlQuery<MainMenu>(SQL).SingleOrDefault();
@@ -868,7 +869,7 @@ namespace POS.Utilities.Services
             string returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select Name from MainMenu where Id={id}";
                     returnValue = context.Database.SqlQuery<string>(SQL).SingleOrDefault();
@@ -886,7 +887,7 @@ namespace POS.Utilities.Services
             List<MainMenuViewModel> returnValue = new List<MainMenuViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from MainMenu Where ParentId IS NULL ";
                     var MainMenu = context.Database.SqlQuery<MainMenu>(SQL).ToList();
@@ -906,7 +907,7 @@ namespace POS.Utilities.Services
             List<MainMenuViewModel> returnValue = new List<MainMenuViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from MainMenu where parentId = {ParentId}";
                     var MainMenu = context.Database.SqlQuery<MainMenu>(SQL).ToList();
@@ -927,7 +928,7 @@ namespace POS.Utilities.Services
             List<MainMenuViewModel> returnValue = new List<MainMenuViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from MainMenu where ParentId={parentId}";
                     var MainMenu = context.Database.SqlQuery<MainMenu>(SQL).ToList();
@@ -946,7 +947,7 @@ namespace POS.Utilities.Services
             List<MainMenuViewModel> returnValue = new List<MainMenuViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select Name from MainMenu";
                     var MainMenu = context.Database.SqlQuery<MainMenu>(SQL).ToList();
@@ -965,7 +966,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.MainMenus.Where(p => p.Id == model.Id).SingleOrDefault();
                     if (find != null)
@@ -999,7 +1000,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.MainMenus.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)
@@ -1022,7 +1023,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.MainMenus.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -1045,7 +1046,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.MainMenus.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -1072,7 +1073,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     UserRight entity = (UserRight)model;
                     context.UserRights.Add(entity);
@@ -1092,7 +1093,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     if (rights.Count > 0)
                     {
@@ -1136,7 +1137,7 @@ namespace POS.Utilities.Services
             UserRightViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from UserRights where Id={id}";
                     returnValue = context.Database.SqlQuery<UserRight>(SQL).SingleOrDefault();
@@ -1154,7 +1155,7 @@ namespace POS.Utilities.Services
             UserRightViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from UserRights where UserId={userId}";
                     returnValue = context.Database.SqlQuery<UserRight>(SQL).FirstOrDefault();
@@ -1172,7 +1173,7 @@ namespace POS.Utilities.Services
             List<UserRightViewModel> returnValue = new List<UserRightViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from UserRights";
                     var UserRight = context.Database.SqlQuery<UserRight>(SQL).ToList();
@@ -1191,7 +1192,7 @@ namespace POS.Utilities.Services
             List<UserRightViewModel> returnValue = new List<UserRightViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from UserRights where UserId={userId} and IsActive='true'";
                     var UserRight = context.Database.SqlQuery<UserRight>(SQL).ToList();
@@ -1210,7 +1211,7 @@ namespace POS.Utilities.Services
             List<UserRightViewModel> returnValue = new List<UserRightViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from UserRights where ParentId={parentId} and UserId = {userId} and IsActive='true'";
                     var UserRight = context.Database.SqlQuery<UserRight>(SQL).ToList();
@@ -1231,7 +1232,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.UserRights.Where(p => p.Id == model.Id).SingleOrDefault();
                     if (find != null)
@@ -1261,7 +1262,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.UserRights.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)
@@ -1284,7 +1285,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.UserRights.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -1307,7 +1308,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.UserRights.Where(p => p.Id == id).SingleOrDefault();
                     if (find != null)
@@ -1334,7 +1335,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     ShopStatus entity = (ShopStatus)model;
                     context.ShopStatuses.Add(entity);
@@ -1355,7 +1356,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL_01 = $"SELECT TOP 1 * FROM ShopStatuses ORDER BY ID DESC";
                     var lastRecord = context.Database.SqlQuery<ShopStatus>(SQL_01).FirstOrDefault();
@@ -1388,7 +1389,7 @@ namespace POS.Utilities.Services
             ShopStatusViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from ShopStatuses where Id={id}";
                     returnValue = context.Database.SqlQuery<ShopStatus>(SQL).SingleOrDefault();
@@ -1406,7 +1407,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     // string SQL = $"SELECT TOP 1 OpenStatus FROM ShopStatuses WHERE CONVERT(DATETIME, CONVERT(VARCHAR, DateOpen, 101)) = '{DateTime.Today}' ORDER BY ID DESC";
                     string SQL = $"SELECT TOP 1 OpenStatus FROM ShopStatuses ";

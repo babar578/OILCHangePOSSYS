@@ -4,12 +4,28 @@
     Layout = null;
 
     var model = Session["Balance"] as FilterInventoryViewModel;
-    //List<ItemStockViewModel> model = VendorServices.GetInventoryBalance();
-    var inventoryBalances = POS.Utilities.Services.ReportServices.GetInventoryBalanceReport(model.FromDate, model.ToDate, model.ItemId, model.UnitId);
+    List<InventoryBalanceViewModel> inventoryBalances = null;
+    
+    if (model != null && model.FromDate != DateTime.MinValue && model.ToDate != DateTime.MinValue)
+    {
+        inventoryBalances = POS.Utilities.Services.ReportServices.GetInventoryBalanceReport(model.FromDate, model.ToDate, model.ItemId, model.UnitId);
+    }
 
     int Counter = 1;
 }
 
+@if (model == null || model.FromDate == DateTime.MinValue || model.ToDate == DateTime.MinValue)
+{
+    <div class="alert alert-info text-center" style="margin: 20px;">
+        <h4><i class="fas fa-info-circle"></i> No Filter Applied</h4>
+        <p>Please set the filter criteria to view the inventory balance report.</p>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filterModal">
+            <i class="fas fa-filter"></i> Set Filter
+        </button>
+    </div>
+}
+else
+{
 <script src="~/Scripts/Site.js"></script>
 <script>
     $("#bootstrap-data-table-export").DataTable({
@@ -143,6 +159,7 @@
         <!-- /.card -->
     </div>
 </div>
+}
 
 
 

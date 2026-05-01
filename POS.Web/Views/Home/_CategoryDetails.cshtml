@@ -10,6 +10,30 @@
         currentTableId = (int)Session["CurrentTableId"];
     }
 }
+<style>
+    .small-box-compact {
+        min-height: 80px !important;
+        padding: 8px !important;
+        margin-bottom: 8px !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .small-box-compact h6 {
+        font-size: 13px !important;
+        margin-bottom: 4px !important;
+        line-height: 1.2;
+        white-space: normal; /* Allow wrapping */
+        word-wrap: break-word;
+    }
+    .small-box-compact small {
+        font-size: 11px !important;
+        display: block;
+        margin-top: 2px;
+        opacity: 0.8;
+    }
+</style>
 <link href="~/Content/PosStyle.css" rel="stylesheet" />
 
 
@@ -17,19 +41,19 @@
     <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light" style="max-height: 700px;">
 
         <!-- Small boxes (Stat box) -->
-        <div class="row">
+        <div class="row no-gutters"> <!-- no-gutters for tighter spacing -->
             @{
                 if (Model?.Count > 0)
                 {
                     foreach (var p in Model)
                     {
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-6 col-6 p-1">
                             <a href="javascript:void(0)" onclick='AddItem(@p.ItemId, 1, "@p.Price", "@p.ItemName", "0", "0", @currentTableId)'>
                                 <!-- small box -->
-                                <div class="small-box btn-success">
-                                    <div class="inner" style="text-align:center">
+                                <div class="small-box btn-success small-box-compact">
+                                    <div class="inner" style="text-align:center; padding: 0;">
                                         <h6>@p.ItemName</h6>
-                                        <h6><small>@p.UnitName</small> @p.BalanceQuantity</h6>
+                                        <small>@p.UnitName | @p.BalanceQuantity</small>
                                     </div>
                                 </div>
                             </a>

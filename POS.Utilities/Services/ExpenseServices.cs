@@ -1,4 +1,5 @@
 ﻿using POS.Database.DatabaseModel;
+using POS.Utilities.MultiTenant;
 using POS.Utilities.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     Expense entity = (Expense)model;
                     context.Expenses.Add(entity);
@@ -37,7 +38,7 @@ namespace POS.Utilities.Services
             ExpenseViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from Expense where Id={id}";
                     returnValue = context.Database.SqlQuery<Expense>(SQL).SingleOrDefault();
@@ -55,7 +56,7 @@ namespace POS.Utilities.Services
             List<ExpenseViewModel> returnValue = new List<ExpenseViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     //string SQL = $"select *from Expense Where DATEDIFF (DAY , CreationDate , GETDATE()) between 1 and 30 order by CreationDate ASC";
                     // string SQL = $"select * from Expense Where Month(CreationDate) = {DateTime.Now.Month} order by CreationDate ASC";
@@ -76,7 +77,7 @@ namespace POS.Utilities.Services
             List<ExpenseViewModel> returnValue = new List<ExpenseViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select Id, Name from Expense";
                     var Users = context.Database.SqlQuery<Expense>(SQL).ToList();
@@ -95,7 +96,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.Expenses.Where(p => p.Id == model.Id).SingleOrDefault();
                     if (find != null)
@@ -123,7 +124,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.Expenses.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)

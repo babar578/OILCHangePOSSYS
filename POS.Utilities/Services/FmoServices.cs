@@ -1,4 +1,5 @@
 ﻿using POS.Database.DatabaseModel;
+using POS.Utilities.MultiTenant;
 using POS.Utilities.ReportsModel;
 using POS.Utilities.ViewModel;
 using System;
@@ -18,7 +19,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     Purchase entity = (Purchase)model;
                     context.Purchases.Add(entity);
@@ -38,7 +39,7 @@ namespace POS.Utilities.Services
             PurchaseViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
 
                     string SQL = $"select * from Purchases where Id={id}";
@@ -58,7 +59,7 @@ namespace POS.Utilities.Services
             List<GetHistoryCarVoucherViewModel> returnValue = new List<GetHistoryCarVoucherViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
 
                     string SQL = $"Exec GetHistoryCarVoucher Id={id}";
@@ -78,7 +79,7 @@ namespace POS.Utilities.Services
             string returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select Payment from Purchases where Id={id}";
                     returnValue = context.Database.SqlQuery<string>(SQL).SingleOrDefault();
@@ -95,7 +96,7 @@ namespace POS.Utilities.Services
             List<PurchaseViewModel> returnValue = new List<PurchaseViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from Purchases";
                     var Vendor = context.Database.SqlQuery<Purchase>(SQL).ToList();
@@ -114,7 +115,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.Purchases.Where(p => p.Id == model.Id).SingleOrDefault();
                     if (find != null)
@@ -141,7 +142,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.Purchases.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)
@@ -167,7 +168,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     Process entity = (Process)model;
                     context.Processes.Add(entity);
@@ -187,7 +188,7 @@ namespace POS.Utilities.Services
             ProcessViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
 
                     string SQL = $"select * from Process where Id={id}";
@@ -206,7 +207,7 @@ namespace POS.Utilities.Services
             string returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select Payment from Process where Id={id}";
                     returnValue = context.Database.SqlQuery<string>(SQL).SingleOrDefault();
@@ -223,7 +224,7 @@ namespace POS.Utilities.Services
             List<ProcessViewModel> returnValue = new List<ProcessViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from Process";
                     var Vendor = context.Database.SqlQuery<Process>(SQL).ToList();
@@ -242,7 +243,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.Processes.Where(p => p.Id == model.Id).SingleOrDefault();
                     if (find != null)
@@ -269,7 +270,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.Processes.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)
@@ -295,7 +296,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     Sale entity = (Sale)model;
                     context.Sales.Add(entity);
@@ -315,7 +316,7 @@ namespace POS.Utilities.Services
             SaleViewModel returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
 
                     string SQL = $"select * from Sale where Id={id}";
@@ -334,7 +335,7 @@ namespace POS.Utilities.Services
             string returnValue = null;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"Select Payment from Sale where Id={id}";
                     returnValue = context.Database.SqlQuery<string>(SQL).SingleOrDefault();
@@ -351,7 +352,7 @@ namespace POS.Utilities.Services
             List<SaleViewModel> returnValue = new List<SaleViewModel>();
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     string SQL = $"select * from Sale";
                     var Vendor = context.Database.SqlQuery<Sale>(SQL).ToList();
@@ -370,7 +371,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var find = context.Sales.Where(p => p.Id == model.Id).SingleOrDefault();
                     if (find != null)
@@ -397,7 +398,7 @@ namespace POS.Utilities.Services
             bool returnValue = false;
             try
             {
-                using (POSEntities context = new POSEntities())
+                using (var context = MultiTenantDbContextFactory.CreateDbContext())
                 {
                     var del = context.Sales.Where(p => p.Id == id).SingleOrDefault();
                     if (del != null)

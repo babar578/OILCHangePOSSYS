@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using POS.Web.Filters;
+using System.Web;
 using System.Web.Mvc;
 
 namespace POS.Web
@@ -8,6 +9,7 @@ namespace POS.Web
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new TenantAuthorizationFilter()); // Add tenant authorization filter
         }
     }
 }

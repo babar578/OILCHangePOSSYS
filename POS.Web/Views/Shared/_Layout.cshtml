@@ -52,8 +52,153 @@
     <link href="~/Content/jHtmlArea/jHtmlArea.css" rel="stylesheet" />
 
     <link href="~/Content/Site.css" rel="stylesheet" />
+    <!-- Modern UI Styles -->
+    <link href="~/Content/modern-ui-styles.css" rel="stylesheet" />
 
-</head>yy
+    <style>
+        /* Global Modern UI Overrides */
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --info-color: #17a2b8;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --light-bg: #f4f6f9;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--light-bg);
+            color: #333;
+        }
+
+        /* Cards */
+        .card {
+            box-shadow: var(--card-shadow);
+            border: none;
+            border-radius: var(--border-radius);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-header {
+            background-color: #fff;
+            border-bottom: 1px solid #f0f0f0;
+            border-top-left-radius: var(--border-radius) !important;
+            border-top-right-radius: var(--border-radius) !important;
+            padding: 1rem 1.25rem;
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #357abd;
+            border-color: #357abd;
+        }
+
+        /* Form Controls */
+        .form-control {
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            padding: 0.5rem 0.75rem;
+            height: auto;
+            box-shadow: none;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+        }
+
+        /* Tables */
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            border-bottom: 2px solid #dee2e6;
+            background-color: #f8f9fa;
+            color: #495057;
+            font-weight: 600;
+        }
+
+        .table td, .table th {
+            padding: 0.75rem;
+            vertical-align: middle;
+            border-top: 1px solid #dee2e6;
+        }
+
+        /* Modals */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .modal-header .close {
+            color: white;
+            opacity: 0.8;
+        }
+
+        /* Navbar */
+        .main-header {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-bottom: none;
+        }
+
+        /* Sidebar */
+        .main-sidebar {
+            box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        }
+        
+        .nav-sidebar .nav-item .nav-link.active {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Small Boxes (Dashboard) */
+        .small-box {
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s;
+        }
+        
+        .small-box:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+        }
+    </style>
+</head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
         @{ Html.RenderPartial("_modal"); }
@@ -65,14 +210,8 @@
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             @*<h1 class="m-0 text-dark">Dashboard</h1>*@
-                        </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
-                                <li class="breadcrumb-item active">@ViewBag.Title</li>
-                            </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->

@@ -1,4 +1,5 @@
-﻿using POS.Utilities.Services;
+﻿using POS.Utilities.MultiTenant;
+using POS.Utilities.Services;
 using POS.Utilities.Utilities;
 using POS.Utilities.ViewModel;
 using System;
@@ -24,24 +25,48 @@ namespace POS.Web.Controllers
             {
                 if (!string.IsNullOrEmpty(login.UserName) && !string.IsNullOrEmpty(login.Password))
                 {
+                    // Step 1: Resolve tenant from username (with caching)
+                    var tenant = TenantCache.GetTenantByUsername(login.UserName);
+
+                    if (tenant == null || !tenant.IsActive)
+                    {
+                        message = "Invalid username or tenant not found";
+                        return Json(message);
+                    }
+
+                    // Step 2: Set tenant context
+                    TenantContext.CurrentTenant = tenant;
+                    
+                    // Step 3: Authenticate user against tenant database
                     var password = Utility.Encrypt(login.Password);
                     var user = UserServices.UserLogin(login.UserName, password);
+
                     if (user != null && user.IsActive)
                     {
-                        Session.Add(WebUtil.CURRENT_USER, user);
+                        // Store in session
+                        Session[WebUtil.CURRENT_USER] = user;
+                        Session["TenantId"] = tenant.TenantId;
+                        Session["TenantName"] = tenant.TenantName;
+                        
                         var userRights = UserServices.GetAllUserRightsByUserId(user.Id);
-                        Session.Add(WebUtil.CurrentUserRights, userRights);
+                        Session[WebUtil.CurrentUserRights] = userRights;
+                        
                         message = "Success";
                     }
                     else
                     {
-                        message = "Error";
+                        // Clear tenant context on failed authentication
+                        TenantContext.Clear();
+                        Session.Remove("TenantId");
+                        Session.Remove("TenantName");
+                        message = "Invalid credentials";
                     }
                 }
             }
             catch (Exception ex)
             {
-                message = "Error";
+                message = "Error: " + ex.Message;
+                TenantContext.Clear();
                 ex.Message.ToString();
             }
             return Json(message);
@@ -50,6 +75,7 @@ namespace POS.Web.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
+            TenantContext.Clear(); // Clear tenant context
             Session.Abandon();
             Session.Clear();
             Session.Contents.RemoveAll();
