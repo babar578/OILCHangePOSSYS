@@ -5,9 +5,9 @@
 @{
     Layout = null;
     var company = ItemServices.GetCompanyById();
-    var printDate = (Model.CreationDate ?? DateTime.Now).ToString("dd-MMM-yyyy");
-    var nextDate = (Model.NextReadingDate ?? DateTime.Now.Date.AddDays(30)).ToString("dd-MMM-yyyy");
+    var printDate = (Model.CreationDate ?? DateTime.Now).ToString("dd/MM/yy");
     var oilName = string.IsNullOrWhiteSpace(Model.OilItemName) ? "Oil" : Model.OilItemName;
+    var phone = !string.IsNullOrWhiteSpace(company.PhoneNumber2) ? company.PhoneNumber2 : company.PhoneNumber1;
 }
 
 <!doctype html>
@@ -17,73 +17,76 @@
     <title>Reading Sticker</title>
     <style>
         @@page {
-            size: 2in 2in;
+            size: 2in 1in;
             margin: 0;
         }
         html, body {
             width: 2in;
-            height: 2in;
+            height: 1in;
             margin: 0;
             padding: 0;
         }
         .sticker {
             box-sizing: border-box;
             width: 2in;
-            height: 2in;
-            padding: 0.10in;
+            height: 1in;
+            padding: 0.06in;
             font-family: Arial, sans-serif;
             color: #000;
+            overflow: hidden;
         }
-        .title {
-            font-weight: 800;
-            font-size: 12px;
-            text-align: center;
-            line-height: 1.1;
-        }
-        .phone {
-            font-size: 10px;
-            text-align: center;
-            margin-top: 2px;
-        }
-        .row {
+        .readings {
             display: flex;
             justify-content: space-between;
-            font-size: 10px;
-            margin-top: 4px;
+            line-height: 1;
         }
-        .label { font-weight: 700; }
-        .big {
-            font-size: 14px;
-            font-weight: 900;
+        .reading {
+            width: 49%;
             text-align: center;
-            margin-top: 6px;
         }
-        .small {
+        .reading span {
+            display: block;
             font-size: 9px;
-            text-align: center;
-            margin-top: 4px;
+            font-weight: 700;
         }
-        .line {
-            border-top: 1px solid #000;
-            margin: 6px 0 4px 0;
+        .reading strong {
+            display: block;
+            font-size: 22px;
+            font-weight: 900;
+        }
+        .meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 0.05in;
+            margin-top: 0.02in;
+            font-size: 8px;
+            font-weight: 700;
+            line-height: 1.15;
+            white-space: nowrap;
+        }
+        .visit {
+            margin-top: 0.02in;
+            font-size: 8px;
+            font-weight: 800;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
         }
     </style>
 </head>
 <body>
     <div class="sticker">
-        <div class="title">@company.CompanyName</div>
-        <div class="phone">Ph: @(!string.IsNullOrWhiteSpace(company.PhoneNumber2) ? company.PhoneNumber2 : company.PhoneNumber1)</div>
-
-        <div class="line"></div>
-
-        <div class="row"><span class="label">Date</span><span>@printDate</span></div>
-        <div class="row"><span class="label">Car</span><span>@Model.CarNo</span></div>
-        <div class="row"><span class="label">Item</span><span>@oilName</span></div>
-
-        <div class="big">Current: @Model.CurrentReading</div>
-        <div class="row"><span class="label">Last</span><span>@Model.LastReading</span></div>
-        <div class="row"><span class="label">Next</span><span>@Model.NextReading</span></div>
-        <div class="small">Next Date: @nextDate</div>
+        <div class="readings">
+            <div class="reading"><span>Current</span><strong>@Model.CurrentReading</strong></div>
+            <div class="reading"><span>Next</span><strong>@Model.NextReading</strong></div>
+        </div>
+        <div class="meta">
+            <span>Oil: @oilName</span>
+            <span>Car: @Model.CarNo</span>
+            <span>Ph: @phone</span>
+            <span>Date: @printDate</span>
+        </div>
+        <div class="visit">Come and visit Shahzada store.</div>
     </div>
 
     <script>

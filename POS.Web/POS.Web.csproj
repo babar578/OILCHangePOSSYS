@@ -6752,6 +6752,7 @@
     <Content Include="Views\User\_Designation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Home\_PrintInvoice.cshtml" />
+    <Content Include="Views\Home\_ReadingSticker.cshtml" />
     <Content Include="Views\Home\_AddOrderFeedBack.cshtml" />
     <Content Include="Views\Vendor\Cities.cshtml" />
     <Content Include="Views\Vendor\_GetAllCities.cshtml" />
